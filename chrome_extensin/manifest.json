@@ -1,0 +1,39 @@
+{
+  "manifest_version": 3,
+  "name": "ZohoLazyAss",
+  "version": "1.0",
+  "description": "description",
+  "permissions": [
+    "tabs",
+    "activeTab",
+    "scripting"
+  ],
+  "action": {
+    "default_popup": "popup_spa/dist/index.html",
+    "default_icon": "default_icon.png"
+  },
+  "content_scripts": [
+    {
+      "js": [
+        "content-script.js"
+      ],
+      "css": [
+        "embedded/output.css"
+      ],
+      "matches": [
+        "https://creator.zoho.com/*"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "embedded/embedded.js",
+        "embedded/embedded.html"
+      ],
+      "matches": [
+        "https://creator.zoho.com/*"
+      ]
+    }
+  ]
+}
