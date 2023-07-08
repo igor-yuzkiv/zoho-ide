@@ -1,11 +1,8 @@
-async function sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-}
 
 async function injectHtml(file_path, querySelector) {
     await fetch(chrome.runtime.getURL(file_path)).then(r => r.text()).then(html => {
         const node = document.querySelector(querySelector);
-        node.insertAdjacentHTML('afterbegin', html)
+        node.insertAdjacentHTML('afterbegin', html);
     });
 }
 

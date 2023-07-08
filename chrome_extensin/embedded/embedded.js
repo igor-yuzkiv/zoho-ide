@@ -18,7 +18,13 @@
 //     doc.replaceRange(code, currentPosition);
 // })
 
+console.log(location.href);
+
 document.addEventListener("zohoLazyAss__insertInCurrentPosition", async function (e) {
+    console.log("zohoLazyAss__insertInCurrentPosition", {
+        location: location.href,
+        e
+    })
     if (e?.detail) {
         const code = e?.detail;
         const cm = document.querySelector(".CodeMirror").CodeMirror;
