@@ -26,7 +26,7 @@
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/",
-            "Zoho\\Connect\\": "libs/zoho-conncet/src"
+            "Domain\\Zoho\\Connect\\": "Domain/zoho-conncet/src"
         }
     },
     "autoload-dev": {

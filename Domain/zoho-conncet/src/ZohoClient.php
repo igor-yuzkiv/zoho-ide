@@ -1,10 +1,10 @@
 <?php
 
-namespace Zoho\Connect;
+namespace Domain\Zoho\Connect;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\RequestOptions;
-use Zoho\Connect\Model\ZohoConnectModel;
+use Domain\Zoho\Connect\Model\ZohoConnectModel;
 
 /**
  *

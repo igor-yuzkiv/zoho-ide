@@ -1,9 +1,9 @@
 <?php
 
-namespace Zoho\Connect\Model;
+namespace Domain\Zoho\Connect\Model;
 
 use Illuminate\Database\Eloquent\Model;
-use Zoho\Connect\ZohoOAuthClient;
+use Domain\Zoho\Connect\ZohoOAuthClient;
 
 /**
  *

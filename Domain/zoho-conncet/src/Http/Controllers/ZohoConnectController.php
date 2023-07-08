@@ -1,16 +1,16 @@
 <?php
 
-namespace Zoho\Connect\Http\Controllers;
+namespace Domain\Zoho\Connect\Http\Controllers;
 
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\Cache;
-use Zoho\Connect\Http\Requests\AuthorizationRequest;
-use Zoho\Connect\Http\Requests\CallbackRequest;
-use Zoho\Connect\Model\ZohoConnectModel;
-use Zoho\Connect\ZohoOAuthClient;
+use Domain\Zoho\Connect\Http\Requests\AuthorizationRequest;
+use Domain\Zoho\Connect\Http\Requests\CallbackRequest;
+use Domain\Zoho\Connect\Model\ZohoConnectModel;
+use Domain\Zoho\Connect\ZohoOAuthClient;
 
 /**
  *

@@ -1,6 +1,6 @@
 <?php
 
-namespace Zoho\Connect\Http\Requests;
+namespace Domain\Zoho\Connect\Http\Requests;
 
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
@@ -8,9 +8,8 @@ use Illuminate\Foundation\Http\FormRequest;
 /**
  *
  */
-class CallbackRequest extends FormRequest
+class AuthorizationRequest extends FormRequest
 {
-
     /**
      * @return bool
      */
@@ -20,19 +19,21 @@ class CallbackRequest extends FormRequest
     }
 
     /**
-     * @return string[]
+     * @return array
      */
     public function rules(): array
     {
         return [
-            'code'     => "required",
-            'location' => ["string", "nullable"],
+            'id'          => "required",
+            'secret'      => "required",
+            'data_center' => "required",
+            'scopes'      => ["required", "array"],
         ];
     }
 
     /**
      * @param Validator $validator
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|void
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Foundation\Application|void
      */
     protected function failedValidation(Validator $validator)
     {

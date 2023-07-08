@@ -1,6 +1,6 @@
 <?php
 
-namespace Zoho\Connect;
+namespace Domain\Zoho\Connect;
 
 use Carbon\Carbon;
 use Illuminate\Contracts\Support\Arrayable;

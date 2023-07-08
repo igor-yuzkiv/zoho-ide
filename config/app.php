@@ -169,7 +169,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
-        \Zoho\Connect\Providers\ZohoConnectServiceProvider::class,
+        \Domain\Zoho\Connect\Providers\ZohoConnectServiceProvider::class,
     ])->toArray(),
 
     /*

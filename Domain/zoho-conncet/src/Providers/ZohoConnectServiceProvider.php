@@ -1,6 +1,6 @@
 <?php
 
-namespace Zoho\Connect\Providers;
+namespace Domain\Zoho\Connect\Providers;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
@@ -23,7 +23,7 @@ class ZohoConnectServiceProvider extends ServiceProvider
 
         Route::prefix('zoho/connection')
             ->middleware('web')
-            ->namespace('Zoho\Connect\Http\Controllers')
+            ->namespace('Domain\Zoho\Connect\Http\Controllers')
             ->group(__DIR__ . '/../../routes/routes.php');
     }
 }
