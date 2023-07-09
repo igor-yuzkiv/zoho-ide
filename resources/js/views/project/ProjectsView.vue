@@ -8,13 +8,18 @@ import {Icon} from "@iconify/vue";
 import XDialog from "@/components/dialog/XDialog.vue";
 import XInput from "@/components/form/XInput.vue";
 import {PROJECT_EDIT_ROUTE} from "@/constans/routes.js";
+import {useStore} from "vuex";
 
 const router = useRouter();
+const store = useStore();
+
 const projects = ref([]);
 const projectDialogIsOpen = ref(false);
 const projectDialogForm = ref({
     name: "",
 });
+
+
 
 const tableHeaders = [
     {
@@ -63,9 +68,20 @@ const deleteProjectHandle = async (project) => {
     if (!project || !project?.id) {
         return;
     }
-    await http.delete(`projects/${project.id}`)
+
+    const isConfirmed = await store.dispatch("confirmDialog/openDialog", {
+        config: {
+            subject: "Are you sure you want to delete the project?",
+        },
+    })
+
+    if (isConfirmed) {
+        await http.delete(`projects/${project.id}`)
             .then(() => loadProjects())
             .catch(e => console.error(e));
+    }
+
+    console.log("isConfirmed", isConfirmed)
 }
 
 onBeforeMount(loadProjects)

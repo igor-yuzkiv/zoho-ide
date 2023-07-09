@@ -6,6 +6,10 @@ const props = defineProps({
     value: {
         type: Boolean,
         default: false
+    },
+    width: {
+        type: String,
+        default: "w-2/6"
     }
 })
 
@@ -18,7 +22,7 @@ const props = defineProps({
             class="fixed top-0 left-0 right-0 bottom-0 w-full h-screen z-50 overflow-hidden bg-black bg-opacity-60 flex flex-col items-center justify-center"
             v-if="value"
         >
-            <div class="relative bg-white rounded-3xl w-3/6">
+            <div class="relative bg-white rounded-3xl" :class="width">
                 <div
                     class="flex items-center justify-between rounded-t-3xl text-md text-white font-semibold bg-gigas-500 pl-4 pr-2 py-2"
                     v-if="$slots.header"
