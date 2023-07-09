@@ -13,4 +13,5 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [\App\Http\Controllers\SpaController::class, 'index']);
+Route::get('{all}', [\App\Ship\Http\Controllers\SpaController::class, 'index'])
+    ->where(['all' => '.*']);

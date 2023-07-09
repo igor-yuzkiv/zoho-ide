@@ -18,4 +18,11 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::any("test", [\App\Http\Controllers\TestController::class, 'index']);
+Route::prefix("projects")
+    ->group(function () {
+        Route::get("", [\App\Containers\Project\Http\Controllers\ProjectController::class, "getProjects"]);
+        Route::post("", [\App\Containers\Project\Http\Controllers\ProjectController::class, "createProject"]);
+        Route::delete("{project}", [\App\Containers\Project\Http\Controllers\ProjectController::class, "deleteProject"]);
+    });
+
+Route::any("test", [\App\Ship\Http\Controllers\TestController::class, 'index']);
