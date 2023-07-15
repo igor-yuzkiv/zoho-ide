@@ -10,8 +10,11 @@ class IgorTestCommand extends Command
 
     protected $description = 'Command description';
 
+
     public function handle(): void
     {
-        // CRM TO CREATOR
+        $t = null;
+
+        dd(gettype($t));
     }
 }
