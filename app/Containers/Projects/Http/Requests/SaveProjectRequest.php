@@ -4,7 +4,7 @@ namespace App\Containers\Projects\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreateProjectRequest extends FormRequest
+class SaveProjectRequest extends FormRequest
 {
     public function rules(): array
     {

@@ -1,23 +1,18 @@
 <script setup>
 import {ref, onBeforeMount} from "vue";
 import {useRouter} from "vue-router";
+import {PROJECT_EDIT_ROUTE} from "@/constans/routes.js";
 import XTable from "@/components/base/table/XTable.vue";
 import XButton from "@/components/base/button/XButton.vue";
 import {Icon} from "@iconify/vue";
 import XModal from "@/components/base/modal/XModal.vue";
-import XInput from "@/components/base/input/XInput.vue";
-import {PROJECT_EDIT_ROUTE} from "@/constans/routes.js";
-import {useStore} from "vuex";
-import {fetchProjects, createProject, deleteProject} from "@/api/project.js";
+import {fetchProjects, deleteProject} from "@/api/project.js";
+import ProjectForm from "@/views/project/components/ProjectForm.vue";
 
 const router = useRouter();
-const store = useStore();
 
 const projects = ref([]);
 const projectDialogIsOpen = ref(false);
-const projectDialogForm = ref({
-    name: "",
-});
 
 const tableHeaders = [
     {
@@ -34,7 +29,7 @@ const tableHeaders = [
     }
 ];
 
-const loadProjects = async () => {
+async function loadProjects() {
     return await fetchProjects()
         .then(({data}) => {
             if (Array.isArray(data)) {
@@ -45,25 +40,23 @@ const loadProjects = async () => {
         .catch(e => console.log(e))
 }
 
-const openProjectDialog = (value) => {
+function openProjectDialog(value) {
     projectDialogIsOpen.value = value;
 }
 
-const openEditProject = (item) => {
+function openEditProject(item) {
     router.push({
         name  : PROJECT_EDIT_ROUTE,
         params: {id: item.id}
     })
 }
 
-const createNewProjectHandle = async () => {
-    await createProject(projectDialogForm.value)
-        .then(() => loadProjects())
-        .catch(e => console.error(e))
-        .finally(() => openProjectDialog(false))
+async function projectCreated() {
+    await loadProjects();
+    openProjectDialog(false);
 }
 
-const deleteProjectHandle = async (project) => {
+async function deleteProjectHandle(project) {
     if (!project || !project?.id) {
         return;
     }
@@ -107,23 +100,10 @@ onBeforeMount(loadProjects)
             Create New Project
         </template>
         <template #default>
-            <x-input v-model="projectDialogForm.name" label="Project Name"></x-input>
-        </template>
-        <template #actions>
-            <div class="flex items-center justify-between">
-                <x-button
-                    class="bg-white !text-gigas-500 px-4"
-                    @click="openProjectDialog(false)"
-                >
-                    Cancel
-                </x-button>
-                <x-button
-                    class="px-4"
-                    @click="createNewProjectHandle"
-                >
-                    Save
-                </x-button>
-            </div>
+            <project-form
+                @cancel="openProjectDialog(false)"
+                @submit="projectCreated"
+            />
         </template>
     </x-modal>
 </template>

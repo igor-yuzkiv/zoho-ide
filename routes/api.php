@@ -21,7 +21,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::prefix("projects")
     ->group(function () {
         Route::get("", [\App\Containers\Projects\Http\Controllers\ProjectController::class, "getProjects"]);
+        Route::get("{project}", [\App\Containers\Projects\Http\Controllers\ProjectController::class, "getProject"]);
         Route::post("", [\App\Containers\Projects\Http\Controllers\ProjectController::class, "createProject"]);
+        Route::put("{project}", [\App\Containers\Projects\Http\Controllers\ProjectController::class, "updateProject"]);
         Route::delete("{project}", [\App\Containers\Projects\Http\Controllers\ProjectController::class, "deleteProject"]);
     });
 

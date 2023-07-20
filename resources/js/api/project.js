@@ -3,6 +3,10 @@ export function fetchProjects() {
     return http.get("projects");
 }
 
+export function fetchProject(id) {
+    return http.get(`projects/${id}`);
+}
+
 export function createProject(data) {
     return http.post("projects", data);
 }
