@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Containers\Deluge\ZohoCrm\IntegrationTasks;
+namespace App\Containers\Deluge\ZohoServices\Crm;
 
-use App\Containers\Deluge\Base\DelugeSyntax;
-use App\Containers\Deluge\Base\Variables\MapVariable;
+use App\Containers\Deluge\Deluge;
+use App\Containers\Deluge\Variables\MapVariable;
 
-class CrmGetRecordByIdTask
+class GetRecordByIdTask
 {
     public function __construct(
         protected string $module,
@@ -17,14 +17,14 @@ class CrmGetRecordByIdTask
     }
 
     public function build():string {
-        return "$this->responseVariable = zoho.crm.getRecordById(\"$this->module\", $this->id)" . DelugeSyntax::CLOSE;
+        return "$this->responseVariable = zoho.crm.getRecordById(\"$this->module\", $this->id)" . Deluge::SEMICOLON_NEW_LINE_TAB;
     }
 
     public function responseMap(): MapVariable {
         return new MapVariable($this->responseVariable);
     }
 
-    public function get(string $key, string $close = DelugeSyntax::CLOSE): string {
+    public function get(string $key, string $close = Deluge::SEMICOLON_NEW_LINE_TAB): string {
         return $this->responseVariable . ".get('$key')";
     }
 }

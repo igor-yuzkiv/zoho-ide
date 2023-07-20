@@ -2,8 +2,7 @@
 
 namespace App\Ship\Http\Controllers;
 
-use App\Containers\Deluge\ZohoCreator\Snippets\SyncCrmRecordWithCreator;
-use App\Containers\Deluge\ZohoCrm\IntegrationTasks\CrmGetRecordByIdTask;
+use App\Containers\Deluge\ZohoServices\Creator\SyncCrmRecordWithCreator;
 use Illuminate\Http\Request;
 
 class TestController extends Controller
