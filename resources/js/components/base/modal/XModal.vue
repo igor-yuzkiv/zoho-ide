@@ -41,9 +41,7 @@ const props = defineProps({
                 </div>
 
                 <div class="flex flex-col p-4 w-full">
-                    <slot>
-
-                    </slot>
+                    <slot></slot>
                 </div>
 
                 <div v-if="$slots.actions" class="p-2 border-t">

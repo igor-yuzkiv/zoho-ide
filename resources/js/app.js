@@ -7,7 +7,7 @@ import {createApp}  from 'vue'
 import router       from './router';
 import {toast}      from "vue3-toastify";
 import Vue3Toastify from 'vue3-toastify';
-import http         from "@/services/http";
+import http         from "@/utils/http";
 import store from '@/store';
 
 const app = createApp(App)

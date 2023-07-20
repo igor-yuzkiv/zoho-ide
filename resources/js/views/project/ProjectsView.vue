@@ -1,14 +1,14 @@
 <script setup>
-import http from "@/services/http.js";
 import {ref, onBeforeMount} from "vue";
 import {useRouter} from "vue-router";
-import XTable from "@/components/table/XTable.vue";
-import XButton from "@/components/button/XButton.vue";
+import XTable from "@/components/base/table/XTable.vue";
+import XButton from "@/components/base/button/XButton.vue";
 import {Icon} from "@iconify/vue";
-import XDialog from "@/components/dialog/XDialog.vue";
-import XInput from "@/components/form/XInput.vue";
+import XModal from "@/components/base/modal/XModal.vue";
+import XInput from "@/components/base/input/XInput.vue";
 import {PROJECT_EDIT_ROUTE} from "@/constans/routes.js";
 import {useStore} from "vuex";
+import {fetchProjects, createProject, deleteProject} from "@/api/project.js";
 
 const router = useRouter();
 const store = useStore();
@@ -19,46 +19,45 @@ const projectDialogForm = ref({
     name: "",
 });
 
-
-
 const tableHeaders = [
     {
-        name: "Name",
+        name : "Name",
         value: "name",
     },
     {
-        name: "Created At",
+        name : "Created At",
         value: "created_at_formatted",
     },
     {
-        name: "Modified At",
+        name : "Modified At",
         value: "updated_at_formatted",
     }
 ];
 
 const loadProjects = async () => {
-    const response = await http.get("projects")
-        .then(({data}) => data)
+    return await fetchProjects()
+        .then(({data}) => {
+            if (Array.isArray(data)) {
+                projects.value = data;
+                return projects;
+            }
+        })
         .catch(e => console.log(e))
-
-    if (Array.isArray(response)) {
-        projects.value = response;
-    }
 }
 
 const openProjectDialog = (value) => {
     projectDialogIsOpen.value = value;
 }
 
-const openEditProject = (proejct) => {
+const openEditProject = (item) => {
     router.push({
-        name: PROJECT_EDIT_ROUTE,
-        params: {id: proejct.id}
+        name  : PROJECT_EDIT_ROUTE,
+        params: {id: item.id}
     })
 }
 
 const createNewProjectHandle = async () => {
-    await http.post("projects", projectDialogForm.value)
+    await createProject(projectDialogForm.value)
         .then(() => loadProjects())
         .catch(e => console.error(e))
         .finally(() => openProjectDialog(false))
@@ -69,19 +68,11 @@ const deleteProjectHandle = async (project) => {
         return;
     }
 
-    const isConfirmed = await store.dispatch("confirmDialog/openDialog", {
-        config: {
-            subject: "Are you sure you want to delete the project?",
-        },
-    })
-
-    if (isConfirmed) {
-        await http.delete(`projects/${project.id}`)
+    if (confirm("Are you sure you want to delete the project?")) {
+        await deleteProject(project.id)
             .then(() => loadProjects())
             .catch(e => console.error(e));
     }
-
-    console.log("isConfirmed", isConfirmed)
 }
 
 onBeforeMount(loadProjects)
@@ -106,12 +97,12 @@ onBeforeMount(loadProjects)
     >
         <template v-slot:actions="{row}">
             <x-button class="text-gigas-500 bg-white" @click="deleteProjectHandle(row)">
-                <Icon class="text-lg" icon="ic:outline-delete"></Icon>
+                <Icon class="text-lg text-gigas-500" icon="ic:outline-delete"></Icon>
             </x-button>
         </template>
     </x-table>
 
-    <x-dialog :value="projectDialogIsOpen" @update="openProjectDialog">
+    <x-modal :value="projectDialogIsOpen" @update="openProjectDialog">
         <template #header>
             Create New Project
         </template>
@@ -120,11 +111,21 @@ onBeforeMount(loadProjects)
         </template>
         <template #actions>
             <div class="flex items-center justify-between">
-                <x-button class="bg-white text-gigas-500 px-4" @click="openProjectDialog(false)"> Cancel</x-button>
-                <x-button class="px-4" @click="createNewProjectHandle"> Save</x-button>
+                <x-button
+                    class="bg-white !text-gigas-500 px-4"
+                    @click="openProjectDialog(false)"
+                >
+                    Cancel
+                </x-button>
+                <x-button
+                    class="px-4"
+                    @click="createNewProjectHandle"
+                >
+                    Save
+                </x-button>
             </div>
         </template>
-    </x-dialog>
+    </x-modal>
 </template>
 
 <style scoped>

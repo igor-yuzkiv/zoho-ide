@@ -2,6 +2,8 @@
 
 namespace App\Ship\Console\Commands;
 
+use App\Containers\Projects\Models\Project;
+use App\Containers\Projects\Services\Connection\MakeProjectConnection;
 use App\Containers\ZohoServices\Creator\SyncCrmRecordWithCreator;
 use Illuminate\Console\Command;
 
@@ -14,7 +16,7 @@ class IgorTestCommand extends Command
 
     public function handle(): void
     {
-        $snippet = new SyncCrmRecordWithCreator(
+        /*$snippet = new SyncCrmRecordWithCreator(
             "Accounts",
             [
                 "Account_Name" => "Account_Name",
@@ -26,6 +28,9 @@ class IgorTestCommand extends Command
 
         $code = $snippet->build();
 
-        dd($code);
+        dd($code);*/
+
+        $project = Project::first();
+        (new MakeProjectConnection($project))->run();
     }
 }

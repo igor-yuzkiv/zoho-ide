@@ -11,6 +11,7 @@ return new class extends Migration {
             $table->id();
 
             $table->unsignedBigInteger("project_id");
+            $table->integer("status")->default(0);
 
             $table->string('client_id');
             $table->string('client_secret');

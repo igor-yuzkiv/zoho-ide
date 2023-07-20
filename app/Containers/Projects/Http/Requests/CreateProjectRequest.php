@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Containers\TaskManager\Http\Requests;
+namespace App\Containers\Projects\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 

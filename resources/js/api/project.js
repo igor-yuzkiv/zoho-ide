@@ -1,0 +1,16 @@
+import http from "@/utils/http.js";
+export function fetchProjects() {
+    return http.get("projects");
+}
+
+export function createProject(data) {
+    return http.post("projects", data);
+}
+
+export function updateProject(id, data) {
+    return http.put(`projects/${id}`, data);
+}
+
+export function deleteProject(id) {
+    return http.delete(`projects/${id}`);
+}
