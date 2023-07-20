@@ -7,6 +7,9 @@ use App\Containers\Deluge\Deluge;
 use App\Containers\Deluge\DelugeSyntax;
 use App\Containers\Deluge\Variables\MapVariable;
 use App\Containers\Deluge\Variables\PrimitiveVariable;
+use App\Containers\ZohoServices\Creator\Base\FetchRecord;
+use App\Containers\ZohoServices\Creator\Base\InsertRecord;
+use App\Containers\ZohoServices\Creator\Base\UpdateRecord;
 use App\Containers\ZohoServices\Crm\GetRecordByIdTask;
 
 class SyncCrmRecordWithCreator extends CodeSnippet
