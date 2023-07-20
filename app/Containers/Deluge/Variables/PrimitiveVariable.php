@@ -33,7 +33,7 @@ class PrimitiveVariable implements DelugeVariable
         return "$this->variableName = " . $value . $close;
     }
 
-    public function getName(): string
+    public function getVariableName(): string
     {
         return $this->variableName;
     }

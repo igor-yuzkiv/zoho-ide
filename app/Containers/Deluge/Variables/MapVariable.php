@@ -54,7 +54,7 @@ class MapVariable implements DelugeVariable
     /**
      * @return string
      */
-    public function getName(): string
+    public function getVariableName(): string
     {
         return $this->variableName;
     }

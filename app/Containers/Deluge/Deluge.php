@@ -2,8 +2,6 @@
 
 namespace App\Containers\Deluge;
 
-use App\Containers\ZohoServices\DelugePrettier;
-
 final class Deluge
 {
     /**
@@ -71,5 +69,20 @@ final class Deluge
     public static function endIf(): string
     {
         return DelugeSyntax::TAB . "}" . DelugeSyntax::NEW_LINE;
+    }
+
+    public function for(string $loopVariable, string $in, string|CodeSnippet|null $body = null, bool $endFor = false): string
+    {
+        $result = "for ($loopVariable in $in) {" . DelugeSyntax::NEW_LINE_TAB;
+
+        if ($body) {
+            $result .= DelugePrettier::tabulate($body);
+        }
+
+        if ($endFor) {
+            $result .= Deluge::endFor();
+        }
+
+        return $result;
     }
 }

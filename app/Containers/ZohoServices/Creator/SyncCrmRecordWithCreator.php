@@ -33,7 +33,7 @@ class SyncCrmRecordWithCreator extends CodeSnippet
         $this->crmRecord = $this->fetchCrmRecord();
 
         //find record by crm id
-        $this->addLine(new FetchRecord($this->formName, "CRM_ID == " . $this->crmId->getName(), "r_$this->formName"));
+        $this->addLine(new FetchRecord($this->formName, "CRM_ID == " . $this->crmId->getVariableName(), "r_$this->formName"));
 
         //insert new record
         $this->code .= Deluge::if(
@@ -54,7 +54,7 @@ class SyncCrmRecordWithCreator extends CodeSnippet
     {
         $task = new GetRecordByIdTask(
             module: $this->crmModule,
-            id: $this->crmId->getName(),
+            id: $this->crmId->getVariableName(),
             responseVariable: 'crmData'
         );
 
