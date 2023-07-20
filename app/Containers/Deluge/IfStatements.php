@@ -2,6 +2,8 @@
 
 namespace App\Containers\Deluge;
 
+use App\Containers\DelugeSyntax;
+
 /**
  *
  */
@@ -14,7 +16,7 @@ final class IfStatements
     public static function if(string $condition, string|CodeSnippet|null $body = null): string
     {
         //TODO: add body, and add tabulation each line
-        $result =  "if ($condition) {" . Deluge::NEW_LINE_TAB;
+        $result =  "if ($condition) {" . DelugeSyntax::NEW_LINE_TAB;
 
         if ($body) {
             if ($body instanceof CodeSnippet) {
@@ -31,7 +33,7 @@ final class IfStatements
     public static function else(): string
     {
         //TODO: add body, and add tabulation each line
-        return "} else {" . Deluge::NEW_LINE_TAB;
+        return "} else {" . DelugeSyntax::NEW_LINE_TAB;
     }
 
     /**
@@ -41,7 +43,7 @@ final class IfStatements
     public static function elseIf(string $condition): string
     {
         //TODO: add body, and add tabulation each line
-        return "} else if ($condition) {" . Deluge::NEW_LINE_TAB;
+        return "} else if ($condition) {" . DelugeSyntax::NEW_LINE_TAB;
     }
 
     /**
@@ -49,6 +51,6 @@ final class IfStatements
      */
     public static function endIf(): string
     {
-        return "}" . Deluge::NEW_LINE_TAB;
+        return "}" . DelugeSyntax::NEW_LINE_TAB;
     }
 }

@@ -4,6 +4,7 @@ namespace App\Containers\Deluge\ZohoServices\Creator;
 
 use App\Containers\Deluge\CodeSnippet;
 use App\Containers\Deluge\Deluge;
+use App\Containers\DelugeSyntax;
 
 class InsertRecord extends CodeSnippet
 {
@@ -20,7 +21,7 @@ class InsertRecord extends CodeSnippet
         foreach ($this->fields as $field => $value) {
             $code .= "\n\t\t$field = $value";
         }
-        $code .= "\n\t]" . Deluge::SEMICOLON_NEW_LINE_TAB;
+        $code .= "\n\t]" . DelugeSyntax::SEMICOLON_NEW_LINE_TAB;
         return $code;
     }
 }

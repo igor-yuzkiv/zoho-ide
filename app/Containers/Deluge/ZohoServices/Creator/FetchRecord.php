@@ -4,6 +4,7 @@ namespace App\Containers\Deluge\ZohoServices\Creator;
 
 use App\Containers\Deluge\CodeSnippet;
 use App\Containers\Deluge\Deluge;
+use App\Containers\DelugeSyntax;
 
 class FetchRecord extends CodeSnippet
 {
@@ -17,6 +18,6 @@ class FetchRecord extends CodeSnippet
     }
 
     public function build(): string {
-        return "$this->variableName = $this->formName[$this->criteria]" . Deluge::SEMICOLON_NEW_LINE_TAB;
+        return "$this->variableName = $this->formName[$this->criteria]" . DelugeSyntax::SEMICOLON_NEW_LINE_TAB;
     }
 }

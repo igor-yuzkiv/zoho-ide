@@ -4,6 +4,7 @@ namespace App\Containers\Deluge\Variables;
 
 use App\Containers\Deluge\Contracts\DelugeVariable;
 use App\Containers\Deluge\Deluge;
+use App\Containers\DelugeSyntax;
 
 class PrimitiveVariable implements DelugeVariable
 {
@@ -12,7 +13,7 @@ class PrimitiveVariable implements DelugeVariable
 
     }
 
-    public function define(mixed $value = null, string $close = Deluge::SEMICOLON_NEW_LINE_TAB): string
+    public function define(mixed $value = null, string $close = DelugeSyntax::SEMICOLON_NEW_LINE_TAB): string
     {
         $valueType = gettype($value);
         switch ($valueType) {

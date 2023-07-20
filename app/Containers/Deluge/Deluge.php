@@ -3,20 +3,10 @@
 namespace App\Containers\Deluge;
 
 use App\Containers\Deluge\ZohoServices\DelugePrettier;
+use App\Containers\DelugeSyntax;
 
 final class Deluge
 {
-    const NEW_LINE_TAB = "\n\t";
-
-    const NEW_LINE = "\n";
-
-    const TAB = "\t";
-
-    const SEMICOLON = ";";
-    const SEMICOLON_NEW_LINE = ";\n";
-
-    const SEMICOLON_NEW_LINE_TAB = ";\n\t";
-
     /**
      * @param string $condition
      * @param string|CodeSnippet|null $body
@@ -25,7 +15,7 @@ final class Deluge
      */
     public static function if(string $condition, string|CodeSnippet|null $body = null, bool $endIf = false): string
     {
-        $result = "if ($condition) {" . Deluge::NEW_LINE_TAB;
+        $result = "if ($condition) {" . DelugeSyntax::NEW_LINE_TAB;
         if ($body) {
             $result .= DelugePrettier::tabulate($body);
         }
@@ -44,7 +34,7 @@ final class Deluge
      */
     public static function else(string|CodeSnippet|null $body = null, bool $endIf = false): string
     {
-        $result = "} else {" . Deluge::NEW_LINE;
+        $result = "} else {" . DelugeSyntax::NEW_LINE;
         if ($body) {
             $result .= DelugePrettier::tabulate($body);
         }
@@ -64,7 +54,7 @@ final class Deluge
      */
     public static function elseIf(string $condition, string|CodeSnippet|null $body = null, bool $endIf = false): string
     {
-        $result = "} else if ($condition) {" . Deluge::NEW_LINE_TAB;
+        $result = "} else if ($condition) {" . DelugeSyntax::NEW_LINE_TAB;
         if ($body) {
             $result .= DelugePrettier::tabulate($body);
         }
@@ -81,6 +71,6 @@ final class Deluge
      */
     public static function endIf(): string
     {
-        return Deluge::TAB . "}" . Deluge::NEW_LINE;
+        return DelugeSyntax::TAB . "}" . DelugeSyntax::NEW_LINE;
     }
 }
