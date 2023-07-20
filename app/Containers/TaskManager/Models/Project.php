@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Containers\Project\Models;
+namespace App\Containers\TaskManager\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;

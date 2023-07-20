@@ -2,8 +2,6 @@
 
 namespace App\Containers\Deluge;
 
-use App\Containers\DelugeSyntax;
-
 /**
  *
  */

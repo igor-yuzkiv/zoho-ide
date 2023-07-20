@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Containers\Deluge\ZohoServices\Creator;
+namespace App\Containers\ZohoServices\Creator;
 
 use App\Containers\Deluge\CodeSnippet;
 use App\Containers\Deluge\Deluge;
+use App\Containers\Deluge\DelugeSyntax;
 use App\Containers\Deluge\Variables\MapVariable;
 use App\Containers\Deluge\Variables\PrimitiveVariable;
-use App\Containers\Deluge\ZohoServices\Crm\GetRecordByIdTask;
-use App\Containers\DelugeSyntax;
+use App\Containers\ZohoServices\Crm\GetRecordByIdTask;
 
 class SyncCrmRecordWithCreator extends CodeSnippet
 {

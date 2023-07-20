@@ -1,12 +1,9 @@
 <?php
 
-namespace App\Containers\Deluge\ZohoServices\Creator;
+namespace App\Containers\ZohoServices\Creator;
 
 use App\Containers\Deluge\CodeSnippet;
-use App\Containers\Deluge\Contracts\DelugeVariable;
-use App\Containers\Deluge\Deluge;
-use App\Containers\Deluge\ZohoServices\DelugePrettier;
-use App\Containers\DelugeSyntax;
+use App\Containers\Deluge\DelugeSyntax;
 
 class UpdateRecord extends CodeSnippet
 {

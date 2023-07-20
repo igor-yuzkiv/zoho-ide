@@ -1,10 +1,9 @@
 <?php
 
-namespace App\Containers\Deluge\ZohoServices\Creator;
+namespace App\Containers\ZohoServices\Creator;
 
 use App\Containers\Deluge\CodeSnippet;
-use App\Containers\Deluge\Deluge;
-use App\Containers\DelugeSyntax;
+use App\Containers\Deluge\DelugeSyntax;
 
 class FetchRecord extends CodeSnippet
 {

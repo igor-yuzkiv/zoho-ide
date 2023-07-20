@@ -3,8 +3,7 @@
 namespace App\Containers\Deluge\Variables;
 
 use App\Containers\Deluge\Contracts\DelugeVariable;
-use App\Containers\Deluge\Deluge;
-use App\Containers\DelugeSyntax;
+use App\Containers\Deluge\DelugeSyntax;
 
 class PrimitiveVariable implements DelugeVariable
 {

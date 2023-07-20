@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Containers\Project\Http\Controllers;
+namespace App\Containers\TaskManager\Http\Controllers;
 
-use App\Containers\Project\Http\Requests\CreateProjectRequest;
-use App\Containers\Project\Models\Project;
-use App\Containers\Project\Transformers\ProjectTransformer;
+use App\Containers\TaskManager\Http\Requests\CreateProjectRequest;
+use App\Containers\TaskManager\Models\Project;
+use App\Containers\TaskManager\Transformers\ProjectTransformer;
 use App\Ship\Http\Controllers\Controller;
 use App\Ship\Utils\LoggerUtil;
 use App\Ship\Utils\ResponseUtil;

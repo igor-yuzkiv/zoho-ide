@@ -2,8 +2,7 @@
 
 namespace App\Containers\Deluge\Contracts;
 
-use App\Containers\Deluge\Deluge;
-use App\Containers\DelugeSyntax;
+use App\Containers\Deluge\DelugeSyntax;
 
 interface DelugeVariable
 {

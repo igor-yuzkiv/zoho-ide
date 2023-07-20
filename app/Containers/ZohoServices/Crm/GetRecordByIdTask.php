@@ -1,10 +1,9 @@
 <?php
 
-namespace App\Containers\Deluge\ZohoServices\Crm;
+namespace App\Containers\ZohoServices\Crm;
 
-use App\Containers\Deluge\Deluge;
+use App\Containers\Deluge\DelugeSyntax;
 use App\Containers\Deluge\Variables\MapVariable;
-use App\Containers\DelugeSyntax;
 
 class GetRecordByIdTask
 {

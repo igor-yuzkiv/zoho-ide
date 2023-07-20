@@ -2,7 +2,7 @@
 
 namespace App\Ship\Console\Commands;
 
-use App\Containers\Deluge\ZohoServices\Creator\SyncCrmRecordWithCreator;
+use App\Containers\ZohoServices\Creator\SyncCrmRecordWithCreator;
 use Illuminate\Console\Command;
 
 class IgorTestCommand extends Command

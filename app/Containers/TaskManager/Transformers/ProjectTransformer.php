@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Containers\Project\Transformers;
+namespace App\Containers\TaskManager\Transformers;
 
-use App\Containers\Project\Models\Project;
+use App\Containers\TaskManager\Models\Project;
 use App\Ship\Utils\TransformersUtil;
 use League\Fractal\TransformerAbstract;
 

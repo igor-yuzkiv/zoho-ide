@@ -2,8 +2,7 @@
 
 namespace App\Containers\Deluge;
 
-use App\Containers\Deluge\ZohoServices\DelugePrettier;
-use App\Containers\DelugeSyntax;
+use App\Containers\ZohoServices\DelugePrettier;
 
 final class Deluge
 {

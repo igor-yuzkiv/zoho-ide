@@ -2,7 +2,7 @@
 
 namespace App\Ship\Http\Controllers;
 
-use App\Containers\Deluge\ZohoServices\Creator\SyncCrmRecordWithCreator;
+use App\Containers\ZohoServices\Creator\SyncCrmRecordWithCreator;
 use Illuminate\Http\Request;
 
 class TestController extends Controller
