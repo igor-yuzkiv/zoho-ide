@@ -1,7 +1,6 @@
 <script setup>
 import {defineProps, ref} from "vue";
 import {Icon} from "@iconify/vue";
-import XButton from "@/components/base/button/XButton.vue";
 
 defineProps({
     name: {
