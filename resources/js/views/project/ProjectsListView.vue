@@ -9,15 +9,19 @@ import ProjectsTable from "@/views/project/components/ProjectsTable.vue";
 
 const router = useRouter();
 const projectsTable = ref(null);
-const projectDialogIsOpen = ref(false);
+const projectFormDialog = ref({
+    isOpen: false,
+    isEdit: false,
+    id: null,
+});
 
 function openProjectDialog(value) {
-    projectDialogIsOpen.value = value;
+    projectFormDialog.value = value;
 }
 
 async function projectCreated() {
     await projectsTable.value.loadProjects();
-    openProjectDialog(false);
+    openProjectDialog({isOpen: false, isEdit: false, id: null});
 }
 
 </script>
@@ -27,7 +31,7 @@ async function projectCreated() {
         <h1 class="text-black text-xs font-semibold">Projects</h1>
         <x-button
             type="button"
-            @click="openProjectDialog(true)"
+            @click="openProjectDialog({isOpen: true, isEdit: false, id: null})"
             title="Create Project"
         >
             <Icon class="text-lg" icon="ic:round-plus"></Icon>
@@ -37,12 +41,12 @@ async function projectCreated() {
     <projects-table ref="projectsTable"></projects-table>
 
     <x-modal
-        :value="projectDialogIsOpen"
+        :value="projectFormDialog.isOpen"
         @update="openProjectDialog"
         title="Create New Project"
     >
         <project-form
-            @cancel="openProjectDialog(false)"
+            @cancel="openProjectDialog({isOpen: false, isEdit: false, id: null})"
             @submit="projectCreated"
         />
     </x-modal>

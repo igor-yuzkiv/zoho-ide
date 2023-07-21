@@ -17,18 +17,18 @@ const router = createRouter({
                 {
                     path: '/',
                     name: routesName.HOME_ROUTE,
-                    component: () => import('@/views/home/index.vue'),
+                    component: () => import('@/views/home/HomeView.vue'),
                 },
 
                 {
                     path: '/projects',
                     name: routesName.PROJECTS_ROUTE,
-                    component: () => import('@/views/project/index.vue'),
+                    component: () => import('@/views/project/ProjectsListView.vue'),
                 },
                 {
                     path: '/projects/:id',
                     name: routesName.PROJECT_EDIT_ROUTE,
-                    component: () => import('@/views/project/edit.vue'),
+                    component: () => import('@/views/project/ProjectEditView.vue'),
                 }
             ],
         },

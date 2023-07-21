@@ -9,7 +9,7 @@ defineProps({
     }
 });
 
-const expanded = ref(true);
+const expanded = ref(false);
 const content = ref();
 
 
