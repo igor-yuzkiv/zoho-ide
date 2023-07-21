@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Containers\Projects\Http\Controllers;
+namespace App\Containers\Projects\Http\Controllers\Project;
 
 use App\Containers\Projects\Http\Requests\SaveProjectRequest;
 use App\Containers\Projects\Models\Project;
@@ -8,8 +8,8 @@ use App\Containers\Projects\Transformers\ProjectTransformer;
 use App\Ship\Http\Controllers\Controller;
 use App\Ship\Utils\LoggerUtil;
 use App\Ship\Utils\ResponseUtil;
+use Illuminate\Http\JsonResponse;
 use Spatie\Fractalistic\ArraySerializer;
-use \Illuminate\Http\JsonResponse;
 
 /**
  *

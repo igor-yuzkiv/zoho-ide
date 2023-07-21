@@ -13,8 +13,8 @@ const props = defineProps({
         default: false,
     },
     projectId: {
-        type   : Number,
-        default: 0
+        type: String,
+        default: 0,
     }
 })
 
@@ -71,22 +71,16 @@ onMounted(() => {
 </script>
 
 <template>
-    <div class="p-2">
+    <div>
         <div>
             <x-input v-model="form.name" label="Project Name"></x-input>
         </div>
 
         <div class="flex items-center justify-between mt-3">
-            <x-button
-                class="bg-white !text-gigas-500 px-4"
-                @click="$emit('cancel')"
-            >
+            <x-button class="px-4" @click="$emit('cancel')">
                 Cancel
             </x-button>
-            <x-button
-                class="px-4"
-                @click="submitFormHandle"
-            >
+            <x-button class="px-4" @click="submitFormHandle">
                 Save
             </x-button>
         </div>

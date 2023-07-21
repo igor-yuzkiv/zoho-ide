@@ -24,9 +24,10 @@ class ProjectConnection extends Model
         "client_secret",
         "access_token",
         "refresh_token",
-        "data_cen\ter",
+        "data_center",
         "domain",
         "expire",
+        "status"
     ];
 
     /**

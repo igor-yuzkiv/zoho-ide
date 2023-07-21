@@ -1,79 +1,30 @@
 <script setup>
-import {ref, onBeforeMount} from "vue";
+import {ref} from "vue";
 import {useRouter} from "vue-router";
-import {PROJECT_EDIT_ROUTE} from "@/constans/routes.js";
-import XTable from "@/components/base/table/XTable.vue";
 import XButton from "@/components/base/button/XButton.vue";
 import {Icon} from "@iconify/vue";
 import XModal from "@/components/base/modal/XModal.vue";
-import {fetchProjects, deleteProject} from "@/api/project.js";
 import ProjectForm from "@/views/project/components/ProjectForm.vue";
+import ProjectsTable from "@/views/project/components/ProjectsTable.vue";
 
 const router = useRouter();
-
-const projects = ref([]);
+const projectsTable = ref(null);
 const projectDialogIsOpen = ref(false);
-
-const tableHeaders = [
-    {
-        name : "Name",
-        value: "name",
-    },
-    {
-        name : "Created At",
-        value: "created_at_formatted",
-    },
-    {
-        name : "Modified At",
-        value: "updated_at_formatted",
-    }
-];
-
-async function loadProjects() {
-    return await fetchProjects()
-        .then(({data}) => {
-            if (Array.isArray(data)) {
-                projects.value = data;
-                return projects;
-            }
-        })
-        .catch(e => console.log(e))
-}
 
 function openProjectDialog(value) {
     projectDialogIsOpen.value = value;
 }
 
-function openEditProject(item) {
-    router.push({
-        name  : PROJECT_EDIT_ROUTE,
-        params: {id: item.id}
-    })
-}
-
 async function projectCreated() {
-    await loadProjects();
+    await projectsTable.value.loadProjects();
     openProjectDialog(false);
 }
 
-async function deleteProjectHandle(project) {
-    if (!project || !project?.id) {
-        return;
-    }
-
-    if (confirm("Are you sure you want to delete the project?")) {
-        await deleteProject(project.id)
-            .then(() => loadProjects())
-            .catch(e => console.error(e));
-    }
-}
-
-onBeforeMount(loadProjects)
 </script>
 
 <template>
     <div class="flex items-center justify-between mb-2 p-2 border-b border-dashed">
-        <h1 class="text-black text-xs font-semibold">Projects </h1>
+        <h1 class="text-black text-xs font-semibold">Projects</h1>
         <x-button
             type="button"
             @click="openProjectDialog(true)"
@@ -83,28 +34,17 @@ onBeforeMount(loadProjects)
         </x-button>
     </div>
 
-    <x-table
-        :items="projects"
-        :headers="tableHeaders"
-        @row:click="openEditProject"
-    >
-        <template v-slot:actions="{row}">
-            <x-button class="text-gigas-500 bg-white" @click="deleteProjectHandle(row)">
-                <Icon class="text-lg text-gigas-500" icon="ic:outline-delete"></Icon>
-            </x-button>
-        </template>
-    </x-table>
+    <projects-table ref="projectsTable"></projects-table>
 
-    <x-modal :value="projectDialogIsOpen" @update="openProjectDialog">
-        <template #header>
-            Create New Project
-        </template>
-        <template #default>
-            <project-form
-                @cancel="openProjectDialog(false)"
-                @submit="projectCreated"
-            />
-        </template>
+    <x-modal
+        :value="projectDialogIsOpen"
+        @update="openProjectDialog"
+        title="Create New Project"
+    >
+        <project-form
+            @cancel="openProjectDialog(false)"
+            @submit="projectCreated"
+        />
     </x-modal>
 </template>
 

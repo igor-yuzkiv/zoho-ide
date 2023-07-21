@@ -31,8 +31,8 @@ class ProjectTransformer extends TransformerAbstract
             'id'                   => (string)$project->id,
             'name'                 => $project->name,
             'created_at'           => $project->created_at,
-            'created_at_formatted' => TransformersUtil::dateTimeFormatted($project->created_at),
             'updated_at'           => $project->updated_at,
+            'created_at_formatted' => TransformersUtil::dateTimeFormatted($project->created_at),
             'updated_at_formatted' => TransformersUtil::dateTimeFormatted($project->updated_at),
         ];
     }

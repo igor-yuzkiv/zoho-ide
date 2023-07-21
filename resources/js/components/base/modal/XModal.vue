@@ -10,6 +10,10 @@ const props = defineProps({
     width: {
         type: String,
         default: "w-2/6"
+    },
+    title: {
+        type: String,
+        default: ""
     }
 })
 
@@ -25,10 +29,11 @@ const props = defineProps({
             <div class="relative bg-white rounded-3xl" :class="width">
                 <div
                     class="flex items-center justify-between rounded-t-3xl text-md text-white font-semibold bg-gigas-500 pl-4 pr-2 py-2"
-                    v-if="$slots.header"
                 >
                     <div>
-                        <slot name="header"></slot>
+                        <slot name="header">
+                            {{ title }}
+                        </slot>
                     </div>
 
                     <button
