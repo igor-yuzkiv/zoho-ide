@@ -26,8 +26,13 @@ const router = createRouter({
                 },
                 {
                     path     : "/connections/create",
-                    name     : routesName.connections_create,
+                    name     : routesName.connection_create,
                     component: () => import('@/views/connection/ConnectionCreateView.vue'),
+                },
+                {
+                    path     : "/connections/:id/authorize",
+                    name     : routesName.connection_authorize,
+                    component: () => import('@/views/connection/ConnectionAuthorizeView.vue'),
                 }
             ],
         },

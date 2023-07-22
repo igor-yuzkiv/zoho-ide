@@ -1,48 +1,72 @@
 <script setup>
-import {ref} from "vue";
-import {dataCenters} from "@/constans/zoho.js"
+import {ref, nextTick, onBeforeMount, inject} from "vue";
+import {dataCenters, defaultScopes} from "@/constans/zoho.js"
 import ZohoScopes from "@/components/zoho/scopes/ZohoScopes.vue";
+import {fetchProjects} from "@/api/project.js";
+import {createConnection} from "@/api/connection.js";
+
+const emit = defineEmits(['connection:created']);
+const toast = inject('toast');
+
+const projects = ref([]);
+const isMounted = ref(false);
 
 const defaultForm = () => ({
+    project_id   : null,
     client_id    : '',
     client_secret: '',
     data_center  : dataCenters.us,
-    scopes       :[
-        "ZohoCRM.bulk.ALL",
-        "ZohoCRM.coql.READ",
-        "ZohoCRM.modules.ALL",
-        "ZohoCRM.settings.ALL",
-        "ZohoCRM.settings.fields.ALL",
-        "ZohoCRM.settings.layouts.ALL",
-        "ZohoCRM.settings.modules.ALL",
-        "ZohoCRM.settings.profiles.ALL",
-        "ZohoCRM.settings.custom_views.ALL",
-        "ZohoCRM.users.ALL",
-        "ZohoCreator.bulk.CREATE",
-        "ZohoCreator.bulk.READ",
-        "ZohoCreator.dashboard.READ",
-        "ZohoCreator.meta.application.READ",
-        "ZohoCreator.meta.form.READ",
-        "ZohoCreator.report.DELETE",
-        "ZohoCreator.report.UPDATE",
-        "ZohoCreator.report.READ",
-        "ZohoCreator.report.CREATE",
-        "ZohoCreator.form.CREATE"
-    ],
+    scopes       : defaultScopes,
 })
 
 const form = ref(defaultForm())
 
-function createConnectionHandle() {
-    console.log(form.value);
+async function createConnectionHandle() {
+
+    const data = {
+        ...form.value,
+        data_center: form.value.data_center?.location,
+        project_id: form.value.project_id?.id,
+    }
+
+    await createConnection(data)
+        .then(({data}) => {
+            emit('connection:created', data)
+            toast.success('Connection created')
+        })
+        .catch(({response}) => {
+            toast.error(response.data?.message || 'Something went wrong while creating connection')
+        })
 }
+
+onBeforeMount(async () => {
+    await fetchProjects().then(({data}) => {
+        if (Array.isArray(data)) {
+            projects.value = data
+        }
+    })
+
+    await nextTick(() => {
+        isMounted.value = true
+    });
+})
 
 </script>
 
 <template>
-    <q-card>
+    <q-card v-if="isMounted">
         <q-card-section>
             <div>
+                <div class="tw-mt-2">
+                    <q-select
+                        outlined
+                        v-model="form.project_id"
+                        :options="projects"
+                        label="Project"
+                        option-label="name"
+                        option-value="id"
+                    />
+                </div>
                 <div class="tw-mt-2">
                     <q-input
                         label="Client ID"
@@ -70,7 +94,7 @@ function createConnectionHandle() {
                 </div>
 
                 <div class="tw-mt-3">
-                     <zoho-scopes v-model="form.scopes"></zoho-scopes>
+                    <zoho-scopes v-model="form.scopes"></zoho-scopes>
                 </div>
 
             </div>

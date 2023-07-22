@@ -1,7 +1,6 @@
 export default {
-    home              : "home",
-    projects          : "projects",
-    project_edit      : "projects.edit",
-    connections       : "connections",
-    connections_create: "connections.create"
+    home               : "home",
+    projects           : "projects",
+    connection_create  : "connection.create",
+    connection_authorize  : "connection.authorize",
 }

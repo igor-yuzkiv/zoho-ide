@@ -2,15 +2,15 @@
 
 namespace Domain\Zoho\Connect\Http\Controllers;
 
+use App\Containers\ZohoAuth\ZohoOAuthClient;
+use Domain\Zoho\Connect\Http\Requests\AuthorizationRequest;
+use Domain\Zoho\Connect\Http\Requests\CallbackRequest;
+use Domain\Zoho\Connect\Model\ZohoConnectModel;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\Cache;
-use Domain\Zoho\Connect\Http\Requests\AuthorizationRequest;
-use Domain\Zoho\Connect\Http\Requests\CallbackRequest;
-use Domain\Zoho\Connect\Model\ZohoConnectModel;
-use Domain\Zoho\Connect\ZohoOAuthClient;
 
 /**
  *
@@ -26,19 +26,19 @@ class ZohoConnectController extends BaseController
     public function index(): mixed
     {
         try {
-            Cache::forget("zoho.connection.credentials.id");
-            Cache::forget("zoho.connection.credentials.secret");
+            Cache::forget("zoho.auth.credentials.id");
+            Cache::forget("zoho.auth.credentials.secret");
 
             $scopes = file_get_contents(__DIR__ . '/../../../scopes.json');
 
-            return view("zoho.connection.index", [
+            return view("zoho.auth.index", [
                 'callback_url'        => ZohoOAuthClient::getCallbackUrl(),
-                'data_center'         => config("zoho.connection.data_center"),
-                'default_data_center' => config("zoho.connection.default_data_center"),
+                'data_center'         => config("zoho.auth.data_center"),
+                'default_data_center' => config("zoho.auth.default_data_center"),
                 'scopes'              => json_decode($scopes, true)
             ]);
         } catch (\Exception $e) {
-            return view("zoho.connection.error");
+            return view("zoho.auth.error");
         }
     }
 
@@ -52,15 +52,15 @@ class ZohoConnectController extends BaseController
             $clientId = $request->get('id');
             $clientSecret = $request->get('secret');
 
-            Cache::add("zoho.connection.credentials.id", $clientId, now()->addHour());
-            Cache::add("zoho.connection.credentials.secret", $clientSecret, now()->addHour());
+            Cache::add("zoho.auth.credentials.id", $clientId, now()->addHour());
+            Cache::add("zoho.auth.credentials.secret", $clientSecret, now()->addHour());
 
             $oAuthClient = new ZohoOAuthClient($clientId, $clientSecret, $request->get('data_center'));
             $url = $oAuthClient->getAuthorizationUrl($request->get('scopes'));
 
             return redirect($url);
         } catch (\Exception $e) {
-            return view("zoho.connection.error");
+            return view("zoho.auth.error");
         }
     }
 
@@ -71,8 +71,8 @@ class ZohoConnectController extends BaseController
     public function callback(CallbackRequest $request): mixed
     {
         try {
-            $clientId = Cache::get("zoho.connection.credentials.id");
-            $clientSecret = Cache::get("zoho.connection.credentials.secret");
+            $clientId = Cache::get("zoho.auth.credentials.id");
+            $clientSecret = Cache::get("zoho.auth.credentials.secret");
 
             $oAuthClient = new ZohoOAuthClient(
                 clientId: $clientId,
@@ -83,7 +83,7 @@ class ZohoConnectController extends BaseController
             $response = $oAuthClient->getRefreshTokenByCode($request->get('code'));
 
             if (!array_key_exists('access_token', $response) || !array_key_exists('refresh_token', $response)) {
-                return view("zoho.connection.error");
+                return view("zoho.auth.error");
             }
 
             ZohoConnectModel::updateOrCreate(
@@ -99,12 +99,12 @@ class ZohoConnectController extends BaseController
                 ]
             );
 
-            Cache::forget("zoho.connection.credentials.id");
-            Cache::forget("zoho.connection.credentials.secret");
+            Cache::forget("zoho.auth.credentials.id");
+            Cache::forget("zoho.auth.credentials.secret");
 
-            return view("zoho.connection.success");
+            return view("zoho.auth.success");
         } catch (GuzzleException $e) {
-            return view("zoho.connection.error");
+            return view("zoho.auth.error");
         }
     }
 }

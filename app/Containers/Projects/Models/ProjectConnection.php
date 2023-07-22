@@ -27,7 +27,15 @@ class ProjectConnection extends Model
         "data_center",
         "domain",
         "expire",
-        "status"
+        "status",
+        'scopes',
+    ];
+
+    /**
+     * @var string[]
+     */
+    protected $casts = [
+        'scopes' => 'array',
     ];
 
     /**

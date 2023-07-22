@@ -93,7 +93,7 @@ onBeforeMount(() => {
                         </q-item>
                         <q-item
                             clickable v-close-popup
-                            :to="{name: routesName.connections_create}"
+                            :to="{name: routesName.connection_create}"
                         >
                             <q-item-section>
                                 New Connection

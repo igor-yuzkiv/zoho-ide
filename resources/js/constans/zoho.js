@@ -25,7 +25,31 @@ export const dataCenters = {
         'title'   : 'Japan',
         'domain'  : '.jp',
         'location': 'jp',
-    }
+    },
 }
 
+
 export const zohoScopes = zoho_scopes.permissions;
+
+export const defaultScopes = [
+    "ZohoCRM.bulk.ALL",
+    "ZohoCRM.coql.READ",
+    "ZohoCRM.modules.ALL",
+    "ZohoCRM.settings.ALL",
+    "ZohoCRM.settings.fields.ALL",
+    "ZohoCRM.settings.layouts.ALL",
+    "ZohoCRM.settings.modules.ALL",
+    "ZohoCRM.settings.profiles.ALL",
+    "ZohoCRM.settings.custom_views.ALL",
+    "ZohoCRM.users.ALL",
+    "ZohoCreator.bulk.CREATE",
+    "ZohoCreator.bulk.READ",
+    "ZohoCreator.dashboard.READ",
+    "ZohoCreator.meta.application.READ",
+    "ZohoCreator.meta.form.READ",
+    "ZohoCreator.report.DELETE",
+    "ZohoCreator.report.UPDATE",
+    "ZohoCreator.report.READ",
+    "ZohoCreator.report.CREATE",
+    "ZohoCreator.form.CREATE"
+];

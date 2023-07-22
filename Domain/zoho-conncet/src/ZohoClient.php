@@ -24,7 +24,7 @@ class ZohoClient extends Client
     public function __construct(array $config = [], ?string $clientId = null)
     {
         if (!$clientId) {
-            $clientId = config('zoho.connection.client_id');
+            $clientId = config('zoho.auth.client_id');
         }
         $this->connectModel = ZohoConnectModel::where('client_id', $clientId)->firstOrFail();
 

@@ -15,11 +15,13 @@ return new class extends Migration {
 
             $table->string('client_id');
             $table->string('client_secret');
-            $table->string('access_token');
-            $table->string('refresh_token');
+            $table->string('access_token')->nullable();
+            $table->string('refresh_token')->nullable();
             $table->string('data_center');
-            $table->string('domain');
-            $table->timestamp('expire');
+            $table->string('domain')->nullable();
+            $table->timestamp('expire')->nullable();
+
+            $table->json('scopes');
 
             $table->foreign("project_id")
                 ->references('id')

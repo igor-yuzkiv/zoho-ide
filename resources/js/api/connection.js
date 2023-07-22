@@ -1,5 +1,14 @@
 import http from "@/utils/http.js";
 
+
+export function getConnection(id, includes = []) {
+    return http.get(`connections/${id}?include=${includes.join(",")}`);
+}
+
+export function getConnectionAuthorizationUrl(id) {
+    return http.get(`connections/${id}/authorization-url`);
+}
+
 export function createConnection(data) {
     return http.post("connections", data);
 }

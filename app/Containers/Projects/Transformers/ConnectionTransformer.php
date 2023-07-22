@@ -3,7 +3,9 @@
 namespace App\Containers\Projects\Transformers;
 
 use App\Containers\Projects\Models\ProjectConnection;
+use App\Containers\ZohoAuth\ZohoOAuthClient;
 use App\Ship\Utils\TransformersUtil;
+use Illuminate\Support\Facades\Cache;
 use League\Fractal\Resource\Item;
 use League\Fractal\TransformerAbstract;
 
@@ -29,18 +31,20 @@ class ConnectionTransformer extends TransformerAbstract
     public function transform(ProjectConnection $projectConnection): array
     {
         return [
-            'id'            => (string)$projectConnection->id,
-            'project_id'    => (string)$projectConnection->project_id,
-            'status'        => (string)$projectConnection->status,
-            'client_id'     => $projectConnection->client_id,
-            'client_secret' => $projectConnection->client_secret,
-            'access_token'  => $projectConnection->access_token,
-            'refresh_token' => $projectConnection->refresh_token,
-            'data_center'   => $projectConnection->data_center,
-            'domain'        => $projectConnection->domain,
-            'expire'        => $projectConnection->expire,
-            'created_at'    => $projectConnection->created_at,
-            'updated_at'    => $projectConnection->updated_at,
+            'id'                   => (string)$projectConnection->id,
+            'project_id'           => (string)$projectConnection->project_id,
+            'status'               => (string)$projectConnection->status,
+            'client_id'            => $projectConnection->client_id,
+            'client_secret'        => $projectConnection->client_secret,
+            'access_token'         => $projectConnection->access_token,
+            'refresh_token'        => $projectConnection->refresh_token,
+            'data_center'          => $projectConnection->data_center,
+            'domain'               => $projectConnection->domain,
+            'expire'               => $projectConnection->expire,
+            'scopes'               => $projectConnection->scopes,
+            'authorization_url'    => $this->getAuthorizationUrl($projectConnection),
+            'created_at'           => $projectConnection->created_at,
+            'updated_at'           => $projectConnection->updated_at,
             'created_at_formatted' => TransformersUtil::dateTimeFormatted($projectConnection->created_at),
             'updated_at_formatted' => TransformersUtil::dateTimeFormatted($projectConnection->updated_at),
         ];
@@ -53,5 +57,22 @@ class ConnectionTransformer extends TransformerAbstract
     public function includeProject(ProjectConnection $projectConnection): Item
     {
         return $this->item($projectConnection->project, new ProjectTransformer);
+    }
+
+    /**
+     * @param ProjectConnection $connection
+     * @return string
+     */
+    protected function getAuthorizationUrl(ProjectConnection $connection): string
+    {
+        Cache::add("project.connection", $connection->id, now()->addHour());
+
+        $oAuthClient = new ZohoOAuthClient(
+            clientId: $connection->client_id,
+            clientSecret: $connection->client_secret,
+            dataCenterZone: $connection->data_center,
+        );
+
+        return $oAuthClient->getAuthorizationUrl($connection->scopes);
     }
 }

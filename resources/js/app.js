@@ -4,22 +4,24 @@ import './style/tailwind.css'
 
 import 'quasar/src/css/index.sass'
 import '@quasar/extras/material-icons/material-icons.css'
-
+import 'vue3-toastify/dist/index.css';
 
 import App          from './App.vue'
 import {createApp}  from 'vue'
 import router       from './router';
-import {toast}      from "vue3-toastify";
-import Vue3Toastify from 'vue3-toastify';
+
+
+import Vue3Toasity, {toast} from 'vue3-toastify';
+
 import http         from "@/utils/http";
 import store from '@/store';
 
 const app = createApp(App)
 app.use(store)
 app.use(router)
-app.use(Vue3Toastify)
-app.provide('toast', toast)
+app.use(Vue3Toasity, {position: toast.POSITION.TOP_CENTER, multiple: false,})
 app.provide("http", http)
+app.provide("toast", toast)
 
 app.use(Quasar, {
     plugins: {}, // import Quasar plugins and add here

@@ -1,6 +1,6 @@
 <?php
 
-namespace Domain\Zoho\Connect;
+namespace App\Containers\ZohoAuth;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\RequestOptions;
@@ -107,7 +107,7 @@ final class ZohoOAuthClient
      */
     public static function getCallbackUrl(): string
     {
-        return config('app.url') . "/zoho/connection/callback";
+        return config('app.url') . "/api/project/connection/zoho-callback";
     }
 
     /**
@@ -124,7 +124,7 @@ final class ZohoOAuthClient
      */
     private function setDataCenter(string $zone = 'com'): void
     {
-        $dataCenter = config("zoho.connection.data_center.$zone");
+        $dataCenter = config("zoho.auth.data_center.$zone");
         if (!$dataCenter) {
             throw new \InvalidArgumentException("$dataCenter - invalid data center");
         }
