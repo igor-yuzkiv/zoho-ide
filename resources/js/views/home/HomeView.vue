@@ -1,42 +1,20 @@
 <script setup>
-import Codemirror from "codemirror-editor-vue3";
+    import {useStore} from "vuex";
+    import {onBeforeMount} from "vue";
 
-// placeholder
-import "codemirror/addon/display/placeholder.js";
+    const store = useStore();
 
-// language
-import "codemirror/mode/javascript/javascript.js";
-// placeholder
-import "codemirror/addon/display/placeholder.js";
-// theme
-import "codemirror/theme/dracula.css";
 
-import { ref } from "vue";
-const code = ref(``);
-
-const cmOptions = ref({
-    mode: "text/javascript", // Language mode
-    // theme: "dracula", // Theme
-})
-
-const change = (e) => {
-    console.log(e);
-}
-
+    onBeforeMount(() => {
+        store.commit('SET_PAGE_TITLE', 'Home')
+        store.commit('ui/SET_CONTEXT_MENU_ITEMS', [])
+    })
 </script>
-
-<template>
-    <h1>Home12321</h1>
-    <Codemirror
-        v-model:value="code"
-        :options="cmOptions"
-        border
-        placeholder="test placeholder"
-        :height="200"
-        @change="change"
-    />
-</template>
 
 <style scoped>
 
 </style>
+
+<template>
+
+</template>

@@ -18,7 +18,3 @@ export function updateProject(id, data) {
 export function deleteProject(id) {
     return http.delete(`projects/${id}`);
 }
-
-export function fetchProjectConnections(id) {
-    return http.get(`projects/${id}/connections`);
-}

@@ -4,6 +4,7 @@ namespace App\Containers\Projects\Http\Controllers\Project;
 
 use App\Containers\Projects\Http\Requests\SaveProjectRequest;
 use App\Containers\Projects\Models\Project;
+use App\Containers\Projects\Transformers\ConnectionTransformer;
 use App\Containers\Projects\Transformers\ProjectTransformer;
 use App\Ship\Http\Controllers\Controller;
 use App\Ship\Utils\LoggerUtil;
@@ -76,6 +77,11 @@ class ProjectController extends Controller
         }
     }
 
+    /**
+     * @param Project $project
+     * @param SaveProjectRequest $request
+     * @return JsonResponse
+     */
     public function updateProject(Project $project, SaveProjectRequest $request): JsonResponse
     {
         try {
@@ -102,6 +108,23 @@ class ProjectController extends Controller
         try {
             $status = $project->delete();
             return response()->json(compact('status'));
+        } catch (\Exception $exception) {
+            LoggerUtil::exception($exception);
+            return ResponseUtil::exception($exception);
+        }
+    }
+
+    /**
+     * @param Project $project
+     * @return JsonResponse
+     */
+    public function getProjectConnections(Project $project): JsonResponse
+    {
+        try {
+            return fractal($project->connections)
+                ->transformWith(new ConnectionTransformer())
+                ->serializeWith(ArraySerializer::class)
+                ->respond();
         } catch (\Exception $exception) {
             LoggerUtil::exception($exception);
             return ResponseUtil::exception($exception);

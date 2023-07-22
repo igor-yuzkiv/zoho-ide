@@ -1,6 +1,7 @@
 import {createStore} from "vuex";
 const APP_NAME = import.meta.env.VITE_APP_NAME;
 import auth from "./modules/auth";
+import ui from "./modules/ui";
 
 const store = createStore({
     state    : {
@@ -11,13 +12,14 @@ const store = createStore({
     },
     actions  : {},
     mutations: {
-        mutatePageTitle: (state, payload) => {
+        SET_PAGE_TITLE: (state, payload) => {
             state.pageTitle = payload;
             document.title = `${payload} | ${APP_NAME}`;
         },
     },
     modules: {
         auth,
+        ui,
     }
 })
 

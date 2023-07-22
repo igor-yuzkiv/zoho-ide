@@ -5,25 +5,25 @@
 
 /* width */
 ::-webkit-scrollbar {
-    @apply rounded-2xl;
+    @apply tw-rounded-2xl;
     width: 4px;
     background-color: #c7c7c7;
 }
 
 /* Track */
 ::-webkit-scrollbar-track {
-    @apply rounded-full;
+    @apply tw-rounded-full;
     background-color: #c7c7c7;
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-    @apply bg-gray-300 rounded-2xl;
+    @apply tw-bg-gray-300 tw-rounded-2xl;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-    @apply bg-gray-700;
+    @apply tw-bg-gray-700;
 }
 
 .fade-enter,

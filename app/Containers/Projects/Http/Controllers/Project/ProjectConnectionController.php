@@ -2,23 +2,56 @@
 
 namespace App\Containers\Projects\Http\Controllers\Project;
 
-use App\Containers\Projects\Models\Project;
+use App\Containers\Projects\Models\ProjectConnection;
+use App\Http\Requests\ProjectConnectionRequest;
 use App\Ship\Http\Controllers\Controller;
 use App\Ship\Utils\LoggerUtil;
 use App\Ship\Utils\ResponseUtil;
 use Illuminate\Http\JsonResponse;
-use Spatie\Fractalistic\ArraySerializer;
-use App\Containers\Projects\Transformers\ConnectionTransformer;
 
-class ProjectConnectionController  extends Controller
+/**
+ *
+ */
+class ProjectConnectionController extends Controller
 {
-    public function getProjectConnections(Project $project): JsonResponse {
+    /**
+     * @param ProjectConnectionRequest $request
+     * @return JsonResponse
+     */
+    public function createConnection(ProjectConnectionRequest $request): JsonResponse
+    {
         try {
-            return  fractal($project->connections)
-                ->transformWith(new ConnectionTransformer())
-                ->serializeWith(ArraySerializer::class)
-                ->respond();
-        }catch (\Exception $exception) {
+            dd($request->toArray());
+        } catch (\Exception $exception) {
+            LoggerUtil::exception($exception);
+            return ResponseUtil::exception($exception);
+        }
+    }
+
+    /**
+     * @param ProjectConnection $connection
+     * @param ProjectConnectionRequest $request
+     * @return JsonResponse
+     */
+    public function updateConnection(ProjectConnection $connection, ProjectConnectionRequest $request): JsonResponse
+    {
+        try {
+            dd($request->toArray());
+        } catch (\Exception $exception) {
+            LoggerUtil::exception($exception);
+            return ResponseUtil::exception($exception);
+        }
+    }
+
+    /**
+     * @param ProjectConnection $connection
+     * @return JsonResponse|void
+     */
+    public function authorizeConnection(ProjectConnection $connection)
+    {
+        try {
+            dd($connection->toArray());
+        } catch (\Exception $exception) {
             LoggerUtil::exception($exception);
             return ResponseUtil::exception($exception);
         }

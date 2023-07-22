@@ -3,17 +3,6 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "api" middleware group. Make something great!
-|
-*/
-
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
@@ -25,10 +14,12 @@ Route::prefix("projects")
         Route::post("", [\App\Containers\Projects\Http\Controllers\Project\ProjectController::class, "createProject"]);
         Route::put("{project}", [\App\Containers\Projects\Http\Controllers\Project\ProjectController::class, "updateProject"]);
         Route::delete("{project}", [\App\Containers\Projects\Http\Controllers\Project\ProjectController::class, "deleteProject"]);
-        Route::prefix("{project}/connections")
-            ->group(function () {
-                Route::get("", [\App\Containers\Projects\Http\Controllers\Project\ProjectConnectionController::class, "getProjectConnections"]);
-            });
+        Route::get("", [\App\Containers\Projects\Http\Controllers\Project\ProjectController::class, "getProjectConnections"]);
     });
 
-Route::any("test", [\App\Ship\Http\Controllers\TestController::class, 'index']);
+Route::prefix('connections')
+    ->group(function () {
+        Route::post("", [\App\Containers\Projects\Http\Controllers\Project\ProjectConnectionController::class, "createConnection"]);
+        Route::put("{connection}", [\App\Containers\Projects\Http\Controllers\Project\ProjectConnectionController::class, "updateConnection"]);
+        Route::post("{connection}/authorize", [\App\Containers\Projects\Http\Controllers\Project\ProjectConnectionController::class, "authorizeConnection"]);
+    });

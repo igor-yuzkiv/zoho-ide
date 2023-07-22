@@ -1,6 +1,10 @@
 import { Quasar } from 'quasar'
+
+import './style/tailwind.css'
+
 import 'quasar/src/css/index.sass'
-/*import './style/tailwind.css'*/
+import '@quasar/extras/material-icons/material-icons.css'
+
 
 import App          from './App.vue'
 import {createApp}  from 'vue'

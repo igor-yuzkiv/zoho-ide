@@ -3,37 +3,31 @@ import {
     createWebHistory
 } from 'vue-router'
 
-import * as routesName from "@/constans/routes.js";
+import routesName from "@/constans/routesName.js";
 
 import DefaultLayout from "@/layout/default/DefaultLayout.vue";
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.VITE_APP_BASE_WEB_URI),
-    routes: [
+    routes : [
         {
-            path: "/",
+            path     : "/",
             component: DefaultLayout,
-            children: [
+            children : [
                 {
-                    path: '/',
-                    name: routesName.HOME_ROUTE,
+                    path     : '/',
+                    name     : routesName.home,
                     component: () => import('@/views/home/HomeView.vue'),
                 },
-
                 {
-                    path: '/projects',
-                    name: routesName.PROJECTS_ROUTE,
-                    component: () => import('@/views/project/ProjectsListView.vue'),
+                    path     : "/projects",
+                    name     : routesName.projects,
+                    component: () => import('@/views/projects/ProjectsView.vue'),
                 },
                 {
-                    path: '/projects/:id/new-connection',
-                    name: routesName.NEW_CONNECTION_ROUTE,
-                    component: () => import('@/views/connections/new-connection/NewConnectionView.vue'),
-                },
-                {
-                    path: '/projects/:id',
-                    name: routesName.PROJECT_EDIT_ROUTE,
-                    component: () => import('@/views/project/ProjectEditView.vue'),
+                    path     : "/connections/create",
+                    name     : routesName.connections_create,
+                    component: () => import('@/views/connection/ConnectionCreateView.vue'),
                 }
             ],
         },
