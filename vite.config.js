@@ -5,6 +5,7 @@ import {
     fileURLToPath,
     URL
 }                                    from 'node:url'
+import { quasar, transformAssetUrls } from '@quasar/vite-plugin'
 
 export default defineConfig({
     plugins: [
@@ -12,7 +13,7 @@ export default defineConfig({
             input: ['resources/css/app.css', 'resources/js/app.js'],
             refresh: true,
         }),
-        vue({
+        /*vue({
             template: {
                 transformAssetUrls: {
                     // The Vue plugin will re-write asset URLs, when referenced
@@ -29,7 +30,15 @@ export default defineConfig({
                     includeAbsolute: false,
                 },
             },
+        }),*/
+
+        //quasar
+        vue({
+            template: { transformAssetUrls }
         }),
+        quasar({
+            sassVariables: 'resources/js/style/quasar-variables.sass'
+        })
     ],
     define : {'process.env': {}},
     resolve: {

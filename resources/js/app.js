@@ -1,6 +1,6 @@
-import './bootstrap';
-import './style.css'
-
+import { Quasar } from 'quasar'
+import 'quasar/src/css/index.sass'
+/*import './style/tailwind.css'*/
 
 import App          from './App.vue'
 import {createApp}  from 'vue'
@@ -17,6 +17,9 @@ app.use(Vue3Toastify)
 app.provide('toast', toast)
 app.provide("http", http)
 
+app.use(Quasar, {
+    plugins: {}, // import Quasar plugins and add here
+})
 
 import { InstallCodemirro } from "codemirror-editor-vue3";
 app.use(InstallCodemirro);
