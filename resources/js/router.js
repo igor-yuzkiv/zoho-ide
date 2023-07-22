@@ -19,21 +19,33 @@ const router = createRouter({
                     name     : routesName.home,
                     component: () => import('@/views/home/HomeView.vue'),
                 },
+
                 {
-                    path     : "/projects",
-                    name     : routesName.projects,
-                    component: () => import('@/views/projects/ProjectsView.vue'),
+                    path    : "/projects",
+                    children: [
+                        {
+                            path     : "",
+                            name     : routesName.projects,
+                            component: () => import('@/views/projects/ProjectsView.vue'),
+                        },
+                        {
+                            path     : ":id",
+                            name     : routesName.project_overview,
+                            component: () => import('@/views/projects/ProjectOverview.vue'),
+                        },
+                    ],
                 },
+
                 {
-                    path     : "/connections/create",
-                    name     : routesName.connection_create,
-                    component: () => import('@/views/connection/ConnectionCreateView.vue'),
+                    path    : "/connections",
+                    children: [
+                        {
+                            path     : "create",
+                            name     : routesName.connection_create,
+                            component: () => import('@/views/connection/ConnectionCreateView.vue'),
+                        }
+                    ],
                 },
-                {
-                    path     : "/connections/:id/authorize",
-                    name     : routesName.connection_authorize,
-                    component: () => import('@/views/connection/ConnectionAuthorizeView.vue'),
-                }
             ],
         },
     ]

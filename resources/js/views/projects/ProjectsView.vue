@@ -12,28 +12,28 @@ const store = useStore();
 const projects = ref([]);
 const columns = [
     {
-        label : "Name",
-        name: "name",
+        label: "Name",
+        name : "name",
         field: "name",
     },
     {
-        label : "Status",
-        name: "status",
+        label: "Status",
+        name : "status",
         field: "status",
     },
     {
-        label : "Created At",
-        name: "created_at_formatted",
+        label: "Created At",
+        name : "created_at_formatted",
         field: "created_at_formatted",
     },
     {
-        label : "Modified At",
-        name: "updated_at_formatted",
+        label: "Modified At",
+        name : "updated_at_formatted",
         field: "updated_at_formatted",
     },
     {
-        label : "Actions",
-        name: "actions",
+        label: "",
+        name : "actions",
         field: "actions",
     },
 ];
@@ -49,15 +49,18 @@ async function loadProjects() {
         .catch(e => console.log(e))
 }
 
+function openProjectOverview({row}) {
+    router.push({name: routesName.project_overview, params: {id: row.id}});
+}
+
 
 onBeforeMount(() => {
     loadProjects();
     store.commit("SET_PAGE_TITLE", "Projects");
-
     store.commit("ui/SET_CONTEXT_MENU_ITEMS", [
         {
-            label: "New Project",
-            icon: "add",
+            label  : "New Project",
+            icon   : "add",
             handler: () => {
                 alert("new project")
             }
@@ -70,33 +73,14 @@ onBeforeMount(() => {
     <q-table
         :columns="columns"
         :rows="projects"
-        @row-click=""
     >
-        <template v-slot:body-cell-actions="props">
+        <template v-slot:body-cell-actions="params">
             <q-td class="flex justify-end">
                 <x-context-menu>
                     <q-list class="tw-min-w-[100px]">
-                        <q-item clickable v-close-popup>
+                        <q-item clickable v-close-popup @click="openProjectOverview(params)">
                             <q-item-section>
-                                Edit
-                            </q-item-section>
-                        </q-item>
-                        <q-item clickable v-close-popup>
-                            <q-item-section>
-                                Delete
-                            </q-item-section>
-                        </q-item>
-                        <q-item clickable v-close-popup>
-                            <q-item-section>
-                                View Connections
-                            </q-item-section>
-                        </q-item>
-                        <q-item
-                            clickable v-close-popup
-                            :to="{name: routesName.connection_create}"
-                        >
-                            <q-item-section>
-                                New Connection
+                                Overview
                             </q-item-section>
                         </q-item>
                     </q-list>
