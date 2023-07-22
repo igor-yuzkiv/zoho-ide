@@ -28,7 +28,7 @@ const props = defineProps({
         >
             <div class="relative bg-white rounded-3xl" :class="width">
                 <div
-                    class="flex items-center justify-between rounded-t-3xl text-md text-white font-semibold bg-gigas-500 pl-4 pr-2 py-2"
+                    class="flex items-center justify-between rounded-t-3xl text-md text-white font-semibold bg-blue-500 pl-4 pr-2 py-2"
                 >
                     <div>
                         <slot name="header">
@@ -38,7 +38,7 @@ const props = defineProps({
 
                     <button
                         type="button"
-                        class="inline-flex shrink-0 rounded-full p-1 hover:bg-gigas-400 hover:text-gigas-700"
+                        class="inline-flex shrink-0 rounded-full p-1 hover:bg-blue-400 hover:text-blue-700"
                         @click="$emit('update', !value)"
                     >
                         <Icon icon="ic:round-close" class="text-xl"></Icon>

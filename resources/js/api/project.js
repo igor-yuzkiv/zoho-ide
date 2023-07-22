@@ -3,8 +3,8 @@ export function fetchProjects() {
     return http.get("projects");
 }
 
-export function fetchProject(id) {
-    return http.get(`projects/${id}`);
+export function fetchProject(id, include = []) {
+    return http.get(`projects/${id}?include=${include.join(",")}`);
 }
 
 export function createProject(data) {

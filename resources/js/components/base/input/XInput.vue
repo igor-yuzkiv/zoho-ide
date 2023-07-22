@@ -3,7 +3,7 @@
         <!--for="name"-->
         <label
             v-if="label"
-            class="block mb-1 ml-1 text-md font-medium text-black font-semibold dark:text-white"
+            class="block mb-1 ml-1 text-md font-medium text-black dark:text-white"
         >
             {{ label }}
         </label>
@@ -44,9 +44,7 @@ export default {
     components: {Icon},
     emits   : ['update:modelValue', 'click:prepend', 'click:append'],
     props   : {
-        modelValue : {
-            required: true,
-        },
+        modelValue : {},
         type       : {
             type   : String,
             default: "text"

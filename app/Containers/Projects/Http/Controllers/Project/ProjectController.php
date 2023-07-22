@@ -8,6 +8,7 @@ use App\Containers\Projects\Transformers\ProjectTransformer;
 use App\Ship\Http\Controllers\Controller;
 use App\Ship\Utils\LoggerUtil;
 use App\Ship\Utils\ResponseUtil;
+use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Spatie\Fractalistic\ArraySerializer;
 
@@ -34,13 +35,20 @@ class ProjectController extends Controller
 
     /**
      * @param Project $project
+     * @param Request $request
      * @return JsonResponse
      */
-    public function getProject(Project $project): JsonResponse
+    public function getProject(Project $project, Request $request): JsonResponse
     {
         try {
+            $includes = [];
+            if ($request->has('includes')) {
+                $includes = explode(',', $request->get('includes'));
+            }
+
             return fractal($project)
                 ->transformWith(new ProjectTransformer())
+                ->parseIncludes($includes)
                 ->serializeWith(ArraySerializer::class)
                 ->respond();
         } catch (\Exception $exception) {

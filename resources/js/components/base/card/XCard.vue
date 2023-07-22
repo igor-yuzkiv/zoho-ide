@@ -1,15 +1,19 @@
 <script setup>
-import {defineProps, ref} from "vue";
+import {ref} from "vue";
 import {Icon} from "@iconify/vue";
 
 defineProps({
     name: {
         type   : String,
         default: ''
+    },
+    expandable: {
+        type   : Boolean,
+        default: true
     }
 });
 
-const expanded = ref(false);
+const expanded = ref(true);
 const content = ref();
 
 
@@ -40,15 +44,19 @@ function leave(element) {
 </script>
 
 <template>
-    <div class="bg-white border border-blue-400 rounded-xl p-1">
-        <div class="flex justify-between items-center">
+    <div class="bg-white border border-gray-100 rounded-xl">
+        <div
+            class="flex justify-between items-center p-2 bg-gray-50"
+            :class="{
+                'border-b rounded-t-xl': expanded,
+                'rounded-xl': !expanded,
+            }"
+        >
             <div class="font-bold text-[18px]">{{ name }}</div>
             <div class="flex items-center gap-2">
                 <slot name="actions"></slot>
-                <div class="x__chevron_container cursor-pointer" @click="toggleExpanded">
-                    <div class="x__chevron" :class="{expanded: expanded}">
-                        <Icon icon="gg:chevron-down"></Icon>
-                    </div>
+                <div v-show="expandable" class="x__chevron" :class="{expanded: expanded}" @click="toggleExpanded">
+                    <Icon icon="gg:chevron-down"></Icon>
                 </div>
             </div>
         </div>
@@ -59,7 +67,7 @@ function leave(element) {
             @after-enter="afterEnter"
         >
             <div class="x__content" v-show="expanded">
-                <div class="pt-4" ref="content">
+                <div class="p-2" ref="content">
                     <slot></slot>
                 </div>
             </div>
@@ -73,21 +81,12 @@ function leave(element) {
     overflow: hidden;
 }
 
-.x__chevron_container {
-    padding: 3px;
-    @apply rounded-full border border-blue-400
-}
-
 .x__chevron {
     font-size: 22px;
     padding-top: 1px;
     transform: rotateZ(0);
     transition: transform .3s cubic-bezier(0.25, 0.8, 0.5, 1);
-    @apply rounded-full bg-blue-400 text-white
-}
-
-.x__chevron_container:hover .x__chevron {
-    @apply bg-blue-500
+    @apply rounded-full bg-gray-400 text-white cursor-pointer
 }
 
 .x__chevron.expanded {

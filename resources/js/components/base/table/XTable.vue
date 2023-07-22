@@ -1,5 +1,5 @@
 <script setup>
-import {defineProps, defineEmits} from "vue";
+import {defineEmits} from "vue";
 import {v4 as uuid} from "uuid";
 
 const props = defineProps({
@@ -33,7 +33,7 @@ const getRowKey = (row, suffix = '') => {
 
     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
         <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-            <thead class="text-base text-black uppercase bg-gigas-500 text-white">
+            <thead class="text-base text-black uppercase bg-blue-500 text-white">
             <tr>
                 <th
                     scope="col" class="px-6 py-3"

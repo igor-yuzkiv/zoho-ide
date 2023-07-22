@@ -1,13 +1,15 @@
 <script setup>
-import {ref} from "vue";
+import {onBeforeMount, ref} from "vue";
 import {useRouter} from "vue-router";
 import XButton from "@/components/base/button/XButton.vue";
 import {Icon} from "@iconify/vue";
 import XModal from "@/components/base/modal/XModal.vue";
 import ProjectForm from "@/views/project/components/ProjectForm.vue";
 import ProjectsTable from "@/views/project/components/ProjectsTable.vue";
+import {useStore} from "vuex";
 
 const router = useRouter();
+const store = useStore();
 const projectsTable = ref(null);
 const projectFormDialog = ref({
     isOpen: false,
@@ -24,11 +26,14 @@ async function projectCreated() {
     openProjectDialog({isOpen: false, isEdit: false, id: null});
 }
 
+onBeforeMount(() => {
+    store.commit("mutatePageTitle", "Projects");
+})
+
 </script>
 
 <template>
-    <div class="flex items-center justify-between mb-2 p-2 border-b border-dashed">
-        <h1 class="text-black text-xs font-semibold">Projects</h1>
+    <div class="flex items-center justify-end mb-2 p-2 border-b border-dashed">
         <x-button
             type="button"
             @click="openProjectDialog({isOpen: true, isEdit: false, id: null})"

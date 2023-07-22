@@ -26,6 +26,11 @@ const router = createRouter({
                     component: () => import('@/views/project/ProjectsListView.vue'),
                 },
                 {
+                    path: '/projects/:id/new-connection',
+                    name: routesName.NEW_CONNECTION_ROUTE,
+                    component: () => import('@/views/connections/new-connection/NewConnectionView.vue'),
+                },
+                {
                     path: '/projects/:id',
                     name: routesName.PROJECT_EDIT_ROUTE,
                     component: () => import('@/views/project/ProjectEditView.vue'),

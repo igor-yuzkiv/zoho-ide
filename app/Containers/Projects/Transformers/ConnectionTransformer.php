@@ -10,7 +10,7 @@ use League\Fractal\TransformerAbstract;
 /**
  *
  */
-class ProjectConnetionTransformer extends TransformerAbstract
+class ConnectionTransformer extends TransformerAbstract
 {
     /**
      * @var array
