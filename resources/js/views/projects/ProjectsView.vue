@@ -3,7 +3,6 @@ import {useRouter} from "vue-router";
 import {useStore} from "vuex";
 import {onBeforeMount, ref} from "vue";
 import {fetchProjects} from "@/api/project.js";
-import XContextMenu from "@/components/base/context-menu/XContextMenu.vue";
 import routesName from "@/constans/routesName.js";
 
 const router = useRouter();

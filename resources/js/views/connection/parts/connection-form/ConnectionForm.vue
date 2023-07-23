@@ -13,7 +13,6 @@ import ZohoScopes from "@/components/zoho/scopes/ZohoScopes.vue";
 import {fetchProjects} from "@/api/project.js";
 import {createConnection, updateConnection} from "@/api/connection.js";
 
-
 const toast = inject('toast');
 const emit = defineEmits(['connection:created', 'connection:updated']);
 const props = defineProps({
@@ -23,8 +22,7 @@ const props = defineProps({
     },
     connection: {
         type   : Object,
-        default: () => {
-        },
+        default: () => {},
     }
 })
 
@@ -152,7 +150,9 @@ onBeforeMount(async () => {
 
             </div>
         </q-card-section>
+
         <q-separator/>
+
         <q-card-actions class="justify-between">
             <slot name="actions">
                 <q-btn> Cancel</q-btn>
