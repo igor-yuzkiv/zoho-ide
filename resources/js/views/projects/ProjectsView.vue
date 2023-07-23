@@ -49,7 +49,7 @@ async function loadProjects() {
         .catch(e => console.log(e))
 }
 
-function openProjectOverview({row}) {
+function openProjectOverview(e, row) {
     router.push({name: routesName.project_overview, params: {id: row.id}});
 }
 
@@ -73,20 +73,8 @@ onBeforeMount(() => {
     <q-table
         :columns="columns"
         :rows="projects"
+        @row-click="openProjectOverview"
     >
-        <template v-slot:body-cell-actions="params">
-            <q-td class="flex justify-end">
-                <x-context-menu>
-                    <q-list class="tw-min-w-[100px]">
-                        <q-item clickable v-close-popup @click="openProjectOverview(params)">
-                            <q-item-section>
-                                Overview
-                            </q-item-section>
-                        </q-item>
-                    </q-list>
-                </x-context-menu>
-            </q-td>
-        </template>
     </q-table>
 </template>
 

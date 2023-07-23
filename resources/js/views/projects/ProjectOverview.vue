@@ -5,7 +5,6 @@ import {useRoute, useRouter} from "vue-router";
 import {fetchProject} from "@/api/project.js";
 import {useStore} from "vuex";
 import XContextMenu from "@/components/base/context-menu/XContextMenu.vue";
-import ConnectionAuthorizeDialog from "@/views/connection/parts/authoirize-dialog/ConnectionAuthorizeDialog.vue";
 import {useQuasar} from 'quasar'
 import {deleteConnection} from "@/api/connection.js";
 
@@ -15,7 +14,6 @@ const store = useStore();
 const $q = useQuasar();
 const toast = inject('toast');
 
-const authorizeConnectionDialog = ref(null);
 const project = ref({});
 
 const connectionsTableColumns = [
@@ -70,8 +68,11 @@ async function loadProject() {
     return response;
 }
 
-function openAuthConnectionDialog({row}) {
-    authorizeConnectionDialog.value.open(row.id)
+function openEditConnectionHandle({row}) {
+    if (!row?.id) {
+        return;
+    }
+    router.push({name: routesName.connection_edit, params: {id: row.id}})
 }
 
 function removeConnection({row}) {
@@ -133,9 +134,9 @@ onMounted(async () => {
                     <q-td class="flex justify-end">
                         <x-context-menu>
                             <q-list class="tw-min-w-[100px]">
-                                <q-item clickable v-close-popup @click="openAuthConnectionDialog(params)">
+                                <q-item clickable v-close-popup @click="openEditConnectionHandle(params)">
                                     <q-item-section>
-                                        Authorize
+                                        Edit
                                     </q-item-section>
                                 </q-item>
 
@@ -151,8 +152,6 @@ onMounted(async () => {
             </q-table>
         </q-card-section>
     </q-card>
-
-    <connection-authorize-dialog ref="authorizeConnectionDialog"></connection-authorize-dialog>
 </template>
 
 <style scoped>

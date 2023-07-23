@@ -18,7 +18,7 @@ async function openDialog(connectionId) {
         return;
     }
     isOpen.value = true;
-    //startAuthProcessHandle();
+    startAuthProcessHandle();
 }
 
 async function loadConnection(connectionId) {

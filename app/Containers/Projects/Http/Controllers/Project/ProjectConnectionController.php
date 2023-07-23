@@ -5,6 +5,7 @@ namespace App\Containers\Projects\Http\Controllers\Project;
 use App\Containers\Projects\Models\ProjectConnection;
 use App\Containers\Projects\Services\Connection\GenerateConnectionToken;
 use App\Containers\Projects\Transformers\ConnectionTransformer;
+use App\Containers\ZohoAuth\ZohoOAuthClient;
 use App\Http\Requests\ProjectConnectionRequest;
 use App\Ship\Http\Controllers\Controller;
 use App\Ship\Utils\LoggerUtil;
@@ -69,7 +70,12 @@ class ProjectConnectionController extends Controller
     public function updateConnection(ProjectConnection $connection, ProjectConnectionRequest $request): JsonResponse
     {
         try {
-            dd($request->toArray());
+            $connection->update($request->validated());
+
+            return fractal($connection)
+                ->transformWith(new ConnectionTransformer())
+                ->serializeWith(ArraySerializer::class)
+                ->respond();
         } catch (\Exception $exception) {
             LoggerUtil::exception($exception);
             return ResponseUtil::exception($exception);
@@ -81,6 +87,27 @@ class ProjectConnectionController extends Controller
         try {
             $status = $connection->delete();
             return  response()->json(compact('status'));
+        }catch (\Exception $exception) {
+            LoggerUtil::exception($exception);
+            return ResponseUtil::exception($exception);
+        }
+    }
+
+    public function authorizeConnection(ProjectConnection $connection): JsonResponse
+    {
+        try {
+            Cache::add("project.connection", $connection->id, now()->addHour());
+
+            $oAuthClient = new ZohoOAuthClient(
+                clientId: $connection->client_id,
+                clientSecret: $connection->client_secret,
+                dataCenterZone: $connection->data_center,
+            );
+
+            $url = $oAuthClient->getAuthorizationUrl($connection->scopes);
+            Cache::put('project.connection', $connection->id);
+
+            return  response()->json(compact('url'));
         }catch (\Exception $exception) {
             LoggerUtil::exception($exception);
             return ResponseUtil::exception($exception);
@@ -104,6 +131,8 @@ class ProjectConnectionController extends Controller
             $action = new GenerateConnectionToken($connection, $grandToken);
             $connection = $action->run();
 
+
+            Cache::delete('project.connection');
             return view('zoho.callback', [
                 'id'      => $connection->id,
                 'status'  => true,

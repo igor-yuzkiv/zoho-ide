@@ -43,6 +43,11 @@ const router = createRouter({
                             path     : "create",
                             name     : routesName.connection_create,
                             component: () => import('@/views/connection/ConnectionCreateView.vue'),
+                        },
+                        {
+                            path     : ":id/edit",
+                            name     : routesName.connection_edit,
+                            component: () => import('@/views/connection/ConnectionEditView.vue'),
                         }
                     ],
                 },

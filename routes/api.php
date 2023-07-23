@@ -23,6 +23,7 @@ Route::prefix('connections')
     ->group(function () {
         Route::get("{connection}", [\App\Containers\Projects\Http\Controllers\Project\ProjectConnectionController::class, "getConnection"]);
         Route::post("", [\App\Containers\Projects\Http\Controllers\Project\ProjectConnectionController::class, "createConnection"]);
+        Route::post("{connection}/authorize", [\App\Containers\Projects\Http\Controllers\Project\ProjectConnectionController::class, "authorizeConnection"]);
         Route::put("{connection}", [\App\Containers\Projects\Http\Controllers\Project\ProjectConnectionController::class, "updateConnection"]);
         Route::delete("{connection}", [\App\Containers\Projects\Http\Controllers\Project\ProjectConnectionController::class, "deleteConnection"]);
     });
