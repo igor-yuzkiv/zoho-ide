@@ -1,44 +1,52 @@
 <script setup>
-import {onMounted, ref} from "vue";
+import {inject, onMounted, ref} from "vue";
 import routesName from "@/constans/routesName.js";
 import {useRoute, useRouter} from "vue-router";
 import {fetchProject} from "@/api/project.js";
 import {useStore} from "vuex";
 import XContextMenu from "@/components/base/context-menu/XContextMenu.vue";
 import ConnectionAuthorizeDialog from "@/views/connection/parts/authoirize-dialog/ConnectionAuthorizeDialog.vue";
+import {useQuasar} from 'quasar'
+import {deleteConnection} from "@/api/connection.js";
 
 const route = useRoute();
 const router = useRouter();
 const store = useStore();
+const $q = useQuasar();
+const toast = inject('toast');
 
 const authorizeConnectionDialog = ref(null);
-
 const project = ref({});
 
 const connectionsTableColumns = [
     {
-        label : "client_id",
-        name: "client_id",
+        label: "client_id",
+        name : "client_id",
         field: "client_id",
     },
     {
-        label : "data_center",
-        name: "data_center",
+        label: "data_center",
+        name : "data_center",
         field: "data_center",
     },
     {
-        label : "domain",
-        name: "domain",
+        label: "status",
+        name : "status",
+        field: "status",
+    },
+    {
+        label: "domain",
+        name : "domain",
         field: "domain",
     },
     {
-        label : "expire",
-        name: "expire",
+        label: "expire",
+        name : "expire",
         field: "expire",
     },
     {
-        label : "",
-        name: "actions",
+        label: "",
+        name : "actions",
         field: "actions",
     },
 ];
@@ -66,12 +74,41 @@ function openAuthConnectionDialog({row}) {
     authorizeConnectionDialog.value.open(row.id)
 }
 
+function removeConnection({row}) {
+    if (!row?.id) {
+        return;
+    }
+
+    $q.dialog({
+        dark      : true,
+        title     : 'Confirm',
+        message   : 'Would you like remove this connection?',
+        cancel    : true,
+        persistent: true
+    })
+        .onOk(() => {
+            deleteConnection(row.id)
+                .then(() => {
+                    toast.success("Connection removed")
+                    loadProject()
+                })
+                .catch(() => toast.error("Something went wrong while removing connection"))
+        });
+}
+
 onMounted(async () => {
     const project = await loadProject();
-    if (!project){
+    if (!project) {
         await router.push({name: routesName.projects});
     }
     store.commit("SET_PAGE_TITLE", `${project.name} overview`)
+    store.commit('ui/SET_CONTEXT_MENU_ITEMS', [
+        {
+            label  : "New Connection",
+            icon   : "add",
+            handler: () => router.push({name: routesName.connection_create})
+        }
+    ])
 });
 </script>
 
@@ -79,7 +116,7 @@ onMounted(async () => {
     <q-card>
         <q-card-section>
             <div>
-                Project Name: {{project.name}}
+                Project Name: {{ project.name }}
             </div>
         </q-card-section>
     </q-card>
@@ -99,6 +136,12 @@ onMounted(async () => {
                                 <q-item clickable v-close-popup @click="openAuthConnectionDialog(params)">
                                     <q-item-section>
                                         Authorize
+                                    </q-item-section>
+                                </q-item>
+
+                                <q-item clickable v-close-popup @click="removeConnection(params)">
+                                    <q-item-section>
+                                        Delete
                                     </q-item-section>
                                 </q-item>
                             </q-list>

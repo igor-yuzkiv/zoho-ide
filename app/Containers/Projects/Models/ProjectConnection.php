@@ -28,14 +28,14 @@ class ProjectConnection extends Model
         "domain",
         "expire",
         "status",
-        'scopes',
+        "scopes",
     ];
 
     /**
      * @var string[]
      */
     protected $casts = [
-        'scopes' => 'array',
+        'scopes' => 'array'
     ];
 
     /**

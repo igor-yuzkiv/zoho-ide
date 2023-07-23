@@ -3,8 +3,8 @@
 namespace App\Containers\Projects\Http\Controllers\Project;
 
 use App\Containers\Projects\Models\ProjectConnection;
+use App\Containers\Projects\Services\Connection\GenerateConnectionToken;
 use App\Containers\Projects\Transformers\ConnectionTransformer;
-use App\Containers\ZohoAuth\ZohoOAuthClient;
 use App\Http\Requests\ProjectConnectionRequest;
 use App\Ship\Http\Controllers\Controller;
 use App\Ship\Utils\LoggerUtil;
@@ -76,65 +76,42 @@ class ProjectConnectionController extends Controller
         }
     }
 
-    /**
-     * @param ProjectConnection $connection
-     * @return JsonResponse|void
-     */
-    public function getAuthorizationUrl(ProjectConnection $connection)
+    public function deleteConnection(ProjectConnection $connection): JsonResponse
     {
         try {
-            Cache::add("project.connection", $connection->id, now()->addHour());
-
-            $oAuthClient = new ZohoOAuthClient(
-                clientId: $connection->client_id,
-                clientSecret: $connection->client_secret,
-                dataCenterZone: $connection->data_center,
-            );
-
-            return response()->json([
-                'url' => $oAuthClient->getAuthorizationUrl($connection->scopes),
-            ]);
-        } catch (\Exception $exception) {
+            $status = $connection->delete();
+            return  response()->json(compact('status'));
+        }catch (\Exception $exception) {
             LoggerUtil::exception($exception);
             return ResponseUtil::exception($exception);
         }
     }
 
-    public function zohoCallback(Request $request)
+    /**
+     * @param Request $request
+     * @return mixed
+     */
+    public function zohoCallback(Request $request): mixed
     {
         try {
             $connection = ProjectConnection::findOrFail(Cache::get('project.connection'));
 
-            $oAuthClient = new ZohoOAuthClient(
-                clientId: $connection->client_id,
-                clientSecret: $connection->client_secret,
-                dataCenterZone: $connection->data_center,
-            );
-
-            $response = $oAuthClient->getRefreshTokenByCode($request->get('code'));
-
-            if (
-                !array_key_exists('access_token', $response)
-                || !array_key_exists('refresh_token', $response)
-            ) {
-                throw new \RuntimeException('Invalid response from Zoho');
+            $grandToken = $request->get('code');
+            if (!$grandToken) {
+                abort(500);
             }
 
-            $connection->update([
-                'access_token'  => $response['access_token'],
-                'refresh_token' => $response['refresh_token'],
-                'domain'        => $oAuthClient->getDataCenterDomain(),
-                'expire'        => now()->addSeconds(\Arr::get($response, 'expires_in', 3600)),
-            ]);
+            $action = new GenerateConnectionToken($connection, $grandToken);
+            $connection = $action->run();
 
             return view('zoho.callback', [
-                'id' => $connection->id,
-                'status'        => true,
-                'message'       => 'Zoho connection has been successfully established.',
+                'id'      => $connection->id,
+                'status'  => true,
+                'message' => 'Zoho connection has been successfully established.',
             ]);
         } catch (\Exception $exception) {
             LoggerUtil::exception($exception);
-            abort(404);
+            abort(500);
         }
     }
 }

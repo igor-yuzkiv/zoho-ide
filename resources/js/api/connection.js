@@ -17,6 +17,10 @@ export function updateConnection(id, data) {
     return http.put(`connections/${id}`, data);
 }
 
+export function deleteConnection(id) {
+    return http.delete(`connections/${id}`);
+}
+
 export function authorizeConnection(id) {
     return http.post(`connections/${id}/authorize`);
 }

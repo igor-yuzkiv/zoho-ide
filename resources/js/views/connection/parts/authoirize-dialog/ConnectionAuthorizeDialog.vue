@@ -1,29 +1,28 @@
 <script setup>
 
-import {computed, onBeforeMount, ref, onBeforeUnmount, inject} from "vue";
+import {onBeforeMount, ref, onBeforeUnmount, inject} from "vue";
 import {getConnection} from "@/api/connection.js";
 import {openWindow} from "@/utils/browser.js";
 
+const toast = inject("toast");
 const emit = defineEmits(["success"]);
 
 const isOpen = ref(false);
-const toast = inject("toast");
 const connection = ref({});
 const authProcess = ref(false);
-
-const projectName = computed(() => connection.value.project?.name || '');
 
 async function openDialog(connectionId) {
     const connection = await loadConnection(connectionId);
     if (!connection) {
+        toast.error('Invalid connection');
         return;
     }
     isOpen.value = true;
-    startAuthProcessHandle();
+    //startAuthProcessHandle();
 }
 
 async function loadConnection(connectionId) {
-    return getConnection(connectionId, ['project'])
+    return getConnection(connectionId)
         .then(({data}) => {
             if (data) {
                 connection.value = data;

@@ -24,5 +24,5 @@ Route::prefix('connections')
         Route::get("{connection}", [\App\Containers\Projects\Http\Controllers\Project\ProjectConnectionController::class, "getConnection"]);
         Route::post("", [\App\Containers\Projects\Http\Controllers\Project\ProjectConnectionController::class, "createConnection"]);
         Route::put("{connection}", [\App\Containers\Projects\Http\Controllers\Project\ProjectConnectionController::class, "updateConnection"]);
-        Route::get("{connection}/authorization-url", [\App\Containers\Projects\Http\Controllers\Project\ProjectConnectionController::class, "authorizeConnection"]);
+        Route::delete("{connection}", [\App\Containers\Projects\Http\Controllers\Project\ProjectConnectionController::class, "deleteConnection"]);
     });

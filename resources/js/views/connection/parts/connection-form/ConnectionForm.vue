@@ -1,4 +1,12 @@
 <script setup>
+const defaultForm = () => ({
+    project_id   : null,
+    client_id    : '',
+    client_secret: '',
+    data_center  : dataCenters.us,
+    scopes       : defaultScopes,
+})
+
 import {ref, nextTick, onBeforeMount, inject} from "vue";
 import {dataCenters, defaultScopes} from "@/constans/zoho.js"
 import ZohoScopes from "@/components/zoho/scopes/ZohoScopes.vue";
@@ -10,19 +18,9 @@ const toast = inject('toast');
 
 const projects = ref([]);
 const isMounted = ref(false);
-
-const defaultForm = () => ({
-    project_id   : null,
-    client_id    : '',
-    client_secret: '',
-    data_center  : dataCenters.us,
-    scopes       : defaultScopes,
-})
-
 const form = ref(defaultForm())
 
 async function createConnectionHandle() {
-
     const data = {
         ...form.value,
         data_center: form.value.data_center?.location,
@@ -67,20 +65,23 @@ onBeforeMount(async () => {
                         option-value="id"
                     />
                 </div>
-                <div class="tw-mt-2">
-                    <q-input
-                        label="Client ID"
-                        outlined
-                        v-model="form.client_id"
-                    />
-                </div>
-                <div class="tw-mt-2">
-                    <q-input
-                        label="Client Secret"
-                        outlined
-                        type="password"
-                        v-model="form.client_secret"
-                    />
+                <div class="tw-flex tw-flex-col sm:tw-flex-row tw-items-center tw-mt-2 tw-gap-1">
+                    <div class="tw-w-full">
+                        <q-input
+                            label="Client ID"
+                            outlined
+                            type="password"
+                            v-model="form.client_id"
+                        />
+                    </div>
+                    <div class="tw-w-full">
+                        <q-input
+                            label="Client Secret"
+                            outlined
+                            type="password"
+                            v-model="form.client_secret"
+                        />
+                    </div>
                 </div>
                 <div class="tw-mt-2">
                     <q-select
