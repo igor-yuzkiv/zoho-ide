@@ -7,7 +7,6 @@ const contextMenu = ref(false)
 const menuItems = computed(() => store.state.ui.contextMenuItems)
 
 function handleItemClick(item) {
-    console.log("clicked", item);
     if (typeof item?.handler === "function") {
         item.handler()
     }
