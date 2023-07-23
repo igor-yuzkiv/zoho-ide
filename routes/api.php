@@ -27,3 +27,11 @@ Route::prefix('connections')
         Route::put("{connection}", [\App\Containers\Projects\Http\Controllers\Project\ProjectConnectionController::class, "updateConnection"]);
         Route::delete("{connection}", [\App\Containers\Projects\Http\Controllers\Project\ProjectConnectionController::class, "deleteConnection"]);
     });
+
+Route::prefix('chrome-extension')
+    ->group(function () {
+        Route::prefix('test')
+            ->group(function () {
+                Route::post('inject', [App\Containers\ChromeExtension\Htpp\Controllers\TestController::class, 'inject']);
+            });
+    });

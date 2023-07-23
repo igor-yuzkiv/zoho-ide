@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Containers\ZohoServices\Creator;
+namespace App\Containers\Deluge\ZohoServices\Creator;
 
 use App\Containers\Deluge\CodeSnippet;
 use App\Containers\Deluge\Deluge;
 use App\Containers\Deluge\DelugeSyntax;
 use App\Containers\Deluge\Variables\MapVariable;
 use App\Containers\Deluge\Variables\PrimitiveVariable;
-use App\Containers\ZohoServices\Creator\Base\FetchRecord;
-use App\Containers\ZohoServices\Creator\Base\InsertRecord;
-use App\Containers\ZohoServices\Creator\Base\UpdateRecord;
-use App\Containers\ZohoServices\Crm\GetRecordByIdTask;
+use App\Containers\Deluge\ZohoServices\Creator\Base\FetchRecord;
+use App\Containers\Deluge\ZohoServices\Creator\Base\InsertRecord;
+use App\Containers\Deluge\ZohoServices\Creator\Base\UpdateRecord;
+use App\Containers\Deluge\ZohoServices\Crm\GetRecordByIdTask;
 
 class SyncCrmRecordWithCreator extends CodeSnippet
 {

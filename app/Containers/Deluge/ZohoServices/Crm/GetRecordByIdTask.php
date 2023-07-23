@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Containers\ZohoServices\Crm;
+namespace App\Containers\Deluge\ZohoServices\Crm;
 
 use App\Containers\Deluge\DelugeSyntax;
 use App\Containers\Deluge\Variables\MapVariable;

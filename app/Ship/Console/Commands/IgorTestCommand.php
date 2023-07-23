@@ -4,7 +4,6 @@ namespace App\Ship\Console\Commands;
 
 use App\Containers\Projects\Models\Project;
 use App\Containers\Projects\Services\Connection\MakeProjectConnection;
-use App\Containers\ZohoServices\Creator\SyncCrmRecordWithCreator;
 use Illuminate\Console\Command;
 
 class IgorTestCommand extends Command

@@ -21,12 +21,18 @@ class ProjectController extends Controller
     /**
      * @return JsonResponse
      */
-    public function getProjects(): JsonResponse
+    public function getProjects(Request $request): JsonResponse
     {
         try {
+            $includes = [];
+            if ($request->has('includes')) {
+                $includes = explode(',', $request->get('includes'));
+            }
+
             return fractal(Project::all())
                 ->transformWith(new ProjectTransformer())
                 ->serializeWith(ArraySerializer::class)
+                ->parseIncludes($includes)
                 ->respond();
         } catch (\Exception $exception) {
             LoggerUtil::exception($exception);
