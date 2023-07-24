@@ -2,7 +2,7 @@
 
 namespace App\Containers\ChromeExtension\Htpp\Controllers;
 
-use App\Containers\Deluge\ZohoServices\Creator\SyncCrmRecordWithCreator;
+use App\Containers\Deluge\Apps\ZohoCreator\SyncCrmRecordWithCreator;
 use App\Ship\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
 

@@ -2,6 +2,8 @@
 
 namespace App\Containers\Deluge;
 
+use App\Containers\Deluge\Prettier\DelugePrettier;
+
 final class Deluge
 {
     /**

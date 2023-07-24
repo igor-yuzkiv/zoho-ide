@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Containers\Deluge\ZohoServices\Creator\Base;
+namespace App\Containers\Deluge\Apps\ZohoCreator;
 
 use App\Containers\Deluge\CodeSnippet;
 use App\Containers\Deluge\DelugeSyntax;

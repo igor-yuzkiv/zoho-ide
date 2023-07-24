@@ -1,6 +1,9 @@
 <?php
 
-namespace App\Containers\Deluge;
+namespace App\Containers\Deluge\Prettier;
+
+use App\Containers\Deluge\CodeSnippet;
+use App\Containers\Deluge\DelugeSyntax;
 
 /**
  *
