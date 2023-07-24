@@ -19,6 +19,7 @@ use Spatie\Fractalistic\ArraySerializer;
 class ProjectController extends Controller
 {
     /**
+     * @param Request $request
      * @return JsonResponse
      */
     public function getProjects(Request $request): JsonResponse

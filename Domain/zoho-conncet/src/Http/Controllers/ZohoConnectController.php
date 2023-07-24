@@ -2,7 +2,7 @@
 
 namespace Domain\Zoho\Connect\Http\Controllers;
 
-use App\Containers\ZohoAuth\ZohoOAuthClient;
+use App\Containers\Zoho\ApiClient\ZohoOAuthClient;
 use Domain\Zoho\Connect\Http\Requests\AuthorizationRequest;
 use Domain\Zoho\Connect\Http\Requests\CallbackRequest;
 use Domain\Zoho\Connect\Model\ZohoConnectModel;

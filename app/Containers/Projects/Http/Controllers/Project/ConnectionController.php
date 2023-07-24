@@ -2,11 +2,11 @@
 
 namespace App\Containers\Projects\Http\Controllers\Project;
 
+use App\Containers\Projects\Http\Requests\ProjectConnectionRequest;
 use App\Containers\Projects\Models\ProjectConnection;
 use App\Containers\Projects\Services\Connection\GenerateConnectionToken;
 use App\Containers\Projects\Transformers\ConnectionTransformer;
-use App\Containers\ZohoAuth\ZohoOAuthClient;
-use App\Http\Requests\ProjectConnectionRequest;
+use App\Containers\Zoho\ApiClient\ZohoOAuthClient;
 use App\Ship\Http\Controllers\Controller;
 use App\Ship\Utils\LoggerUtil;
 use App\Ship\Utils\ResponseUtil;
@@ -18,7 +18,7 @@ use League\Fractal\Serializer\ArraySerializer;
 /**
  *
  */
-class ProjectConnectionController extends Controller
+class ConnectionController extends Controller
 {
     /**
      * @param ProjectConnection $connection
@@ -82,6 +82,10 @@ class ProjectConnectionController extends Controller
         }
     }
 
+    /**
+     * @param ProjectConnection $connection
+     * @return JsonResponse
+     */
     public function deleteConnection(ProjectConnection $connection): JsonResponse
     {
         try {
@@ -93,6 +97,10 @@ class ProjectConnectionController extends Controller
         }
     }
 
+    /**
+     * @param ProjectConnection $connection
+     * @return JsonResponse
+     */
     public function authorizeConnection(ProjectConnection $connection): JsonResponse
     {
         try {
@@ -130,7 +138,6 @@ class ProjectConnectionController extends Controller
 
             $action = new GenerateConnectionToken($connection, $grandToken);
             $connection = $action->run();
-
 
             Cache::delete('project.connection');
             return view('zoho.callback', [

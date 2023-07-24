@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Containers\ZohoAuth;
+namespace App\Containers\Zoho\ApiClient;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\RequestOptions;

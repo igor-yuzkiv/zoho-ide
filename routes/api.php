@@ -7,7 +7,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::any('project/connection/zoho-callback', [\App\Containers\Projects\Http\Controllers\Project\ProjectConnectionController::class, 'zohoCallback']);
+Route::any('project/connection/zoho-callback', [\App\Containers\Projects\Http\Controllers\Project\ConnectionController::class, 'zohoCallback']);
 
 Route::prefix("projects")
     ->group(function () {
@@ -21,11 +21,11 @@ Route::prefix("projects")
 
 Route::prefix('connections')
     ->group(function () {
-        Route::get("{connection}", [\App\Containers\Projects\Http\Controllers\Project\ProjectConnectionController::class, "getConnection"]);
-        Route::post("", [\App\Containers\Projects\Http\Controllers\Project\ProjectConnectionController::class, "createConnection"]);
-        Route::post("{connection}/authorize", [\App\Containers\Projects\Http\Controllers\Project\ProjectConnectionController::class, "authorizeConnection"]);
-        Route::put("{connection}", [\App\Containers\Projects\Http\Controllers\Project\ProjectConnectionController::class, "updateConnection"]);
-        Route::delete("{connection}", [\App\Containers\Projects\Http\Controllers\Project\ProjectConnectionController::class, "deleteConnection"]);
+        Route::get("{connection}", [\App\Containers\Projects\Http\Controllers\Project\ConnectionController::class, "getConnection"]);
+        Route::post("", [\App\Containers\Projects\Http\Controllers\Project\ConnectionController::class, "createConnection"]);
+        Route::post("{connection}/authorize", [\App\Containers\Projects\Http\Controllers\Project\ConnectionController::class, "authorizeConnection"]);
+        Route::put("{connection}", [\App\Containers\Projects\Http\Controllers\Project\ConnectionController::class, "updateConnection"]);
+        Route::delete("{connection}", [\App\Containers\Projects\Http\Controllers\Project\ConnectionController::class, "deleteConnection"]);
     });
 
 Route::prefix('chrome-extension')

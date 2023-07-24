@@ -1,11 +1,17 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Containers\Projects\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
+/**
+ *
+ */
 class ProjectConnectionRequest extends FormRequest
 {
+    /**
+     * @return array[]
+     */
     public function rules(): array
     {
         $dataCenter = array_keys(config('zoho.auth.data_center'));
@@ -18,6 +24,9 @@ class ProjectConnectionRequest extends FormRequest
         ];
     }
 
+    /**
+     * @return bool
+     */
     public function authorize(): bool
     {
         return true;

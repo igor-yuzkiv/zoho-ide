@@ -2,9 +2,9 @@
 
 namespace App\Containers\Projects\Services\Connection;
 
-use App\Containers\Projects\Enums\ProjectConnectionStatus;
+use App\Containers\Projects\Enums\ConnectionStatus;
 use App\Containers\Projects\Models\ProjectConnection;
-use App\Containers\ZohoAuth\ZohoOAuthClient;
+use App\Containers\Zoho\ApiClient\ZohoOAuthClient;
 use App\Ship\Contracts\Runnable;
 
 /**
@@ -45,7 +45,7 @@ class GenerateConnectionToken implements Runnable
             'refresh_token' => $response['refresh_token'],
             'domain'        => $this->oAuthClient->getDataCenterDomain(),
             'expire'        => now()->addSeconds(\Arr::get($response, 'expires_in', 3600)),
-            'status' => ProjectConnectionStatus::ACTIVE,
+            'status'        => ConnectionStatus::ACTIVE->value,
         ]);
 
         return $this->connection;

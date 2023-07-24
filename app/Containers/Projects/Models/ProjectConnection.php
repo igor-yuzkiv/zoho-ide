@@ -2,6 +2,7 @@
 
 namespace App\Containers\Projects\Models;
 
+use App\Containers\Projects\Enums\ConnectionStatus;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 

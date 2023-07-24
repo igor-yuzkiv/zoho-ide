@@ -2,7 +2,7 @@
 
 namespace Domain\Zoho\Connect\Model;
 
-use App\Containers\ZohoAuth\ZohoOAuthClient;
+use App\Containers\Zoho\ApiClient\ZohoOAuthClient;
 use Illuminate\Database\Eloquent\Model;
 
 /**
