@@ -1,5 +1,5 @@
 @props(['condition'])
 
-if ({{$condition}}) {
+else if ({{$condition}}) {
 {{$slot}}
 }
