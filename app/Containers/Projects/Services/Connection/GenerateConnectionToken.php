@@ -35,6 +35,7 @@ class GenerateConnectionToken implements Runnable
 
     /**
      * @return ProjectConnection
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function run(): ProjectConnection
     {

@@ -32,6 +32,6 @@ Route::prefix('chrome-extension')
     ->group(function () {
         Route::prefix('test')
             ->group(function () {
-                Route::post('inject', [App\Containers\ChromeExtension\Htpp\Controllers\TestController::class, 'inject']);
+                Route::post('inject', [App\Containers\ChromeExtension\Http\Controllers\TestController::class, 'inject']);
             });
     });

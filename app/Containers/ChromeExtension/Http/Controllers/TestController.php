@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Containers\ChromeExtension\Htpp\Controllers;
+namespace App\Containers\ChromeExtension\Http\Controllers;
 
 use App\Containers\Snippets\View\Components\SyncCrmWithCreator;
 use App\Ship\Http\Controllers\Controller;

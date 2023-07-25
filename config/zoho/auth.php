@@ -1,7 +1,5 @@
 <?php
 return [
-    'client_id'  => env('ZOHO_CONNECT_CLIENT_ID', ''),
-    'client_secret'  => env('ZOHO_CONNECT_CLIENT_SECRET', ''),
     'default_data_center' => "us",
     'data_center'         => [
         'us' => [

@@ -26,8 +26,7 @@
         "psr-4": {
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",
-            "Database\\Seeders\\": "database/seeders/",
-            "Domain\\Zoho\\Connect\\": "Domain/zoho-conncet/src"
+            "Database\\Seeders\\": "database/seeders/"
         }
     },
     "autoload-dev": {
