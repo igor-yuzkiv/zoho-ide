@@ -2,10 +2,8 @@
 
 namespace App\Ship\Console\Commands;
 
-use App\Containers\Projects\Enums\ConnectionStatus;
-use App\Containers\Projects\Models\Project;
 use App\Containers\Projects\Services\Connection\MakeProjectConnection;
-use App\View\Components\SyncCrmWithCreator;
+use App\Containers\Snippets\View\Components\SyncCrmWithCreator;
 use Illuminate\Console\Command;
 
 class IgorTestCommand extends Command
