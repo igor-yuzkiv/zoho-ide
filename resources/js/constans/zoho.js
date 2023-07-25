@@ -34,11 +34,11 @@ export const zohoScopes = zoho_scopes.permissions;
 export const defaultScopes = [
     "ZohoCRM.bulk.ALL",
     "ZohoCRM.coql.READ",
-    "ZohoCRM.modules.ALL",
+    "ZohoCRM.snippets.ALL",
     "ZohoCRM.settings.ALL",
     "ZohoCRM.settings.fields.ALL",
     "ZohoCRM.settings.layouts.ALL",
-    "ZohoCRM.settings.modules.ALL",
+    "ZohoCRM.settings.snippets.ALL",
     "ZohoCRM.settings.profiles.ALL",
     "ZohoCRM.settings.custom_views.ALL",
     "ZohoCRM.users.ALL",
