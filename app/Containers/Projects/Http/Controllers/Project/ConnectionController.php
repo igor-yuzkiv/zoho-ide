@@ -6,7 +6,7 @@ use App\Containers\Projects\Http\Requests\ProjectConnectionRequest;
 use App\Containers\Projects\Models\ProjectConnection;
 use App\Containers\Projects\Services\Connection\GenerateConnectionToken;
 use App\Containers\Projects\Transformers\ConnectionTransformer;
-use App\Containers\Zoho\ApiClient\ZohoOAuthClient;
+use App\Containers\Projects\Zoho\ApiClient\ZohoOAuthClient;
 use App\Ship\Http\Controllers\Controller;
 use App\Ship\Utils\LoggerUtil;
 use App\Ship\Utils\ResponseUtil;

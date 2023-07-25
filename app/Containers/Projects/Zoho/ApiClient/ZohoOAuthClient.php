@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Containers\Zoho\ApiClient;
+namespace App\Containers\Projects\Zoho\ApiClient;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\RequestOptions;

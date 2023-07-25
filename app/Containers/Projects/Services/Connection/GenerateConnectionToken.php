@@ -4,7 +4,7 @@ namespace App\Containers\Projects\Services\Connection;
 
 use App\Containers\Projects\Enums\ConnectionStatus;
 use App\Containers\Projects\Models\ProjectConnection;
-use App\Containers\Zoho\ApiClient\ZohoOAuthClient;
+use App\Containers\Projects\Zoho\ApiClient\ZohoOAuthClient;
 use App\Ship\Contracts\Runnable;
 
 /**
