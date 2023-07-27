@@ -4,7 +4,7 @@ namespace Deluge\Core\Views;
 
 use Illuminate\Support\HtmlString;
 use Illuminate\View\Component;
-class DelugeElse extends Component
+class DelugeElseIf extends Component
 {
     public function render(): \Closure
     {

@@ -1,15 +1,16 @@
 <?php
 
-namespace App\Providers;
+namespace App\Ship\Providers;
 
 use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\ServiceProvider;
 
 class DelugeLanguageServiceProvider extends ServiceProvider
 {
     public function register(): void
     {
-        $this->componentsRegister();
+        $this->registryModules();
     }
 
     public function boot(): void
@@ -17,16 +18,12 @@ class DelugeLanguageServiceProvider extends ServiceProvider
 
     }
 
-    private function componentsRegister(): void
+    private function registryModules(): void
     {
-        //TODO: реєструвати компоненти через команду в кеш і бд (для редактора), а тоді вже тут
-        $namespaces = glob('Deluge/*');
-
         foreach (glob('Deluge/*') as $component) {
             if (!file_exists($component . '/manifest.php')) {
                 continue;
             }
-
             $manifest = require $component . '/manifest.php';
             if (!is_array($manifest)) {
                 continue;

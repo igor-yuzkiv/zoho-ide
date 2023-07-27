@@ -10,9 +10,9 @@ function init() {
                 console.log(model, position);
                 const suggestions = [
                     {
-                        label:  "if statement",
+                        label:  "deluge-if",
                         kind: monaco.languages.CompletionItemKind.Text,
-                        insertText:   "<x-if condition=\"{{ $condition }}\"> </x-if>",
+                        insertText:   "<deluge-if>\n\t<x-slot name='condition'></x-slot>\n\t<x-slot></x-slot>\n</deluge-if>",
                     }
                 ];
 
@@ -25,7 +25,7 @@ function init() {
     monaco.editor.create(
         document.getElementById('monacoEditorContainer'),
         {
-            value   : 'console.log("Hello, world")',
+            value   : "",
             language: 'php',
             theme   : 'vs-dark',
         });

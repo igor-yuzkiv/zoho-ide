@@ -27,6 +27,8 @@ class DelugeIf extends Component
             $slot = \Arr::get($data, 'slot');
             $attributes = \Arr::get($data, 'attributes');
 
+            dd($data);
+
             $result = "if () {\n";
 
             if ($slot) {
