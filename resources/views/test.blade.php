@@ -1,4 +1,9 @@
-<x-dl::if-statement>
+<deluge-if>
+    <x-slot name="condition">
+    </x-slot>
+
     <x-slot name="else if" condition="test != 0">
     </x-slot>
-</x-dl::if-statement>
+
+</deluge-if>
+

@@ -169,11 +169,9 @@ return [
         \App\Ship\Providers\EventServiceProvider::class,
         \App\Ship\Providers\RouteServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
+        App\Providers\DelugeLanguageServiceProvider::class,
 
-
-        \Deluge\Core\DelugeCoreServiceProvider::class,
-        \Deluge\Crm\DelugeCrmServiceProvider::class,
-        \Deluge\Creator\DelugeCreatorServiceProvider::class,
+        \App\Providers\DelugeLanguageServiceProvider::class
     ])->toArray(),
 
     /*

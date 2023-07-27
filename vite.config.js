@@ -6,6 +6,7 @@ import {
     URL
 }                                    from 'node:url'
 import { quasar, transformAssetUrls } from '@quasar/vite-plugin'
+import monacoEditorPlugin from 'vite-plugin-monaco-editor';
 
 export default defineConfig({
     plugins: [
@@ -38,7 +39,8 @@ export default defineConfig({
         }),
         quasar({
             sassVariables: 'resources/js/style/quasar-variables.sass'
-        })
+        }),
+        monacoEditorPlugin,
     ],
     define : {'process.env': {}},
     resolve: {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Deluge\Core\Snippets;
+namespace Deluge\Core\Views;
 
 use Illuminate\Support\HtmlString;
 use Illuminate\View\Component;
@@ -15,21 +15,17 @@ use Illuminate\View\Component;
  *  - condition - for each slot and this component
  */
 
-class IfStatement extends Component
+class DelugeIf extends Component
 {
     public function render(): \Closure
     {
         return function (array $data) {
 
-            dd($data);
             /**
              * @var ?HtmlString $slot
              */
             $slot = \Arr::get($data, 'slot');
-
             $attributes = \Arr::get($data, 'attributes');
-
-
 
             $result = "if () {\n";
 

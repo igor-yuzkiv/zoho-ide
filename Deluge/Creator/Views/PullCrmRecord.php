@@ -1,16 +1,15 @@
 <?php
-
-namespace Deluge\Crm\Snippets;
+namespace Deluge\Creator\Views;
 
 use Illuminate\View\Component;
 
-class GetRecordById  extends Component
+class PullCrmRecord extends Component
 {
     public function render(): string
     {
         return <<<'blade'
                 <div>
-                    crm.getRecordById
+                    creator.pullCrmRecord
                 </div>
         blade;
     }

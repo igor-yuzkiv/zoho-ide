@@ -14,6 +14,7 @@ class IgorTestCommand extends Command
 
     public function handle(): void
     {
-       dd(Redis::get('test'));
+        $test = view("test")->render();
+        dd($test);
     }
 }
