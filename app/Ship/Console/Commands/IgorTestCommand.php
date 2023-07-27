@@ -3,6 +3,7 @@
 namespace App\Ship\Console\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Redis;
 
 class IgorTestCommand extends Command
 {
@@ -13,7 +14,6 @@ class IgorTestCommand extends Command
 
     public function handle(): void
     {
-        $test = view('test')->render();
-        dd($test);
+       dd(Redis::get('test'));
     }
 }
