@@ -1,16 +1,28 @@
 <?php
 
-namespace App\Ship\Console\Commands;
+namespace App\Containers\Deluge\Console\Commands;
 
 use App\Containers\Deluge\Models\DelugeModule;
 use Illuminate\Console\Command;
 
+/**
+ *
+ */
 class DelugeRegistryModulesCommand extends Command
 {
+    /**
+     * @var string
+     */
     protected $signature = 'deluge:registry-modules';
 
-    protected $description = 'Command description';
+    /**
+     * @var string
+     */
+    protected $description = 'Registry all deluge modules and components';
 
+    /**
+     * @return void
+     */
     public function handle(): void
     {
         $namespaces = glob('Deluge/*');

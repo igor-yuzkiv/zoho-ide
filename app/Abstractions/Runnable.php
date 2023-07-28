@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Ship\Contracts;
+namespace App\Abstractions;
 
 interface Runnable
 {

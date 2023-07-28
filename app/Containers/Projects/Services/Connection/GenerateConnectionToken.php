@@ -2,10 +2,10 @@
 
 namespace App\Containers\Projects\Services\Connection;
 
+use App\Abstractions\Runnable;
 use App\Containers\Projects\Enums\ConnectionStatus;
 use App\Containers\Projects\Models\ProjectConnection;
 use App\Containers\Projects\Zoho\ApiClient\ZohoOAuthClient;
-use App\Ship\Contracts\Runnable;
 
 /**
  *

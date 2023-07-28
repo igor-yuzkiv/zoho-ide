@@ -2,8 +2,8 @@
 
 namespace Deluge\Core\Views;
 
+use App\Abstractions\DelugeComponent;
 use Illuminate\Support\HtmlString;
-use Illuminate\View\Component;
 
 
 /**
@@ -15,22 +15,16 @@ use Illuminate\View\Component;
  *  - condition - for each slot and this component
  */
 
-class DelugeIf extends Component
+class DelugeIf extends DelugeComponent
 {
     public function render(): \Closure
     {
         return function (array $data) {
-
-            /**
-             * @var ?HtmlString $slot
-             */
+            /** @var ?HtmlString $slot */
             $slot = \Arr::get($data, 'slot');
             $attributes = \Arr::get($data, 'attributes');
 
-            dd($data);
-
             $result = "if () {\n";
-
             if ($slot) {
                 $result .= $slot->toHtml();
             }

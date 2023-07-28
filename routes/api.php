@@ -19,9 +19,14 @@ Route::prefix("projects")
         Route::get("{project}/connections", [\App\Containers\Projects\Http\Controllers\Project\ProjectController::class, "getProjectConnections"]);
     });
 
-Route::prefix("deluge/editor")
+Route::prefix("deluge")
     ->group(function () {
-        Route::get("suggestion", [\App\Containers\Deluge\Http\Controllers\DelugeEditorController::class, "getSuggestion"]);
+
+        Route::prefix("components")
+            ->group(function () {
+                Route::get("", [\App\Containers\Deluge\Http\Controllers\DelugeComponentsController::class, "getComponents"]);
+            });
+
     });
 
 Route::prefix('connections')
