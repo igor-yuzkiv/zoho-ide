@@ -25,6 +25,7 @@ class DelugeRegistryModulesCommand extends Command
      */
     public function handle(): void
     {
+        $cache = [];
         $namespaces = glob('Deluge/*');
         foreach (glob('Deluge/*') as $component) {
             if (!file_exists($component . '/manifest.php')) {
@@ -60,6 +61,12 @@ class DelugeRegistryModulesCommand extends Command
                 );
             }
 
+            $cache[] = [
+                'namespace' => $manifest['namespace'],
+                'prefix'    => $manifest['prefix'],
+            ];
         }
+
+        cache()->put('deluge:modules', $cache);
     }
 }

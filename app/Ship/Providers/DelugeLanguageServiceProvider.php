@@ -10,26 +10,18 @@ class DelugeLanguageServiceProvider extends ServiceProvider
 {
     public function register(): void
     {
-        $this->registryModules();
+
     }
 
     public function boot(): void
     {
-
+        $this->registryModules();
     }
 
     private function registryModules(): void
     {
-        foreach (glob('Deluge/*') as $component) {
-            if (!file_exists($component . '/manifest.php')) {
-                continue;
-            }
-            $manifest = require $component . '/manifest.php';
-            if (!is_array($manifest)) {
-                continue;
-            }
-
-            Blade::componentNamespace($manifest['namespace'], $manifest['prefix']);
+        foreach (cache()->get('deluge:modules') as $component) {
+            Blade::componentNamespace($component['namespace'], $component['prefix']);
         }
     }
 }

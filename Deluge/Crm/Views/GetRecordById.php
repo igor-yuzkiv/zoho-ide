@@ -2,16 +2,17 @@
 
 namespace Deluge\Crm\Views;
 
+use App\Abstractions\DelugeComponent;
 use Illuminate\View\Component;
 
-class GetRecordById  extends Component
+class GetRecordById  extends DelugeComponent
 {
-    public function render(): string
+    public function handle(): string
     {
-        return <<<'blade'
-                <div>
-                    crm.getRecordById
-                </div>
-        blade;
+        $varName = $this->attributes->get('varName');
+        $moduleName = $this->attributes->get('module');
+        $recordId = $this->attributes->get('id');
+
+        return "$varName = zoho.crm.getRecordById(\"$moduleName\",$recordId);\n";
     }
 }

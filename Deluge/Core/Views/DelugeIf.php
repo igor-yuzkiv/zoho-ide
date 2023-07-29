@@ -14,22 +14,24 @@ use Illuminate\Support\HtmlString;
  * Attributes
  *  - condition - for each slot and this component
  */
-
 class DelugeIf extends DelugeComponent
 {
-    public function render(): \Closure
+    public function handle(): string
     {
-        return function (array $data) {
-            /** @var ?HtmlString $slot */
-            $slot = \Arr::get($data, 'slot');
-            $attributes = \Arr::get($data, 'attributes');
+        $statement = $this->attributes->get('else_if') ? 'else if' : 'if';
 
-            $result = "if () {\n";
-            if ($slot) {
-                $result .= $slot->toHtml();
-            }
+        $condition = $this->getSlot('condition');
+        if (!$condition) {
+            throw new \InvalidArgumentException("condition is required");
+        }
 
-            return $result . "\n}";
-        };
+        $result = "$statement (" . $condition->toHtml() . ") {\n";
+        $result .= $this->getSlot('then')->toHtml() . "\n}";
+
+        $elseSlot = $this->getSlot('else');
+        if ($elseSlot) {
+            $result .= "else {\n" . $elseSlot->toHtml() . "\n}";
+        }
+        return $result;
     }
 }
