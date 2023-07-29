@@ -19,3 +19,4 @@ yarn-error.log
 /.vscode
 docker
 /_tmp/
+/resources/views/snippets/

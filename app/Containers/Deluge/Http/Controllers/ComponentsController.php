@@ -12,7 +12,7 @@ use  \Illuminate\Http\JsonResponse;
 /**
  *
  */
-class DelugeComponentsController extends Controller
+class ComponentsController extends Controller
 {
     /**
      * @param Request $request

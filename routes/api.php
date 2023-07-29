@@ -24,7 +24,12 @@ Route::prefix("deluge")
 
         Route::prefix("components")
             ->group(function () {
-                Route::get("", [\App\Containers\Deluge\Http\Controllers\DelugeComponentsController::class, "getComponents"]);
+                Route::get("", [\App\Containers\Deluge\Http\Controllers\ComponentsController::class, "getComponents"]);
+            });
+
+        Route::prefix("snippets")
+            ->group(function () {
+                Route::post("", [\App\Containers\Deluge\Http\Controllers\SnippetsController::class, "createSnippet"]);
             });
 
     });

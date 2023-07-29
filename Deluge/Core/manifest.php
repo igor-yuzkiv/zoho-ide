@@ -6,7 +6,7 @@ return [
     "components" => [
         [
             "name"      => "if",
-            "insertText" => "<deluge-if>\n\t<x-slot name='condition'></x-slot>\n\t<x-slot></x-slot>\n</deluge-if>",
+            "insertText" => "<x-dl::deluge-if>\n\t<x-slot name='condition'></x-slot>\n</x-dl::deluge-if>",
             "attributes" => [],
             "slots" => [],
         ],
