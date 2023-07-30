@@ -1,11 +1,18 @@
 <script setup>
-import {useQuasar} from "quasar";
-const $q = useQuasar()
-$q.dark.set(false)
+
+import { initFlowbite } from 'flowbite'
+import {onMounted} from "vue";
+
+onMounted(() => {
+    initFlowbite()
+});
+
 </script>
 
 <template>
-    <router-view></router-view>
+    <div class="dark">
+        <router-view></router-view>
+    </div>
 </template>
 
 <style scoped>

@@ -1,62 +1,20 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-    prefix: 'tw-',
     content: [
         "./resources/**/*.blade.php",
         "./resources/**/*.js",
         "./resources/**/*.vue",
+        'node_modules/flowbite-vue/**/*.{js,jsx,ts,tsx}',
+        'node_modules/flowbite/**/*.{js,jsx,ts,tsx}'
     ],
-    darkMode: '',
+    darkMode: 'class',
     theme: {
-        colors: {
-            black: "#393939",
-            white: "#ffffff",
-            blue: {
-                50: "#eff2ff",
-                100: "#dce3fd",
-                200: "#c0cdfd",
-                300: "#95aefb",
-                400: "#5c7ff7",
-                500: "#3e5bf3",
-                600: "#2839e8",
-                700: "#2028d5",
-                800: "#2122ac",
-                900: "#202488",
-                950: "#181953",
-            },
-            green: {
-                50: "#f4fbf2",
-                100: "#e5f6e2",
-                200: "#ccecc6",
-                300: "#a3dc99",
-                400: "#72c464",
-                500: "#5abb4a",
-                600: "#3b8a2f",
-                700: "#316d28",
-                800: "#2b5724",
-                900: "#24481f",
-                950: "#0f270c",
-            },
-            gray: {
-                '50': '#f4f6f7',
-                '100': '#e2e6eb',
-                '200': '#c9cfd8',
-                '300': '#a3aebd',
-                '400': '#76859a',
-                '500': '#64748b',
-                '600': '#4e596c',
-                '700': '#444b5a',
-                '800': '#3d424d',
-                '900': '#363a43',
-                '950': '#21242b',
-            },
-        },
+        colors: {},
         extend: {},
-        fontFamily: {
-            body: ['"Inter Tight"'],
-            sans: ['"Inter Tight"'],
-        },
+        fontFamily: {},
     },
-    plugins: [],
+    plugins: [
+        require('flowbite/plugin')
+    ]
 }
 

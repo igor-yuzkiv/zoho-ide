@@ -1,37 +1,3 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-
-/* width */
-::-webkit-scrollbar {
-    @apply tw-rounded-2xl;
-    width: 4px;
-    background-color: #c7c7c7;
-}
-
-/* Track */
-::-webkit-scrollbar-track {
-    @apply tw-rounded-full;
-    background-color: #c7c7c7;
-}
-
-/* Handle */
-::-webkit-scrollbar-thumb {
-    @apply tw-bg-gray-300 tw-rounded-2xl;
-}
-
-/* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
-    @apply tw-bg-gray-700;
-}
-
-.fade-enter,
-.fade-leave-to {
-    opacity: 0;
-}
-
-.fade-enter-active,
-.fade-leave-active {
-    transition: opacity 200ms ease-out;
-}
