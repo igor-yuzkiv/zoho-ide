@@ -11,5 +11,10 @@ class Snippet extends Model
     protected $fillable = [
         'name',
         'content',
+        'arguments',
+    ];
+
+    protected $casts = [
+        'arguments' => 'array',
     ];
 }

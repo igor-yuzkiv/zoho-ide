@@ -11,6 +11,7 @@ return new class extends Migration {
             $table->id();
             $table->string('name');
             $table->longText('content');
+            $table->json('arguments')->nullable();
             $table->timestamps();
         });
     }

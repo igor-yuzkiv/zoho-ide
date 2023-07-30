@@ -1,5 +1,5 @@
 <template>
-    <q-layout view="hHh lpR fFf">
+    <q-layout view="hHh lpR fFf" class="tw-flex tw-flex-col tw-min-h-screen">
         <q-header elevated class="bg-primary text-white">
             <q-toolbar>
                 <q-btn dense flat round icon="menu" @click="toggleLeftDrawer"/>
@@ -11,10 +11,8 @@
                 </q-toolbar-title>
 
                 <header-context-menu></header-context-menu>
-                <q-btn dense flat round icon="menu" @click="toggleRightDrawer"/>
             </q-toolbar>
         </q-header>
-
         <q-drawer :mini="leftMiniState" side="left" bordered :model-value="true" class="tw-p-2">
             <q-list>
                 <q-item clickable v-ripple :to="{name: routesName.home}">
@@ -35,14 +33,8 @@
             </q-list>
         </q-drawer>
 
-        <q-drawer v-model="rightDrawerOpen" side="right" bordered>
-            <!-- drawer content -->
-        </q-drawer>
-
-        <q-page-container>
-            <div class="tw-m-2">
-                <router-view/>
-            </div>
+        <q-page-container class="tw-flex tw-flex-col tw-flex-grow tw-h-full tw-m-2">
+            <router-view/>
         </q-page-container>
     </q-layout>
 </template>
@@ -57,15 +49,9 @@ const store = useStore();
 
 const title = computed(() => store.state.pageTitle)
 const leftMiniState = ref(true)
-const rightDrawerOpen = ref(false)
-
 
 function toggleLeftDrawer() {
     leftMiniState.value = !leftMiniState.value
-}
-
-function toggleRightDrawer() {
-    rightDrawerOpen.value = !rightDrawerOpen.value
 }
 </script>
 
