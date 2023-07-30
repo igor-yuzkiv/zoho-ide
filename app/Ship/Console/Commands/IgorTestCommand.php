@@ -15,13 +15,10 @@ class IgorTestCommand extends Command
 
     public function handle(): void
     {
-        $v = view('test', [
-            'crmModuleName' => "Accounts",
-            'creatorFromName' => "Accounts",
-            'mapping' => [
-                'creator_f_1' => 'crm_f_1',
-                'creator_f_2' => 'crm_f_2',
-            ],
+        $v = view('snippets.s_3', [
+            'formName' => "Accounts",
+            'moduleName' => "Accounts",
+            'creatorCrmIdFieldName' => "CRM_ID",
         ]);
         dd($v->render());
     }
