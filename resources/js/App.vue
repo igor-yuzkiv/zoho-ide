@@ -1,7 +1,13 @@
 <script setup>
 
-import { initFlowbite } from 'flowbite'
-import {onMounted} from "vue";
+import {initFlowbite} from 'flowbite'
+import {computed, onMounted} from "vue";
+import {useStore} from "vuex";
+
+
+const store = useStore();
+
+const darkTheme = computed(() => store.state.darkTheme);
 
 onMounted(() => {
     initFlowbite()
@@ -10,7 +16,7 @@ onMounted(() => {
 </script>
 
 <template>
-    <div class="dark">
+    <div :class="{dark:darkTheme}">
         <router-view></router-view>
     </div>
 </template>

@@ -11,7 +11,7 @@ import routesName from "@/constans/routesName.js";
                 class="ml-6 text-lg font-bold text-gray-800 dark:text-gray-200"
                 :to="{name: routesName.home}"
             >
-                Windmill
+                Zoho Lazy Ass
             </router-link>
             <ul class="mt-6">
                 <li class="relative px-6 py-3">

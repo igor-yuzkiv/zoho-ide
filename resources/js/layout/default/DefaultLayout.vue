@@ -2,9 +2,7 @@
 import {ref} from "vue";
 import LeftSidebar from "@/layout/default/parts/left-sidebar/LeftSidebar.vue";
 import DefaultHeader from "@/layout/default/parts/header/DefaultHeader.vue";
-
 const isSideMenuOpen = ref(false)
-
 
 </script>
 

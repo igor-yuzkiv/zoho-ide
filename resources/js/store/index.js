@@ -5,6 +5,7 @@ import auth from "./modules/auth";
 const store = createStore({
     state    : {
         pageTitle: "",
+        darkTheme     : true,
     },
     getters  : {
         appName: () => APP_NAME,
@@ -15,6 +16,7 @@ const store = createStore({
             state.pageTitle = payload;
             document.title = `${payload} | ${APP_NAME}`;
         },
+        SET_DARK_THEME: (state, payload) => state.darkTheme = payload,
     },
     modules: {
         auth

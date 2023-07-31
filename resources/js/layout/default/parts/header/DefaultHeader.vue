@@ -1,10 +1,14 @@
 <script setup>
-import {ref} from "vue";
+import {computed, ref} from "vue";
+import {useStore} from "vuex";
+const store = useStore();
 
-const dark = ref(false);
-function toggleSideMenu() {
-    //TODO: ...
-}
+
+
+const dark = computed({
+    get: () => store.state.darkTheme,
+    set: (value) => store.commit("SET_DARK_THEME", value)
+});
 
 function toggleTheme() {
     dark.value = !dark.value;

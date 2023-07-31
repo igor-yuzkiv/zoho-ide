@@ -1,98 +1,107 @@
-<script setup>
-import {onMounted, ref} from "vue";
+<script>
+import {defineComponent, h} from "vue";
 import * as monaco from "monaco-editor";
 import {fetchComponents} from "@/api/deluge.js";
 
-const props = defineProps({
+export default defineComponent({
+  props: {
     modelValue: {
-        type   : String,
-        default: '',
+      type   : String,
+      default: '',
     },
     height    : {
-        type   : String,
-        default: "500px"
+      type   : String,
+      default: "500px"
+    },
+    id        : {
+      type   : String,
+      default: "editorContainer"
     },
     theme     : {
-        type   : String,
-        default: "vs-dark",
-        validator(value) {
-            return ['vs', 'vs-dark', 'hc-black'].includes(value);
-        }
+      type   : String,
+      default: 'vs-dark',
+      validator(value) {
+        return ['vs', 'vs-dark', 'hc-black'].includes(value);
+      }
     },
-    arguments : {
-        type   : Array,
-        default: () => []
+    variables : {
+      type   : Array,
+      default: () => []
     }
-});
-const emit = defineEmits(['update:modelValue']);
-const components = ref([]);
-const editorInstance = ref(null);
-
-async function loadComponents() {
-    const response = await fetchComponents()
-        .then(({data}) => data)
-        .catch(e => console.error(e))
-
-    if (Array.isArray(response)) {
-        components.value = response;
+  },
+  emits: ["update:modelValue"],
+  data() {
+    return {
+      components    : [],
+      editorInstance: null,
     }
-}
+  },
+  async beforeMount() {
+    await this.loadComponents();
+  },
+  mounted() {
+    this.initEditor();
+  },
+  methods : {
+    async loadComponents() {
+      const response = await fetchComponents()
+          .then(({data}) => data)
+          .catch(e => console.error(e))
 
-// eslint-disable-next-line no-unused-vars
-const provideCompletionItems = (model, position, context) => {
-    const suggestions = components.value.map(i => ({
+      if (Array.isArray(response)) {
+        this.components = response;
+      }
+    },
+    provideCompletionItems() {
+      const suggestions = this.components.map(i => ({
         label     : i.name,
         kind      : monaco.languages.CompletionItemKind.Text,
         insertText: i?.insertText || '',
-    }))
+      }))
 
 
-    for (const item of props.arguments) {
+      for (const item of this.variables) {
         if (!item?.name) {
-            continue;
+          continue;
         }
 
         suggestions.push({
-            label     : '$' + item.name,
-            kind      : monaco.languages.CompletionItemKind.Variable,
-            insertText: '{{$' + item.name + '}}'
+          label     : '$' + item.name,
+          kind      : monaco.languages.CompletionItemKind.Variable,
+          insertText: '{{$' + item.name + '}}'
         })
-    }
+      }
 
-    return {suggestions};
-}
+      return {suggestions};
+    },
+    initEditor() {
+      monaco.languages.registerCompletionItemProvider(
+          'php',
+          {
+            provideCompletionItems: this.provideCompletionItems
+          }
+      );
 
-function initEditor() {
-    monaco.languages.registerCompletionItemProvider(
-        'php',
-        {
-            provideCompletionItems: provideCompletionItems
-        }
-    );
-
-    const instance = monaco.editor.create(
-        document.getElementById('editorContainer'),
-        {
-            value   : props.modelValue,
+      const instance = monaco.editor.create(
+          document.getElementById('editorContainer'),
+          {
+            value   : this.modelValue,
             language: 'php',
-            theme   : props.theme,
-        }
-    );
+            theme   : this.theme,
+          }
+      );
 
-    instance.onDidChangeModelContent(() => emit('update:modelValue', instance.getValue()));
-    editorInstance.value = instance;
-}
-
-onMounted(async () => {
-    await loadComponents();
-    initEditor();
+      instance.onDidChangeModelContent(() => this.$emit('update:modelValue', instance.getValue()));
+      this.editorInstance = instance;
+    }
+  },
+  setup(props) {
+    return () => h("div", {
+      id   : props.id,
+      style: {
+        height: props.height
+      },
+    })
+  },
 })
 </script>
-
-<template>
-    <div id="editorContainer" :style="{height}"></div>
-</template>
-
-<style scoped>
-
-</style>
