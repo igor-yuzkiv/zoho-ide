@@ -16,7 +16,7 @@ const isSideMenuOpen = ref(false)
         <div class="flex flex-col flex-1 w-full">
             <default-header></default-header>
 
-            <main class="h-full overflow-y-auto">
+            <main class="flex flex-col flex-grow overflow-hidden p-2">
                <router-view></router-view>
             </main>
         </div>

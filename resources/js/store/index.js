@@ -1,7 +1,5 @@
 import {createStore} from "vuex";
 const APP_NAME = import.meta.env.VITE_APP_NAME;
-import auth from "./modules/auth";
-
 const store = createStore({
     state    : {
         pageTitle: "",
@@ -17,9 +15,6 @@ const store = createStore({
             document.title = `${payload} | ${APP_NAME}`;
         },
         SET_DARK_THEME: (state, payload) => state.darkTheme = payload,
-    },
-    modules: {
-        auth
     }
 })
 
