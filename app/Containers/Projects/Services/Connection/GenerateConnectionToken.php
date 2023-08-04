@@ -2,7 +2,7 @@
 
 namespace App\Containers\Projects\Services\Connection;
 
-use App\Abstractions\Runnable;
+use App\Abstractions\Contracts\ActionInterface;
 use App\Containers\Projects\Enums\ConnectionStatus;
 use App\Containers\Projects\Models\ProjectConnection;
 use App\Containers\Projects\Zoho\ApiClient\ZohoOAuthClient;
@@ -10,7 +10,7 @@ use App\Containers\Projects\Zoho\ApiClient\ZohoOAuthClient;
 /**
  *
  */
-class GenerateConnectionToken implements Runnable
+class GenerateConnectionToken implements ActionInterface
 {
     /**
      * @var ZohoOAuthClient
@@ -37,7 +37,7 @@ class GenerateConnectionToken implements Runnable
      * @return ProjectConnection
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function run(): ProjectConnection
+    public function handle(): ProjectConnection
     {
         $response = $this->getRefreshToken();
 

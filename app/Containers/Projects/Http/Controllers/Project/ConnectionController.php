@@ -137,7 +137,7 @@ class ConnectionController extends Controller
             }
 
             $action = new GenerateConnectionToken($connection, $grandToken);
-            $connection = $action->run();
+            $connection = $action->handle();
 
             Cache::delete('project.connection');
             return view('zoho.callback', [

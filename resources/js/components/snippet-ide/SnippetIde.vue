@@ -1,7 +1,7 @@
 <script>
 import {defineComponent} from "vue";
 import CodeEditor from "@/components/snippet-ide/parts/CodeEditor.vue";
-import ArgumentsList from "@/components/snippet-ide/parts/ArgumentsList.vue";
+import argumentsList from "@/components/snippet-ide/parts/ArgumentsList.vue";
 import XButton from "@/components/button/XButton.vue";
 import XCard from "@/components/card/XCard.vue";
 import {Input as XInput} from "flowbite-vue";
@@ -9,7 +9,7 @@ import XIconButton from "@/components/icon-button/XIconButton.vue";
 import {Icon} from "@iconify/vue";
 
 export default defineComponent({
-    components: {Icon, XIconButton, XInput, XCard, XButton, ArgumentsList, CodeEditor},
+    components: {argumentsList, Icon, XIconButton, XInput, XCard, XButton, CodeEditor},
     props     : {
         isEdit   : {
             type   : Boolean,
@@ -23,20 +23,20 @@ export default defineComponent({
     data() {
         return {
             collapsed: false,
-            form     : {
-                name     : '',
-                content  : '',
-                arguments: [
-                    {
-                        name: 'crmModuleName',
-                        type: "string",
-                    },
-                    {
-                        name: "creatorFormName",
-                        type: "string",
-                    }
-                ],
-            }
+            snippet  : {
+                name   : '',
+                content: '',
+            },
+            arguments: [
+                {
+                    name: 'crmModuleName',
+                    type: "string",
+                },
+                {
+                    name: "creatorFormName",
+                    type: "string",
+                }
+            ],
         }
     },
     computed: {},
@@ -64,20 +64,20 @@ export default defineComponent({
             class="col-span-2 flex flex-col flex-gow pr-1 overflow-auto"
             v-show="!collapsed"
         >
-            <x-card title="Genereal" expandable>
+            <x-card title="General" expandable>
                 <x-input label="Name"/>
             </x-card>
 
-            <arguments-list v-model="form.arguments"></arguments-list>
+            <arguments-list v-model="arguments"></arguments-list>
         </div>
         <code-editor
             :class="{
                 'col-span-4': !collapsed,
                 'col-span-6': collapsed,
             }"
-            :variables="form.arguments"
+            :variables="snippet.arguments"
             theme="vs"
-            v-model="form.content"
+            v-model="snippet.content"
         />
     </div>
 </template>

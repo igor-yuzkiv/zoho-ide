@@ -1,69 +1,54 @@
 <script setup>
-import {reactive} from "vue";
+import {ref} from "vue";
 import XCard from "@/components/card/XCard.vue";
-import {Button, Input, ListGroup, ListGroupItem, Modal, Select} from "flowbite-vue";
+import {ListGroup, ListGroupItem, Modal} from "flowbite-vue";
 import XIconButton from "@/components/icon-button/XIconButton.vue";
+import ArgumentForm from "@/components/snippet-ide/parts/ArgumentForm.vue";
 
-const props = defineProps({
+defineEmits(['update:modelValue']);
+defineProps({
     modelValue: {
         type   : Array,
         default: () => []
     }
 });
-const emit = defineEmits(['update:modelValue']);
 
-const argumentForm = reactive({
-    isOpen: false,
-    name  : '',
-    type  : '',
-});
 
-function submitArgumentHandle() {
-    emit('update:modelValue', [
-        ...props.modelValue,
-        {
-            name: argumentForm.name,
-            type: argumentForm.type,
-        }
-    ])
-    argumentForm.isOpen = false;
+const argumentFormModal = ref({
+    show  : false,
+    id    : null,
+    isEdit: false,
+})
+
+function openArgumentFormModal(item) {
+    console.log("openArgumentFormModal", item)
+    if (item?.id) {
+        argumentFormModal.value.id = item.id;
+        argumentFormModal.value.isEdit = item.id;
+    }
+    argumentFormModal.value.show = true;
 }
 
-function openArgumentForm(item) {
-    argumentForm.isOpen = true;
-    argumentForm.name = item?.name || '';
-    argumentForm.type = item?.type || 'string';
+function closeArgumentFormModal() {
+    argumentFormModal.value = {
+        show  : false,
+        id    : null,
+        isEdit: false,
+    };
 }
 
 function deleteArgument(item) {
-    emit('update:modelValue', props.modelValue.filter(i => i.name !== item.name));
+    console.log("deleteArgument", item);
+    //TODO: ...
+    //emit('update:modelValue', props.modelValue.filter(i => i.name !== item.name));
 }
-
-const argumentsTypes = [
-    {
-        name : 'string',
-        value: 'string',
-    },
-    {
-        name : 'number',
-        value: 'number',
-    },
-    {
-        name : 'boolean',
-        value: 'boolean',
-    },
-    {
-        name : 'any',
-        value: 'any',
-    },
-];
 
 </script>
 
 <template>
-    <x-card title="Arguments" expandable>
+    <x-card title="Argument" expandable>
         <template #actions>
-            <x-icon-button icon="ph:plus" @click="openArgumentForm(null)"/>
+            <x-icon-button icon="ph:plus" @click="openArgumentFormModal"/>
         </template>
 
         <ListGroup class="w-full">
@@ -71,8 +56,9 @@ const argumentsTypes = [
                 v-for="item in modelValue"
                 :key="item.name"
                 class="flex items-center justify-between"
+                @click="openArgumentFormModal(item)"
             >
-                <div class="flex flex-col v-full" @click="openArgumentForm(item)">
+                <div class="flex flex-col v-full">
                     <span>{{ item.name }}</span>
                     <span class="text-black">type: {{ item.type }}</span>
                 </div>
@@ -81,14 +67,13 @@ const argumentsTypes = [
         </ListGroup>
     </x-card>
 
-    <Modal v-if="argumentForm.isOpen" @close="argumentForm.isOpen = false">
-        <template #header>Add Arguments</template>
+    <Modal v-if="argumentFormModal.show" @close="closeArgumentFormModal">
+        <template #header>Argument Form</template>
         <template #body>
-            <Input label="Name" v-model="argumentForm.name"/>
-            <Select label="Type" v-model="argumentForm.type" :options="argumentsTypes"/>
-        </template>
-        <template #footer>
-            <Button @click="submitArgumentHandle" type="button">Add</Button>
+            <argument-form
+                :is-edit="argumentFormModal.isEdit"
+                :argument-id="argumentFormModal.id"
+            ></argument-form>
         </template>
     </Modal>
 </template>
