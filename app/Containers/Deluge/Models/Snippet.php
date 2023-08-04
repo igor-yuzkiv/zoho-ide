@@ -3,18 +3,34 @@
 namespace App\Containers\Deluge\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
+/**
+ *
+ */
 class Snippet extends Model
 {
+    use SoftDeletes;
+
+    /**
+     * @var string
+     */
     protected $table = 'snippets';
 
+    /**
+     * @var string[]
+     */
     protected $fillable = [
         'name',
         'content',
-        'arguments',
     ];
 
-    protected $casts = [
-        'arguments' => 'array',
-    ];
+    /**
+     * @return HasMany
+     */
+    public function arguments(): HasMany
+    {
+        return $this->hasMany(SnippetArgument::class);
+    }
 }

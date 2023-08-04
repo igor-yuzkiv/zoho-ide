@@ -83,6 +83,7 @@ export default defineComponent({
                     value   : this.modelValue,
                     language: 'php',
                     theme   : this.theme,
+                    automaticLayout: true,
                 }
             );
 
