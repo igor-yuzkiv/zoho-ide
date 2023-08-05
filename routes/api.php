@@ -34,10 +34,10 @@ Route::prefix("deluge")
                 Route::prefix("arguments")
                     ->group(function () {
                         Route::get("{snippet}", [\App\Containers\Deluge\Http\Controllers\SnippetArgumentController::class, "getBySnippet"]);
-                        Route::get("{argument}", [\App\Containers\Deluge\Http\Controllers\SnippetArgumentController::class, "getById"]);
-                        Route::post("", [\App\Containers\Deluge\Http\Controllers\SnippetArgumentController::class, "create"]);
-                        Route::put("{argument}", [\App\Containers\Deluge\Http\Controllers\SnippetArgumentController::class, "update"]);
-                        Route::delete("{argument}", [\App\Containers\Deluge\Http\Controllers\SnippetArgumentController::class, "delete"]);
+                        Route::get("{snippet-argument}", [\App\Containers\Deluge\Http\Controllers\SnippetArgumentController::class, "getById"]);
+                        Route::post("{snippet}", [\App\Containers\Deluge\Http\Controllers\SnippetArgumentController::class, "createSnippetArgument"]);
+                        Route::put("{snippet-argument}", [\App\Containers\Deluge\Http\Controllers\SnippetArgumentController::class, "update"]);
+                        Route::delete("{snippet-argument}", [\App\Containers\Deluge\Http\Controllers\SnippetArgumentController::class, "delete"]);
                     });
             });
 

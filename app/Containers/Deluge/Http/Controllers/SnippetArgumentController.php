@@ -2,6 +2,7 @@
 
 namespace App\Containers\Deluge\Http\Controllers;
 
+use App\Containers\Deluge\Http\Requests\SaveArgumentRequest;
 use App\Containers\Deluge\Models\Snippet;
 use App\Containers\Deluge\Models\SnippetArgument;
 use App\Containers\Deluge\Transformers\SnippetArgumentTransformer;
@@ -27,9 +28,15 @@ class SnippetArgumentController extends Controller
             ->respond();
     }
 
-    public function create()
+    public function createSnippetArgument(Snippet $snippet, SaveArgumentRequest $request)
     {
-        //TODO: ...
+        $argument = SnippetArgument::create([
+            ...$request->validated(),
+            'snippet_id' => $snippet->id,
+        ]);
+        return fractal($argument)
+            ->transformWith(new SnippetArgumentTransformer())
+            ->respond();
     }
 
     public function update(SnippetArgument $argument)

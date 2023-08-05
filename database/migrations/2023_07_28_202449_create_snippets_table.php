@@ -10,8 +10,7 @@ return new class extends Migration {
         Schema::create('snippets', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->longText('content');
-            $table->json('arguments')->nullable();
+            $table->longText('content')->nullable();
             $table->timestamps();
         });
     }
