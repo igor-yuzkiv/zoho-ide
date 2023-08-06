@@ -1,9 +1,9 @@
 <script setup>
 import {ARGUMENT_TYPES} from "@/constans/deluge.js"
-import XInput from "@/components/input/XInput.vue";
+import XInput from "@/components/base/input/XInput.vue";
 import {Checkbox, Select} from "flowbite-vue"
 import {onMounted, ref} from "vue";
-import XButton from "@/components/button/XButton.vue";
+import XButton from "@/components/base/button/XButton.vue";
 
 const defaultFormState = () => ({
     name    : '',

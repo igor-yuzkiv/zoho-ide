@@ -1,15 +1,15 @@
 <script>
 import {defineComponent} from "vue";
 import CodeEditor from "@/components/code-editor/CodeEditor.vue";
-import XButton from "@/components/button/XButton.vue";
-import XCard from "@/components/card/XCard.vue";
+import XButton from "@/components/base/button/XButton.vue";
+import XCard from "@/components/base/card/XCard.vue";
 import {ListGroup, ListGroupItem, Modal} from "flowbite-vue";
-import XIconButton from "@/components/icon-button/XIconButton.vue";
+import XIconButton from "@/components/base/icon-button/XIconButton.vue";
 import {Icon} from "@iconify/vue";
 import {fetchSnippet, updateSnippet} from "@/api/deluge.js"
-import XInput from "@/components/input/XInput.vue";
+import XInput from "@/components/base/input/XInput.vue";
 import ArgumentForm from "@/components/argument-form/ArgumentForm.vue";
-import XTextarea from "@/components/textarea/XTextarea.vue";
+import XTextarea from "@/components/base/textarea/XTextarea.vue";
 
 export default defineComponent({
     components: {

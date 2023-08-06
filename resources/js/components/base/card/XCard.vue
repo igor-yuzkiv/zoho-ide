@@ -1,7 +1,7 @@
 <script setup>
 import {Icon} from "@iconify/vue";
 import {ref} from "vue";
-import XIconButton from "@/components/icon-button/XIconButton.vue";
+import XIconButton from "@/components/base/icon-button/XIconButton.vue";
 
 const props = defineProps({
     title     : {
