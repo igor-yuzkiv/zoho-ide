@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Containers\Deluge\Transformers;
+namespace App\Containers\Deluge\Transformers\Snippet;
 
-use App\Containers\Deluge\Models\Snippet;
+use App\Containers\Deluge\Models\Snippet\Snippet;
 use League\Fractal\Resource\Collection;
 use League\Fractal\TransformerAbstract;
 
@@ -28,13 +28,12 @@ class SnippetTransformer extends TransformerAbstract
     public function transform(Snippet $snippet): array
     {
         return [
-            'id'              => (int)$snippet->id,
+            'id'              => (string)$snippet->id,
             'name'            => $snippet->name,
             'content'         => $snippet->content,
             'arguments'       => $snippet->arguments,
             'created_at'      => $snippet->created_at,
-            'updated_at'      => $snippet->updated_at,
-            'arguments_count' => (int)$snippet->arguments_count,
+            'updated_at'      => $snippet->updated_at
         ];
     }
 

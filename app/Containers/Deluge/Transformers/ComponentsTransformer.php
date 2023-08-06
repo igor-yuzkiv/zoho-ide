@@ -28,7 +28,7 @@ class ComponentsTransformer extends TransformerAbstract
     public function transform(DelugeComponent $delugeComponent): array
     {
         return [
-            'id'          => (int)$delugeComponent->id,
+            'id'          => (string)$delugeComponent->id,
             'name'        => $delugeComponent->name,
             'description' => $delugeComponent->description,
             'insertText'  => $delugeComponent->insertText,

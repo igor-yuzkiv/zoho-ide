@@ -2,7 +2,7 @@
 
 namespace App\Containers\Deluge\Http\Controllers;
 
-use App\Containers\Deluge\Models\Snippet;
+use App\Containers\Deluge\Models\Snippet\Snippet;
 use App\Ship\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 

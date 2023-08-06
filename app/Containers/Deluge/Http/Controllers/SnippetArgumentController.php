@@ -3,9 +3,9 @@
 namespace App\Containers\Deluge\Http\Controllers;
 
 use App\Containers\Deluge\Http\Requests\SaveArgumentRequest;
-use App\Containers\Deluge\Models\Snippet;
-use App\Containers\Deluge\Models\SnippetArgument;
-use App\Containers\Deluge\Transformers\SnippetArgumentTransformer;
+use App\Containers\Deluge\Models\Snippet\Snippet;
+use App\Containers\Deluge\Models\Snippet\SnippetArgument;
+use App\Containers\Deluge\Transformers\Snippet\SnippetArgumentTransformer;
 use App\Ship\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
 

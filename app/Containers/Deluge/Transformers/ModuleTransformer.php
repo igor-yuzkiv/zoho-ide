@@ -28,13 +28,12 @@ class ModuleTransformer extends TransformerAbstract
     public function transform(DelugeModule $delugeModule): array
     {
         return [
-            'id'               => (int)$delugeModule->id,
+            'id'               => (string)$delugeModule->id,
             'name'             => $delugeModule->name,
             'prefix'           => $delugeModule->prefix,
             'namespace'        => $delugeModule->namespace,
             'created_at'       => $delugeModule->created_at,
             'updated_at'       => $delugeModule->updated_at,
-            'components_count' => (int)$delugeModule->components_count,
         ];
     }
 

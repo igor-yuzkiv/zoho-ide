@@ -3,36 +3,30 @@ import {defineComponent} from "vue";
 import CodeEditor from "@/components/code-editor/CodeEditor.vue";
 import XButton from "@/components/button/XButton.vue";
 import XCard from "@/components/card/XCard.vue";
-import {Input as XInput, ListGroup, ListGroupItem, Modal} from "flowbite-vue";
+import {Input as XInput, ListGroup, ListGroupItem} from "flowbite-vue";
 import XIconButton from "@/components/icon-button/XIconButton.vue";
 import {Icon} from "@iconify/vue";
-import ArgumentForm from "@/components/snippet-ide/parts/ArgumentForm.vue";
 
 export default defineComponent({
-    components: {ArgumentForm, Modal, ListGroupItem, ListGroup, Icon, XIconButton, XInput, XCard, XButton, CodeEditor},
+    components: {ListGroupItem, ListGroup, Icon, XIconButton, XInput, XCard, XButton, CodeEditor},
     props     : {
         snippetId: {
             type    : String,
             required: true,
         }
     },
+    beforeMount() {
+
+    },
     data() {
         return {
-            collapsed    : false,
-            snippet      : {
+            collapsed: false,
+            snippet  : {
                 name   : '',
                 content: '',
+                arguments: []
             },
-            arguments    : [
-                {
-                    name: 'crmModuleName',
-                    type: "string",
-                }
-            ],
-            argumentModal: {
-                isOpen    : false,
-                argumentId: null,
-            }
+
         }
     },
     computed: {},
@@ -41,12 +35,8 @@ export default defineComponent({
             console.log(this.form);
         },
 
-        openArgumentModalForm(item) {
-            this.argumentModal.argumentId = item?.id || null;
-            this.argumentModal.isOpen = true;
-        },
-
         deleteArgumentHandle(item) {
+            //TODO:...
             console.log("deleteArgumentHandle", item);
         }
     },
@@ -76,16 +66,16 @@ export default defineComponent({
 
             <x-card title="Arguments" expandable>
                 <template #actions>
-                    <x-icon-button icon="ph:plus" @click="openArgumentModalForm"/>
+                    <x-icon-button icon="ph:plus"/>
                 </template>
 
                 <ListGroup class="w-full">
                     <ListGroupItem
-                        v-for="item in arguments"
+                        v-for="item in snippet.arguments"
                         :key="item.name"
                         class="flex items-center justify-between"
                     >
-                        <div class="flex flex-col v-full" @click="openArgumentModalForm(item)">
+                        <div class="flex flex-col v-full">
                             <span>{{ item.name }}</span>
                             <span class="text-black">type: {{ item.type }}</span>
                         </div>
@@ -105,19 +95,6 @@ export default defineComponent({
             v-model="snippet.content"
         />
     </div>
-
-    <teleport to="body">
-        <Modal v-if="argumentModal.isOpen" @close="argumentModal.isOpen = false">
-            <template #header>Argument Form</template>
-            <template #body>
-                <ArgumentForm
-                    :isEdit="Boolean(argumentModal.argumentId)"
-                    :argument-id="argumentModal.argumentId"
-                >
-                </ArgumentForm>
-            </template>
-        </Modal>
-    </teleport>
 </template>
 
 <style scoped>
