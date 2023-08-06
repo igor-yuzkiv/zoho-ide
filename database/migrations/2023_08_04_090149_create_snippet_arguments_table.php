@@ -11,9 +11,10 @@ return new class extends Migration {
             $table->id();
             $table->foreignId('snippet_id')->constrained('snippets');
 
-            $table->string("name");
+            $table->string("name")->unique();
             $table->string("type")->nullable();
             $table->string("default")->nullable();
+            $table->json("options")->nullable();
             $table->boolean("required")->default(false);
 
             $table->softDeletes();

@@ -28,12 +28,12 @@ class SnippetTransformer extends TransformerAbstract
     public function transform(Snippet $snippet): array
     {
         return [
-            'id'              => (string)$snippet->id,
-            'name'            => $snippet->name,
-            'content'         => $snippet->content,
-            'arguments'       => $snippet->arguments,
-            'created_at'      => $snippet->created_at,
-            'updated_at'      => $snippet->updated_at
+            'id'          => (string)$snippet->id,
+            'name'        => $snippet->name,
+            'content'     => $snippet->content,
+            'description' => $snippet->description,
+            'created_at'  => $snippet->created_at,
+            'updated_at'  => $snippet->updated_at
         ];
     }
 

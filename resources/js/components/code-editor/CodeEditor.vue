@@ -32,10 +32,8 @@ export default defineComponent({
             editorInstance: null,
         }
     },
-    async beforeMount() {
+    async mounted() {
         await this.loadComponents();
-    },
-    mounted() {
         this.initEditor();
     },
     methods: {
@@ -76,6 +74,8 @@ export default defineComponent({
                     provideCompletionItems: this.provideCompletionItems
                 }
             );
+
+            console.log("initEditor", this.modelValue);
 
             const instance = monaco.editor.create(
                 document.getElementById('editorContainer'),

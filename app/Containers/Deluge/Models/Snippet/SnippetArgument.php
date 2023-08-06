@@ -26,13 +26,21 @@ class SnippetArgument extends Model
         'name',
         'type',
         'default',
-        'required'
+        'required',
+        'options',
+    ];
+
+    /**
+     * @var string[]
+     */
+    protected $casts = [
+        'options' => 'array',
     ];
 
     /**
      * @return BelongsTo
      */
-    public function snippet():BelongsTo
+    public function snippet(): BelongsTo
     {
         return $this->belongsTo(Snippet::class);
     }

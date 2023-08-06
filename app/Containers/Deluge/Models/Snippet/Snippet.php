@@ -24,6 +24,7 @@ class Snippet extends Model
     protected $fillable = [
         'name',
         'content',
+        'description',
     ];
 
     /**

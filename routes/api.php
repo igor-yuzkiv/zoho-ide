@@ -29,16 +29,10 @@ Route::prefix("deluge")
 
         Route::prefix("snippets")
             ->group(function () {
+                Route::get("{snippet}", [\App\Containers\Deluge\Http\Controllers\SnippetsController::class, "getSnippetById"]);
                 Route::post("", [\App\Containers\Deluge\Http\Controllers\SnippetsController::class, "createSnippet"]);
-
-                Route::prefix("arguments")
-                    ->group(function () {
-                        Route::get("{snippet}", [\App\Containers\Deluge\Http\Controllers\SnippetArgumentController::class, "getBySnippet"]);
-                        Route::get("{snippet-argument}", [\App\Containers\Deluge\Http\Controllers\SnippetArgumentController::class, "getById"]);
-                        Route::post("{snippet}", [\App\Containers\Deluge\Http\Controllers\SnippetArgumentController::class, "createSnippetArgument"]);
-                        Route::put("{snippet-argument}", [\App\Containers\Deluge\Http\Controllers\SnippetArgumentController::class, "update"]);
-                        Route::delete("{snippet-argument}", [\App\Containers\Deluge\Http\Controllers\SnippetArgumentController::class, "delete"]);
-                    });
+                Route::put("{snippet}", [\App\Containers\Deluge\Http\Controllers\SnippetsController::class, "updateSnippet"]);
+                Route::delete("{snippet}", [\App\Containers\Deluge\Http\Controllers\SnippetsController::class, "deleteSnippet"]);
             });
 
     });
