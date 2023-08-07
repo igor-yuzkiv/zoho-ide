@@ -1,0 +1,48 @@
+{
+    "manifest_version": 3,
+    "name": "ZohoLazyAss",
+    "version": "1.0",
+    "description": "description",
+    "permissions": [
+        "tabs",
+        "activeTab",
+        "scripting",
+        "webRequest"
+    ],
+    "action": {
+        "default_popup": "popup/dist/index.html",
+        "default_icon": "popup/icon.png"
+    },
+    "content_scripts": [
+        {
+            "js": [
+                "content-script.js"
+            ],
+            "css": [
+                "embedded/src/zla_style.css"
+            ],
+            "matches": [
+                "https://creator.zoho.com/*"
+            ]
+        }
+    ],
+    "web_accessible_resources": [
+        {
+            "resources": [
+                "embedded/src/toolbar/zla_toolbar.js",
+                "embedded/src/zla_eventListener.js",
+                "embedded/src/toolbar/zla_toolbar.html"
+            ],
+            "matches": [
+                "https://creator.zoho.com/*"
+            ]
+        }
+    ],
+    "host_permissions": [
+        "https://store.igoryuzkiv.tech/*"
+    ],
+    "optional_host_permissions":[
+        "https://*/*",
+        "http://*/*"
+    ]
+}
