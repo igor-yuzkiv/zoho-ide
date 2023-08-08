@@ -16,3 +16,14 @@ export const ARGUMENT_TYPES = {
         value: 'any',
     },
 }
+
+export const SNIPPET_TYPES = {
+    template: {
+        name: "template",
+        variant: "success"
+    },
+    sample: {
+        name: "sample",
+        variant: "info"
+    }
+}

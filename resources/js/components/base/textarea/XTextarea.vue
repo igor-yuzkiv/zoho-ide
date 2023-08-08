@@ -3,7 +3,8 @@ import {defineComponent, h} from "vue"
 import {Textarea} from "flowbite-vue"
 
 /**
- * Wrapper for Flowbite Input component
+ * Wrapper for Flowbite component
+ * TODO: write custom select component
  */
 export default defineComponent({
     setup() {

@@ -6,10 +6,16 @@ import XIconButton from "@/components/base/icon-button/XIconButton.vue";
 import routesName from "@/constans/routesName.js";
 import {useConfirmBeforeAction} from "@/components/confirm-dialog/useConfirmDialog.js";
 import {Icon} from "@iconify/vue";
+import XChip from "@/components/chip/x-chip.vue";
+import {SNIPPET_TYPES} from "@/constans/snippet.js";
 
 export default defineComponent({
-    components: {Icon, XIconButton, XButton},
+    components: {XChip, Icon, XIconButton, XButton},
     inject    : ['toast'],
+    setup() {
+        const confirmBeforeAction = useConfirmBeforeAction();
+        return {confirmBeforeAction}
+    },
     data() {
         return {
             snippets  : [],
@@ -22,13 +28,13 @@ export default defineComponent({
             }
         }
     },
-    setup() {
-        const confirmBeforeAction = useConfirmBeforeAction();
-
-        return {confirmBeforeAction}
-    },
     async beforeMount() {
         await this.loadSnippets();
+    },
+    computed  : {
+        SNIPPET_TYPES() {
+            return SNIPPET_TYPES
+        }
     },
     methods: {
         async loadSnippets(page = 1) {
@@ -100,8 +106,12 @@ export default defineComponent({
                 <div class="flex flex-col flex-grow text-sm">
                     {{ item.description }}
                 </div>
-                <div class="text-sm text-gray-500">
-                    Updated At: {{ item?.updated_at_formatted || '-'}}
+                <div class="flex flex-col items-start mb-1">
+                    <x-chip
+                        :variant="SNIPPET_TYPES[item.type]['variant']"
+                    >
+                        {{ item.type }}
+                    </x-chip>
                 </div>
             </div>
             <div class="flex items-center justify-end border-t pt-2">

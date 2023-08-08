@@ -1,9 +1,10 @@
 <script setup>
-import {ARGUMENT_TYPES} from "@/constans/deluge.js"
+import {ARGUMENT_TYPES} from "@/constans/snippet.js"
 import XInput from "@/components/base/input/XInput.vue";
-import {Checkbox, Select} from "flowbite-vue"
 import {onMounted, ref} from "vue";
 import XButton from "@/components/base/button/XButton.vue";
+import XSelect from "@/components/base/select/XSelect.vue";
+import XCheckbox from "@/components/base/checkbox/XCheckbox.vue";
 
 const defaultFormState = () => ({
     name    : '',
@@ -42,7 +43,7 @@ onMounted(() => {
             v-model="form.name"
         />
 
-        <Select
+        <x-select
             label="Type"
             :options="Object.values(ARGUMENT_TYPES)"
             v-model="form.type"
@@ -53,7 +54,7 @@ onMounted(() => {
             v-model="form.default"
         />
 
-        <Checkbox label="Required" v-model="form.required"/>
+        <x-checkbox label="Required" v-model="form.required"/>
     </div>
 
     <div class="flex items-center justify-end mt-3">

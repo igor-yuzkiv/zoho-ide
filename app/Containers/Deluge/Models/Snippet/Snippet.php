@@ -2,6 +2,7 @@
 
 namespace App\Containers\Deluge\Models\Snippet;
 
+use App\Containers\Deluge\Enums\SnippetType;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -25,6 +26,14 @@ class Snippet extends Model
         'name',
         'content',
         'description',
+        'type',
+    ];
+
+    /**
+     * @var string[]
+     */
+    protected $casts = [
+        'type' => SnippetType::class,
     ];
 
     /**

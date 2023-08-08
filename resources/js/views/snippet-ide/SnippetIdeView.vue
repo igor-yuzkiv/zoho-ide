@@ -1,6 +1,6 @@
 <script>
 import {defineComponent} from "vue";
-import XCodeEditor from "@/components/code-editor/XCodeEditor.vue";
+import XSnippetCodeEditor from "@/components/code-editor/XSnippetCodeEditor.vue";
 import XButton from "@/components/base/button/XButton.vue";
 import XCard from "@/components/base/card/XCard.vue";
 import {ListGroup, ListGroupItem, Modal} from "flowbite-vue";
@@ -12,8 +12,13 @@ import ArgumentForm from "@/components/argument-form/ArgumentForm.vue";
 import XTextarea from "@/components/base/textarea/XTextarea.vue";
 import routesName from "@/constans/routesName.js";
 import {mapState} from "vuex";
+import XSelect from "@/components/base/select/XSelect.vue";
+import {SNIPPET_TYPES} from "@/constans/snippet.js";
+
 export default defineComponent({
     components: {
+        XSelect,
+        XSnippetCodeEditor,
         XTextarea,
         ArgumentForm,
         Modal,
@@ -23,8 +28,7 @@ export default defineComponent({
         Icon,
         XIconButton,
         XCard,
-        XButton,
-        XCodeEditor
+        XButton
     },
     inject    : ['toast'],
     async beforeMount() {
@@ -47,7 +51,8 @@ export default defineComponent({
                 name       : '',
                 content    : '',
                 description: '',
-                arguments  : []
+                arguments  : [],
+                type       : "template",
             },
             argumentFormModal: {
                 isOpen    : false,
@@ -59,6 +64,12 @@ export default defineComponent({
         ...mapState(['darkTheme']),
         getSnippetArguments() {
             return this.snippet.arguments.filter(argument => !argument?._delete)
+        },
+        getSnippetTypesOptions() {
+            return Object.keys(SNIPPET_TYPES).map(key => ({name: key, value: key}))
+        },
+        isTemplateSnippet() {
+            return this.snippet.type === SNIPPET_TYPES.template.name;
         }
     },
     methods : {
@@ -145,6 +156,11 @@ export default defineComponent({
             <x-card title="General" expandable>
                 <div class="flex flex-col gap-y-2">
                     <x-input label="Name" v-model="snippet.name"/>
+                    <x-select
+                        label="Type"
+                        v-model="snippet.type"
+                        :options="getSnippetTypesOptions"
+                    />
                     <x-textarea v-model="snippet.description" label="Description"/>
                 </div>
             </x-card>
@@ -170,7 +186,7 @@ export default defineComponent({
             </x-card>
         </div>
 
-        <x-code-editor
+        <x-snippet-code-editor
             :class="{
                 'col-span-4': !showToolbar,
                 'col-span-6': showToolbar,
@@ -178,13 +194,18 @@ export default defineComponent({
             :variables="getSnippetArguments"
             :theme="darkTheme ? 'vs-dark' : 'vs'"
             v-model="snippet.content"
+            :type="snippet.type"
         />
     </div>
 
-    <teleport to="body">
+    <teleport to="#x__application">
+
+        <!--Argument form modal-->
         <Modal v-if="argumentFormModal.isOpen" @close="handleCloseArgumentModal">
             <template #header>
-                {{ argumentFormModal.modelValue.name || 'New Argument' }}
+                <div class="text-black dark:text-white">
+                    {{ argumentFormModal.modelValue.name || 'New Argument' }}
+                </div>
             </template>
             <template #body>
                 <argument-form :model-value="argumentFormModal.modelValue" @update:modalValue="handleUpdateArgument"/>

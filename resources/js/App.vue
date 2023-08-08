@@ -13,7 +13,7 @@ onMounted(() => {
 </script>
 
 <template>
-    <div :class="{dark:darkTheme}">
+    <div id="x__application" :class="{dark:darkTheme}">
         <confirm-dialog-wrapper></confirm-dialog-wrapper>
         <router-view></router-view>
     </div>

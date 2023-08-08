@@ -1,6 +1,6 @@
 <script>
 import {defineComponent, h} from "vue"
-import {Input} from "flowbite-vue"
+import {Select} from "flowbite-vue"
 
 /**
  * Wrapper for Flowbite component
@@ -8,7 +8,7 @@ import {Input} from "flowbite-vue"
  */
 export default defineComponent({
     setup() {
-        return () => h(Input)
+        return () => h(Select)
     }
 });
 </script>

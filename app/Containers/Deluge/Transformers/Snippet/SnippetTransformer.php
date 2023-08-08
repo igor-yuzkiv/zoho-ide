@@ -35,6 +35,7 @@ class SnippetTransformer extends TransformerAbstract
             'description' => $snippet->description,
             'created_at'  => $snippet->created_at,
             'updated_at'  => $snippet->updated_at,
+            'type'        => $snippet->type->value,
             'updated_at_formatted' => TransformersUtil::dateTimeFormatted($snippet->updated_at),
         ];
     }
