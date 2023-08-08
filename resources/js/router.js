@@ -23,6 +23,11 @@ const router = createRouter({
                     name     : routesName.snippets,
                     component: () => import('@/views/snippets/SnippetsView.vue'),
                 },
+                {
+                    path     : '/snippets/ide/:id?',
+                    name     : routesName.snippet_ide,
+                    component: () => import('@/views/snippet-ide/SnippetIdeView.vue'),
+                },
             ],
         },
     ]

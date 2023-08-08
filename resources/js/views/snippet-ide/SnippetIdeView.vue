@@ -10,22 +10,26 @@ import {createSnippet, fetchSnippet, updateSnippet} from "@/api/deluge.js"
 import XInput from "@/components/base/input/XInput.vue";
 import ArgumentForm from "@/components/argument-form/ArgumentForm.vue";
 import XTextarea from "@/components/base/textarea/XTextarea.vue";
-
+import routesName from "@/constans/routesName.js";
 export default defineComponent({
     components: {
         XTextarea,
-        ArgumentForm, Modal, XInput, ListGroupItem, ListGroup, Icon, XIconButton, XCard, XButton, XCodeEditor
+        ArgumentForm,
+        Modal,
+        XInput,
+        ListGroupItem,
+        ListGroup,
+        Icon,
+        XIconButton,
+        XCard,
+        XButton,
+        XCodeEditor
     },
     inject    : ['toast'],
-    props     : {
-        snippetId: {
-            type   : String,
-            default: null,
-        }
-    },
     async beforeMount() {
-        if (this.snippetId) {
-            await this.loadSnippet(this.snippetId);
+        if (this.$route.params?.id) {
+            this.snippetId = this.$route.params.id;
+            await this.loadSnippet(this.$route.params.id);
         }
 
         this.$nextTick(() => {
@@ -36,6 +40,7 @@ export default defineComponent({
         return {
             isLoaded         : false,
             showToolbar      : false,
+            snippetId        : null,
             snippet          : {
                 id         : null,
                 name       : '',
@@ -101,13 +106,14 @@ export default defineComponent({
 
             const response = await upsertSnippet(this.snippetId, this.snippet)
                 .then(({data}) => data)
-                .catch(e => console.error(e))
+                .catch(({response}) => {
+                    this.toast.error(response?.data?.message || 'Something went wrong');
+                })
 
             if (response?.id) {
                 this.toast.success('Snippet saved');
                 await this.loadSnippet(response.id);
-            } else {
-                this.toast.error('Something went wrong');
+                await this.$router.push({name: routesName.snippets,})
             }
         },
 

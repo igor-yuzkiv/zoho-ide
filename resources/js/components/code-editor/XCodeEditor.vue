@@ -1,101 +1,95 @@
-<script>
-import {defineComponent, h} from "vue";
+<script setup>
+import {onMounted, onUnmounted, ref} from "vue";
 import * as monaco from "monaco-editor";
 import {fetchComponents} from "@/api/deluge.js";
 
-export default defineComponent({
-    props: {
-        modelValue: {
-            type   : String,
-            default: '',
-        },
-        id        : {
-            type   : String,
-            default: "editorContainer"
-        },
-        theme     : {
-            type   : String,
-            default: 'vs-dark',
-            validator(value) {
-                return ['vs', 'vs-dark', 'hc-black'].includes(value);
-            }
-        },
-        variables : {
-            type   : Array,
-            default: () => []
+const emit = defineEmits(['update:modelValue'])
+const props = defineProps({
+    modelValue: {
+        type   : String,
+        default: '',
+    },
+    id        : {
+        type   : String,
+        default: "editorContainer"
+    },
+    theme     : {
+        type   : String,
+        default: 'vs-dark',
+        validator(value) {
+            return ['vs', 'vs-dark', 'hc-black'].includes(value);
         }
     },
-    emits: ["update:modelValue"],
-    data() {
-        return {
-            components    : [],
-            editorInstance: null,
+    variables : {
+        type   : Array,
+        default: () => []
+    }
+})
+const components = ref([]);
+let _editor = null;
+let _completionProvider = null;
+
+async function loadComponents() {
+    const response = await fetchComponents()
+        .then(({data}) => data)
+        .catch(e => console.error(e))
+
+    if (Array.isArray(response)) {
+        components.value = response;
+    }
+}
+
+const completionItemProvider = () => {
+    const suggestions = components.value.map(i => ({
+        label     : i.name,
+        kind      : monaco.languages.CompletionItemKind.Text,
+        insertText: i?.insertText || '',
+    }))
+
+    for (const item of props.variables) {
+        if (!item?.name) {
+            continue;
         }
-    },
-    async mounted() {
-        await this.loadComponents();
-        this.initEditor();
-    },
-    methods: {
-        async loadComponents() {
-            const response = await fetchComponents()
-                .then(({data}) => data)
-                .catch(e => console.error(e))
 
-            if (Array.isArray(response)) {
-                this.components = response;
-            }
-        },
-        provideCompletionItems() {
-            const suggestions = this.components.map(i => ({
-                label     : i.name,
-                kind      : monaco.languages.CompletionItemKind.Text,
-                insertText: i?.insertText || '',
-            }))
-
-            for (const item of this.variables) {
-                if (!item?.name) {
-                    continue;
-                }
-
-                suggestions.push({
-                    label     : '$' + item.name,
-                    kind      : monaco.languages.CompletionItemKind.Variable,
-                    insertText: '{{$' + item.name + '}}'
-                })
-            }
-
-            return {suggestions};
-        },
-        initEditor() {
-            monaco.languages.registerCompletionItemProvider(
-                'php',
-                {
-                    provideCompletionItems: this.provideCompletionItems
-                }
-            );
-
-            console.log("initEditor", this.modelValue);
-
-            const instance = monaco.editor.create(
-                document.getElementById('editorContainer'),
-                {
-                    value   : this.modelValue,
-                    language: 'php',
-                    theme   : this.theme,
-                    automaticLayout: true,
-                }
-            );
-
-            instance.onDidChangeModelContent(() => this.$emit('update:modelValue', instance.getValue()));
-            this.editorInstance = instance;
-        }
-    },
-    setup(props) {
-        return () => h("div", {
-            id   : props.id,
-            class: "x__monacoEditor h-full"
+        suggestions.push({
+            label     : '$' + item.name,
+            kind      : monaco.languages.CompletionItemKind.Variable,
+            insertText: '{{$' + item.name + '}}'
         })
-    },
+    }
+
+    return {suggestions};
+}
+
+onMounted(async () => {
+    await loadComponents();
+
+    _completionProvider = monaco.languages.registerCompletionItemProvider(
+        'php',
+        {
+            provideCompletionItems: completionItemProvider
+        }
+    );
+
+    _editor = monaco.editor.create(
+        document.getElementById('editorContainer'),
+        {
+            value          : props.modelValue,
+            language       : 'php',
+            theme          : props.theme,
+            automaticLayout: true,
+        }
+    );
+
+    _editor.onDidChangeModelContent(() => emit('update:modelValue', _editor.getValue()));
+})
+
+onUnmounted(() => {
+    _editor.dispose()
+    _completionProvider.dispose();
 })
 </script>
+
+<template>
+    <div :id="id"/>
+</template>
