@@ -3,7 +3,7 @@ const APP_NAME = import.meta.env.VITE_APP_NAME;
 const store = createStore({
     state    : {
         pageTitle: "",
-        darkTheme     : true,
+        darkTheme     : localStorage.getItem('darkTheme') === 'true',
     },
     getters  : {
         appName: () => APP_NAME,

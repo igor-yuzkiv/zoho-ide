@@ -1,12 +1,14 @@
 <script>
 import {defineComponent} from "vue";
-import {fetchSnippets} from "@/api/deluge.js";
+import {deleteSnippet, fetchSnippets} from "@/api/deluge.js";
 import XButton from "@/components/base/button/XButton.vue";
 import XIconButton from "@/components/base/icon-button/XIconButton.vue";
 import routesName from "@/constans/routesName.js";
+import {useConfirmBeforeAction} from "@/components/confirm-dialog/useConfirmDialog.js";
 
 export default defineComponent({
     components: {XIconButton, XButton},
+    inject    : ['toast'],
     data() {
         return {
             snippets  : [],
@@ -18,6 +20,11 @@ export default defineComponent({
                 total_pages : 1,
             }
         }
+    },
+    setup() {
+        const confirmBeforeAction = useConfirmBeforeAction();
+
+        return {confirmBeforeAction}
     },
     async beforeMount() {
         await this.loadSnippets();
@@ -38,7 +45,7 @@ export default defineComponent({
 
         openSnippetIde(snippetId) {
             this.$router.push({
-                name: routesName.snippet_ide,
+                name  : routesName.snippet_ide,
                 params: {
                     id: snippetId
                 }
@@ -47,7 +54,23 @@ export default defineComponent({
         },
 
         handleClickDeleteSnippet(snippetId) {
-            //TODO:...
+            if (!snippetId) {
+                return;
+            }
+
+            const deleteHandle = () => {
+                deleteSnippet(snippetId)
+                    .then(() => {
+                        this.snippets = this.snippets.filter(item => item.id !== snippetId);
+                        this.toast.success("Snippet deleted successfully")
+                    })
+                    .catch(e => {
+                        console.error(e);
+                        this.toast.error("Something went wrong")
+                    })
+            }
+
+            this.confirmBeforeAction.open(deleteHandle, 'Are you sure you want to delete this snippet?');
         }
     }
 })
@@ -78,7 +101,10 @@ export default defineComponent({
                 </div>
             </div>
             <div class="flex items-center justify-between border-t pt-2">
-                <x-icon-button icon="ic:baseline-delete" @click="handleClickDeleteSnippet(item.id)"/>
+                <x-icon-button
+                    icon="ic:baseline-delete"
+                    @click="handleClickDeleteSnippet(item.id)"
+                />
             </div>
         </div>
     </div>

@@ -11,6 +11,7 @@ import XInput from "@/components/base/input/XInput.vue";
 import ArgumentForm from "@/components/argument-form/ArgumentForm.vue";
 import XTextarea from "@/components/base/textarea/XTextarea.vue";
 import routesName from "@/constans/routesName.js";
+import {mapState} from "vuex";
 export default defineComponent({
     components: {
         XTextarea,
@@ -55,6 +56,7 @@ export default defineComponent({
         }
     },
     computed: {
+        ...mapState(['darkTheme']),
         getSnippetArguments() {
             return this.snippet.arguments.filter(argument => !argument?._delete)
         }
@@ -175,7 +177,7 @@ export default defineComponent({
                 'col-span-6': showToolbar,
             }"
             :variables="getSnippetArguments"
-            theme="vs"
+            :theme="darkTheme ? 'vs-dark' : 'vs'"
             v-model="snippet.content"
         />
     </div>

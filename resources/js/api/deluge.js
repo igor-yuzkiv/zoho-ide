@@ -38,3 +38,7 @@ export function createSnippet(data) {
 export function updateSnippet(id, data) {
     return http.put(`deluge/snippets/${id}`, data);
 }
+
+export function deleteSnippet(id) {
+    return http.delete(`deluge/snippets/${id}`);
+}

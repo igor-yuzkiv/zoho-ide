@@ -25,6 +25,7 @@ const props = defineProps({
         default: () => []
     }
 })
+
 const components = ref([]);
 let _editor = null;
 let _completionProvider = null;

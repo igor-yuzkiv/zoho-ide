@@ -17,8 +17,9 @@ import routesName from "@/constans/routesName.js";
                 <li class="relative px-6 py-3">
                         <span class="absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg"
                               aria-hidden="true"></span>
-                    <div
+                    <router-link
                         class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
+                        :to="{name: routesName.home}"
                     >
                         <svg
                             class="w-5 h-5"
@@ -35,7 +36,7 @@ import routesName from "@/constans/routesName.js";
                             ></path>
                         </svg>
                         <span class="ml-4">Home</span>
-                    </div>
+                    </router-link>
                 </li>
             </ul>
             <ul>
@@ -61,8 +62,9 @@ import routesName from "@/constans/routesName.js";
                     </div>
                 </li>
                 <li class="relative px-6 py-3">
-                    <div
+                    <router-link
                         class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
+                        :to="{name: routesName.snippets}"
                     >
                         <svg
                             class="w-5 h-5"
@@ -79,7 +81,7 @@ import routesName from "@/constans/routesName.js";
                             ></path>
                         </svg>
                         <span class="ml-4">Snippets</span>
-                    </div>
+                    </router-link>
                 </li>
                 <li class="relative px-6 py-3">
                     <div

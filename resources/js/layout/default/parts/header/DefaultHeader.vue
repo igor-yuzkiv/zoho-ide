@@ -1,5 +1,5 @@
 <script setup>
-import {computed, ref} from "vue";
+import {computed} from "vue";
 import {useStore} from "vuex";
 const store = useStore();
 
@@ -7,7 +7,11 @@ const store = useStore();
 
 const dark = computed({
     get: () => store.state.darkTheme,
-    set: (value) => store.commit("SET_DARK_THEME", value)
+    set: (value) => {
+        localStorage.setItem("darkTheme", value);
+        store.commit("SET_DARK_THEME", value);
+        window.location.reload();
+    }
 });
 
 function toggleTheme() {
