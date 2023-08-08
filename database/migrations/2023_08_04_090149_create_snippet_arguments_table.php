@@ -9,9 +9,12 @@ return new class extends Migration {
     {
         Schema::create('snippet_arguments', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('snippet_id')->constrained('snippets');
 
-            $table->string("name")->unique();
+            $table->foreignId('snippet_id')
+                ->constrained('snippets')
+                ->cascadeOnDelete();
+
+            $table->string("name");
             $table->string("type")->nullable();
             $table->string("default")->nullable();
             $table->json("options")->nullable();

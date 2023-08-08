@@ -1,12 +1,12 @@
 <script>
 import {defineComponent} from "vue";
-import CodeEditor from "@/components/code-editor/CodeEditor.vue";
+import XCodeEditor from "@/components/code-editor/XCodeEditor.vue";
 import XButton from "@/components/base/button/XButton.vue";
 import XCard from "@/components/base/card/XCard.vue";
 import {ListGroup, ListGroupItem, Modal} from "flowbite-vue";
 import XIconButton from "@/components/base/icon-button/XIconButton.vue";
 import {Icon} from "@iconify/vue";
-import {fetchSnippet, updateSnippet} from "@/api/deluge.js"
+import {createSnippet, fetchSnippet, updateSnippet} from "@/api/deluge.js"
 import XInput from "@/components/base/input/XInput.vue";
 import ArgumentForm from "@/components/argument-form/ArgumentForm.vue";
 import XTextarea from "@/components/base/textarea/XTextarea.vue";
@@ -14,17 +14,19 @@ import XTextarea from "@/components/base/textarea/XTextarea.vue";
 export default defineComponent({
     components: {
         XTextarea,
-        ArgumentForm, Modal, XInput, ListGroupItem, ListGroup, Icon, XIconButton, XCard, XButton, CodeEditor
+        ArgumentForm, Modal, XInput, ListGroupItem, ListGroup, Icon, XIconButton, XCard, XButton, XCodeEditor
     },
     inject    : ['toast'],
     props     : {
         snippetId: {
-            type    : String,
-            required: true,
+            type   : String,
+            default: null,
         }
     },
     async beforeMount() {
-        await this.loadSnippet();
+        if (this.snippetId) {
+            await this.loadSnippet(this.snippetId);
+        }
 
         this.$nextTick(() => {
             this.isLoaded = true;
@@ -53,8 +55,8 @@ export default defineComponent({
         }
     },
     methods : {
-        async loadSnippet() {
-            await fetchSnippet(this.snippetId, ['arguments'])
+        async loadSnippet(id) {
+            await fetchSnippet(id, ['arguments'])
                 .then(({data}) => {
                     if (data) {
                         this.snippet = data;
@@ -89,13 +91,21 @@ export default defineComponent({
         },
 
         async handleClickSaveSnippet() {
-            const response = await updateSnippet(this.snippetId, this.snippet)
+            const upsertSnippet = async () => {
+                if (this.snippetId) {
+                    return updateSnippet(this.snippetId, this.snippet)
+                } else {
+                    return createSnippet(this.snippet)
+                }
+            }
+
+            const response = await upsertSnippet(this.snippetId, this.snippet)
                 .then(({data}) => data)
                 .catch(e => console.error(e))
 
-            if (response) {
+            if (response?.id) {
                 this.toast.success('Snippet saved');
-                await this.loadSnippet();
+                await this.loadSnippet(response.id);
             } else {
                 this.toast.error('Something went wrong');
             }
@@ -124,18 +134,17 @@ export default defineComponent({
     </div>
 
     <div class="grid grid-cols-6 gap-2 flex-grow overflow-hidden" v-if="isLoaded">
-        <div
-            class="col-span-2 flex flex-col flex-gow gap-2 pr-1 overflow-auto"
-            v-show="!showToolbar"
-        >
+        <div v-show="!showToolbar" class="col-span-2 flex flex-col flex-gow gap-2 pr-1 overflow-auto">
             <x-card title="General" expandable>
-                <x-input label="Name" v-model="snippet.name"/>
-                <x-textarea v-model="snippet.description" label="Description"/>
+                <div class="flex flex-col gap-y-2">
+                    <x-input label="Name" v-model="snippet.name"/>
+                    <x-textarea v-model="snippet.description" label="Description"/>
+                </div>
             </x-card>
 
             <x-card title="Arguments" expandable>
                 <template #actions>
-                    <x-icon-button icon="ph:plus" @click="handleOpenArgumentModal"/>
+                    <x-icon-button icon="ph:plus" @click="handleOpenArgumentModal(null)"/>
                 </template>
 
                 <ListGroup class="w-full">
@@ -154,7 +163,7 @@ export default defineComponent({
             </x-card>
         </div>
 
-        <code-editor
+        <x-code-editor
             :class="{
                 'col-span-4': !showToolbar,
                 'col-span-6': showToolbar,

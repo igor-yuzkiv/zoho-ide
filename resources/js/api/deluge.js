@@ -10,6 +10,18 @@ export function fetchComponents() {
  * Snippets
  * */
 
+export function fetchSnippets(page = 1, limit = 10, includes = []) {
+
+    let query = {
+        page, limit
+    };
+    if (includes.length) {
+        query['includes'] = includes.join(',');
+    }
+
+    return http.get(`deluge/snippets?${new URLSearchParams(query).toString()}`);
+}
+
 export function fetchSnippet(id, includes = []) {
     let query = {};
     if (includes.length) {
