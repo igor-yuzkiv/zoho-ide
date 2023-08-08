@@ -31,7 +31,10 @@ export default defineConfig({
                 },
             },
         }),
-        monacoEditorPlugin,
+        monacoEditorPlugin({
+            /*https://www.npmjs.com/package/vite-plugin-monaco-editor*/
+            languageWorkers: ['editorWorkerService', 'css', 'html', 'json', 'typescript', 'javascript'],
+        }),
     ],
     define : {'process.env': {}},
     resolve: {
