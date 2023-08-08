@@ -3,6 +3,7 @@
 namespace App\Containers\Deluge\Transformers\Snippet;
 
 use App\Containers\Deluge\Models\Snippet\Snippet;
+use App\Ship\Utils\TransformersUtil;
 use League\Fractal\Resource\Collection;
 use League\Fractal\TransformerAbstract;
 
@@ -33,7 +34,8 @@ class SnippetTransformer extends TransformerAbstract
             'content'     => $snippet->content,
             'description' => $snippet->description,
             'created_at'  => $snippet->created_at,
-            'updated_at'  => $snippet->updated_at
+            'updated_at'  => $snippet->updated_at,
+            'updated_at_formatted' => TransformersUtil::dateTimeFormatted($snippet->updated_at),
         ];
     }
 

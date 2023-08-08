@@ -84,11 +84,9 @@ export default defineComponent({
 
         handleUpdateArgument(item) {
             const snippetArguments = [...this.snippet.arguments];
-            if (item?.id) {
-                const index = snippetArguments.findIndex(argument => argument.id === item.id);
-                if (index >= 0) {
-                    snippetArguments[index] = item;
-                }
+            const index = snippetArguments.findIndex(argument => argument.name === item?.name);
+            if (index >= 0) {
+                snippetArguments[index] = item;
             } else {
                 snippetArguments.push(item);
             }
@@ -114,6 +112,7 @@ export default defineComponent({
 
             if (response?.id) {
                 this.toast.success('Snippet saved');
+                this.snippetId = response.id;
                 await this.loadSnippet(response.id);
                 await this.$router.push({name: routesName.snippets,})
             }

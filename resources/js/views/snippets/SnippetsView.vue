@@ -5,9 +5,10 @@ import XButton from "@/components/base/button/XButton.vue";
 import XIconButton from "@/components/base/icon-button/XIconButton.vue";
 import routesName from "@/constans/routesName.js";
 import {useConfirmBeforeAction} from "@/components/confirm-dialog/useConfirmDialog.js";
+import {Icon} from "@iconify/vue";
 
 export default defineComponent({
-    components: {XIconButton, XButton},
+    components: {Icon, XIconButton, XButton},
     inject    : ['toast'],
     data() {
         return {
@@ -84,7 +85,7 @@ export default defineComponent({
         </x-button>
     </div>
 
-    <div class="grid grid-cols-2 xl:grid-cols-4 gap-3">
+    <div class="grid grid-cols-2 xl:grid-cols-4 gap-3" v-if="snippets.length">
         <div
             v-for="item in snippets"
             :key="item.id"
@@ -96,17 +97,24 @@ export default defineComponent({
                 @click="openSnippetIde(item.id)"
             >
                 <h3 class="text-lg mb-1 font-semibold">{{ item.name }}</h3>
-                <div class="text-sm">
+                <div class="flex flex-col flex-grow text-sm">
                     {{ item.description }}
                 </div>
+                <div class="text-sm text-gray-500">
+                    Updated At: {{ item?.updated_at_formatted || '-'}}
+                </div>
             </div>
-            <div class="flex items-center justify-between border-t pt-2">
+            <div class="flex items-center justify-end border-t pt-2">
                 <x-icon-button
                     icon="ic:baseline-delete"
                     @click="handleClickDeleteSnippet(item.id)"
                 />
             </div>
         </div>
+    </div>
+
+    <div class="flex items-center justify-center flex-grow" v-else>
+        <Icon icon="formkit:sad" class="text-[100px] text-gray-500"/>
     </div>
 </template>
 
