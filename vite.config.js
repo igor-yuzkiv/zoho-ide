@@ -1,55 +1,56 @@
-import {defineConfig}                from 'vite';
-import laravel                       from 'laravel-vite-plugin';
-import vue                           from '@vitejs/plugin-vue'
+import {defineConfig, loadEnv} from 'vite';
+import laravel from 'laravel-vite-plugin';
+import vue from '@vitejs/plugin-vue'
 import {
     fileURLToPath,
     URL
-}                                    from 'node:url'
-import monacoEditorPlugin from 'vite-plugin-monaco-editor';
+} from 'node:url'
 
-export default defineConfig({
-    plugins: [
-        laravel({
-            input: ['resources/css/app.css', 'resources/js/app.js'],
-            refresh: true,
-        }),
-        vue({
-            template: {
-                transformAssetUrls: {
-                    // The Vue plugin will re-write asset URLs, when referenced
-                    // in Single File Components, to point to the Laravel web
-                    // server. Setting this to `null` allows the Laravel plugin
-                    // to instead re-write asset URLs to point to the Vite
-                    // server instead.
-                    base: null,
+export default ({mode}) => {
+    const env = loadEnv(mode, process.cwd());
 
-                    // The Vue plugin will parse absolute URLs and treat them
-                    // as absolute paths to files on disk. Setting this to
-                    // `false` will leave absolute URLs un-touched so they can
-                    // reference assets in the public directory as expected.
-                    includeAbsolute: false,
+    return defineConfig({
+        plugins: [
+            laravel({
+                input  : ['resources/css/app.css', 'resources/js/app.js'],
+                refresh: true,
+            }),
+            vue({
+                template: {
+                    transformAssetUrls: {
+                        // The Vue plugin will re-write asset URLs, when referenced
+                        // in Single File Components, to point to the Laravel web
+                        // server. Setting this to `null` allows the Laravel plugin
+                        // to instead re-write asset URLs to point to the Vite
+                        // server instead.
+                        base: null,
+
+                        // The Vue plugin will parse absolute URLs and treat them
+                        // as absolute paths to files on disk. Setting this to
+                        // `false` will leave absolute URLs un-touched so they can
+                        // reference assets in the public directory as expected.
+                        includeAbsolute: false,
+                    },
                 },
-            },
-        }),
-        monacoEditorPlugin({
-            /*https://www.npmjs.com/package/vite-plugin-monaco-editor*/
-            languageWorkers: ['editorWorkerService', 'css', 'html', 'json', 'typescript', 'javascript'],
-        }),
-    ],
-    define : {'process.env': {}},
-    resolve: {
-        alias     : {
-            '@': fileURLToPath(new URL('./resources/js', import.meta.url))
-        },
-        extensions: [
-            '.js',
-            '.json',
-            '.jsx',
-            '.mjs',
-            '.ts',
-            '.tsx',
-            '.vue',
+            })
         ],
-    },
-    base: './',
-});
+        define : {'process.env': {}},
+        resolve: {
+            alias     : {
+                '@': fileURLToPath(new URL('./resources/js', import.meta.url))
+            },
+            extensions: [
+                '.js',
+                '.json',
+                '.jsx',
+                '.mjs',
+                '.ts',
+                '.tsx',
+                '.vue',
+            ],
+        },
+        server : {
+            origin: env.VITE_APP_URL,
+        }
+    });
+}

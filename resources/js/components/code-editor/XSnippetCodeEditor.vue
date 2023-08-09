@@ -1,7 +1,21 @@
 <script setup>
-import {onMounted, onUnmounted, ref} from "vue";
+import * as monaco from 'monaco-editor'
+import editorWorker from 'monaco-editor/esm/vs/editor/editor.worker?worker'
+import tsWorker from 'monaco-editor/esm/vs/language/typescript/ts.worker?worker'
+import htmlWorker from 'monaco-editor/esm/vs/language/html/html.worker.js?worker'
+
+self.MonacoEnvironment = {
+    getWorker(_, label) {
+        if (label === 'javascript' || label === 'typescript') {
+            return new tsWorker()
+        }
+        return new editorWorker()
+    }
+}
+
+import {computed, onMounted, onUnmounted, ref, watch} from "vue";
 import {fetchComponents} from "@/api/deluge.js";
-import * as monaco from "monaco-editor";
+import {SNIPPET_TYPES} from "@/constans/snippet.js";
 
 const emit = defineEmits(['update:modelValue'])
 const props = defineProps({
@@ -23,9 +37,15 @@ const props = defineProps({
     variables : {
         type   : Array,
         default: () => []
+    },
+    type      : {
+        type   : String,
+        default: SNIPPET_TYPES.template.name,
+        validator(value) {
+            return Object.values(SNIPPET_TYPES).map(i => i.name).includes(value);
+        }
     }
 })
-
 const components = ref([]);
 let _editor;
 let _completionProvider;
@@ -69,6 +89,11 @@ function setTemplateCompletionProvider() {
     );
 }
 
+watch(
+    () => props.type,
+    () => monaco.editor.setModelLanguage(_editor.getModel(), SNIPPET_TYPES[props.type].language)
+)
+
 onMounted(async () => {
     await loadComponents();
     setTemplateCompletionProvider();
@@ -77,11 +102,16 @@ onMounted(async () => {
         document.getElementById(props.id),
         {
             value          : props.modelValue,
-            language       : 'php',
+            language       : SNIPPET_TYPES[props.type].language,
             theme          : props.theme,
             automaticLayout: true,
         }
     );
+
+    monaco.languages.typescript.typescriptDefaults.setDiagnosticsOptions({
+        noSemanticValidation: true,
+        noSyntaxValidation  : true,
+    });
 
     _editor.onDidChangeModelContent(() => emit('update:modelValue', _editor.getValue()));
 })

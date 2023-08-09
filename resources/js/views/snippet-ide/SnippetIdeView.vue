@@ -68,7 +68,7 @@ export default defineComponent({
         getSnippetTypesOptions() {
             return Object.keys(SNIPPET_TYPES).map(key => ({name: key, value: key}))
         },
-        isTemplateSnippet() {
+        isSnippetTypeTemplate() {
             return this.snippet.type === SNIPPET_TYPES.template.name;
         }
     },
@@ -165,7 +165,7 @@ export default defineComponent({
                 </div>
             </x-card>
 
-            <x-card title="Arguments" expandable>
+            <x-card title="Arguments" expandable v-if="isSnippetTypeTemplate">
                 <template #actions>
                     <x-icon-button icon="ph:plus" @click="handleOpenArgumentModal(null)"/>
                 </template>
@@ -199,7 +199,6 @@ export default defineComponent({
     </div>
 
     <teleport to="#x__application">
-
         <!--Argument form modal-->
         <Modal v-if="argumentFormModal.isOpen" @close="handleCloseArgumentModal">
             <template #header>

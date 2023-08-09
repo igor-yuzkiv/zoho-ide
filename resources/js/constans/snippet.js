@@ -20,10 +20,12 @@ export const ARGUMENT_TYPES = {
 export const SNIPPET_TYPES = {
     template: {
         name: "template",
-        variant: "success"
+        variant: "success",
+        language: "php"
     },
     sample: {
         name: "sample",
-        variant: "info"
+        variant: "info",
+        language: 'typescript'
     }
 }

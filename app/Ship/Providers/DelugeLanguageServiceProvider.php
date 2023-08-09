@@ -20,8 +20,12 @@ class DelugeLanguageServiceProvider extends ServiceProvider
 
     private function registryModules(): void
     {
-        foreach (cache()->get('deluge:modules') as $component) {
-            Blade::componentNamespace($component['namespace'], $component['prefix']);
+        $modules = cache()->get('deluge:modules');
+        if (is_array($modules)) {
+            foreach ($modules as $component) {
+                Blade::componentNamespace($component['namespace'], $component['prefix']);
+            }
         }
+
     }
 }
