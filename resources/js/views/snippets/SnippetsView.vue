@@ -1,6 +1,6 @@
 <script>
 import {defineComponent} from "vue";
-import {deleteSnippet, fetchSnippets} from "@/api/deluge.js";
+import {deleteSnippet, fetchSnippets} from "@/api/snippets.js";
 import XButton from "@/components/base/button/XButton.vue";
 import XIconButton from "@/components/base/icon-button/XIconButton.vue";
 import routesName from "@/constans/routesName.js";

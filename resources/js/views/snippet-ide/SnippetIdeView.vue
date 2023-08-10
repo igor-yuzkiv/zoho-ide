@@ -6,7 +6,7 @@ import XCard from "@/components/base/card/XCard.vue";
 import {ListGroup, ListGroupItem, Modal} from "flowbite-vue";
 import XIconButton from "@/components/base/icon-button/XIconButton.vue";
 import {Icon} from "@iconify/vue";
-import {createSnippet, fetchSnippet, updateSnippet} from "@/api/deluge.js"
+import {createSnippet, fetchSnippet, updateSnippet} from "@/api/snippets.js"
 import XInput from "@/components/base/input/XInput.vue";
 import ArgumentForm from "@/components/argument-form/ArgumentForm.vue";
 import XTextarea from "@/components/base/textarea/XTextarea.vue";
