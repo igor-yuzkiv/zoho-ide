@@ -1,12 +1,10 @@
 import {reactive, ref} from "vue";
 
 const isOpen = ref(false);
-
 const options = reactive({
     title  : "Confirmation",
     message: ''
 });
-
 const result = ref(null);
 
 function openDialog(message, title = 'Confirmation') {
