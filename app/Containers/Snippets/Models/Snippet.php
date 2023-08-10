@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Containers\Deluge\Models\Snippet;
+namespace App\Containers\Snippets\Models;
 
-use App\Containers\Deluge\Enums\SnippetType;
+use App\Containers\Snippets\Enums\SnippetType;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;

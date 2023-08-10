@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Containers\Deluge\Enums;
+namespace App\Containers\Snippets\Enums;
 
 enum SnippetType : string
 {

@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Containers\Deluge\Http\Controllers;
+namespace App\Containers\Snippets\Http\Controllers;
 
-use App\Containers\Deluge\Actions\SaveArgumentsAction;
-use App\Containers\Deluge\Http\Requests\SaveSnippetRequest;
-use App\Containers\Deluge\Models\Snippet\Snippet;
-use App\Containers\Deluge\Transformers\Snippet\SnippetTransformer;
+use App\Containers\Snippets\Actions\SaveArgumentsAction;
+use App\Containers\Snippets\Http\Requests\SaveSnippetRequest;
+use App\Containers\Snippets\Models\Snippet;
+use App\Containers\Snippets\Transformers\SnippetTransformer;
 use App\Ship\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Spatie\Fractalistic\ArraySerializer;
 
 /**

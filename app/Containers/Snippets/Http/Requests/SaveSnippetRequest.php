@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Containers\Deluge\Http\Requests;
+namespace App\Containers\Snippets\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 

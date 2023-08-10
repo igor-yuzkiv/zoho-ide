@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Containers\Deluge\Transformers\Snippet;
+namespace App\Containers\Snippets\Transformers;
 
-use App\Containers\Deluge\Models\Snippet\Snippet;
+use App\Containers\Snippets\Models\Snippet;
 use App\Ship\Utils\TransformersUtil;
 use League\Fractal\Resource\Collection;
 use League\Fractal\TransformerAbstract;

@@ -8,7 +8,7 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::table('snippets', function (Blueprint $table) {
-            $table->string("type")->default(\App\Containers\Deluge\Enums\SnippetType::TEMPLATE->value);
+            $table->string("type")->default(\App\Containers\Snippets\Enums\SnippetType::TEMPLATE->value);
         });
     }
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Containers\Deluge\Models\Snippet;
+namespace App\Containers\Snippets\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;

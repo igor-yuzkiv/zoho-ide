@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Containers\Deluge\Actions;
+namespace App\Containers\Snippets\Actions;
 
 use App\Abstractions\Contracts\ActionInterface;
-use App\Containers\Deluge\Models\Snippet\Snippet;
+use App\Containers\Snippets\Models\Snippet;
 
 /**
  *
