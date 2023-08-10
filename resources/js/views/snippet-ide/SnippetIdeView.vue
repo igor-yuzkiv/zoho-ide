@@ -1,6 +1,6 @@
 <script>
 import {defineComponent} from "vue";
-import XSnippetCodeEditor from "@/components/code-editor/XSnippetCodeEditor.vue";
+import XSnippetEditor from "@/components/snippet-edior/XSnippetEditor.vue";
 import XButton from "@/components/base/button/XButton.vue";
 import XCard from "@/components/base/card/XCard.vue";
 import {ListGroup, ListGroupItem, Modal} from "flowbite-vue";
@@ -18,7 +18,7 @@ import {SNIPPET_TYPES} from "@/constans/snippet.js";
 export default defineComponent({
     components: {
         XSelect,
-        XSnippetCodeEditor,
+        XSnippetEditor,
         XTextarea,
         ArgumentForm,
         Modal,
@@ -95,6 +95,7 @@ export default defineComponent({
 
         handleUpdateArgument(item) {
             const snippetArguments = [...this.snippet.arguments];
+
             const index = snippetArguments.findIndex(argument => argument.name === item?.name);
             if (index >= 0) {
                 snippetArguments[index] = item;
@@ -108,11 +109,9 @@ export default defineComponent({
 
         async handleClickSaveSnippet() {
             const upsertSnippet = async () => {
-                if (this.snippetId) {
-                    return updateSnippet(this.snippetId, this.snippet)
-                } else {
-                    return createSnippet(this.snippet)
-                }
+                return this.snippetId
+                    ? updateSnippet(this.snippetId, this.snippet)
+                    : createSnippet(this.snippet)
             }
 
             const response = await upsertSnippet(this.snippetId, this.snippet)
@@ -141,62 +140,68 @@ export default defineComponent({
 </script>
 
 <template>
-    <div class="flex items-center justify-between mb-2 p-2 bg-white rounded-lg shadow-xs dark:bg-gray-800">
-        <x-icon-button @click="showToolbar = !showToolbar">
-            <Icon :icon="showToolbar ? 'simple-line-icons:size-fullscreen' : 'simple-line-icons:size-actual'"/>
-        </x-icon-button>
+    <section class="flex flex-col flex-grow" v-if="isLoaded">
+        <!--Top Toolbar-->
+        <div class="flex items-center justify-between mb-2 p-2 bg-white rounded-lg shadow-xs dark:bg-gray-800">
+            <div class="flex items-center gap-x-2">
+                <x-icon-button @click="$router.go(-1)">
+                    <Icon icon="simple-line-icons:arrow-left"/>
+                </x-icon-button>
 
-        <x-button @click="handleClickSaveSnippet">
-            Save
-        </x-button>
-    </div>
+                <x-icon-button @click="showToolbar = !showToolbar">
+                    <Icon :icon="showToolbar ? 'simple-line-icons:size-actual' : 'simple-line-icons:size-fullscreen'"/>
+                </x-icon-button>
+            </div>
 
-    <div class="grid grid-cols-6 gap-2 flex-grow overflow-hidden" v-if="isLoaded">
-        <div v-show="!showToolbar" class="col-span-2 flex flex-col flex-gow gap-2 pr-1 overflow-auto">
-            <x-card title="General" expandable>
-                <div class="flex flex-col gap-y-2">
-                    <x-input label="Name" v-model="snippet.name"/>
-                    <x-select
-                        label="Type"
-                        v-model="snippet.type"
-                        :options="getSnippetTypesOptions"
-                    />
-                    <x-textarea v-model="snippet.description" label="Description"/>
-                </div>
-            </x-card>
-
-            <x-card title="Arguments" expandable v-if="isSnippetTypeTemplate">
-                <template #actions>
-                    <x-icon-button icon="ph:plus" @click="handleOpenArgumentModal(null)"/>
-                </template>
-
-                <ListGroup class="w-full">
-                    <ListGroupItem
-                        v-for="item in getSnippetArguments"
-                        :key="item.name"
-                        class="flex items-center justify-between"
-                    >
-                        <div class="flex flex-col v-full" @click="handleOpenArgumentModal(item)">
-                            <span>{{ item.name }}</span>
-                            <span class="text-black">type: {{ item.type }}</span>
-                        </div>
-                        <x-icon-button icon="ph:x-bold" @click="handleClickDeleteArgument(item)"/>
-                    </ListGroupItem>
-                </ListGroup>
-            </x-card>
+            <x-button @click="handleClickSaveSnippet">
+                Save
+            </x-button>
         </div>
 
-        <x-snippet-code-editor
-            :class="{
-                'col-span-4': !showToolbar,
-                'col-span-6': showToolbar,
-            }"
-            :variables="getSnippetArguments"
-            :theme="darkTheme ? 'vs-dark' : 'vs'"
-            v-model="snippet.content"
-            :type="snippet.type"
-        />
-    </div>
+        <div class="grid grid-cols-6 gap-2 flex-grow overflow-hidden">
+            <div v-show="!showToolbar" class="col-span-2 flex flex-col flex-gow gap-2 pr-1 overflow-auto">
+                <x-card title="General" expandable>
+                    <div class="flex flex-col gap-y-2">
+                        <x-input label="Name" v-model="snippet.name"/>
+                        <x-select
+                            label="Type"
+                            v-model="snippet.type"
+                            :options="getSnippetTypesOptions"
+                        />
+                        <x-textarea v-model="snippet.description" label="Description"/>
+                    </div>
+                </x-card>
+
+                <x-card title="Arguments" expandable v-if="isSnippetTypeTemplate">
+                    <template #actions>
+                        <x-icon-button icon="ph:plus" @click="handleOpenArgumentModal(null)"/>
+                    </template>
+
+                    <ListGroup class="w-full">
+                        <ListGroupItem
+                            v-for="item in getSnippetArguments"
+                            :key="item.name"
+                            class="flex items-center justify-between"
+                        >
+                            <div class="flex flex-col v-full" @click="handleOpenArgumentModal(item)">
+                                <span>{{ item.name }}</span>
+                                <span class="text-black">type: {{ item.type }}</span>
+                            </div>
+                            <x-icon-button icon="ph:x-bold" @click="handleClickDeleteArgument(item)"/>
+                        </ListGroupItem>
+                    </ListGroup>
+                </x-card>
+            </div>
+
+            <x-snippet-editor
+                :class="{'col-span-4': !showToolbar,'col-span-6': showToolbar}"
+                v-model="snippet.content"
+                :variables="getSnippetArguments"
+                :theme="darkTheme ? 'vs-dark' : 'vs'"
+                :type="snippet.type"
+            />
+        </div>
+    </section>
 
     <teleport to="#x__application">
         <!--Argument form modal-->

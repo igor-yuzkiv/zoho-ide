@@ -6,15 +6,7 @@ import XButton from "@/components/base/button/XButton.vue";
 import XSelect from "@/components/base/select/XSelect.vue";
 import XCheckbox from "@/components/base/checkbox/XCheckbox.vue";
 
-const defaultFormState = () => ({
-    name    : '',
-    type    : ARGUMENT_TYPES.string.name,
-    default : null,
-    required: false,
-})
-
 const emit = defineEmits(['update:modalValue']);
-
 const props = defineProps({
     modelValue: {
         type    : Object,
@@ -22,7 +14,12 @@ const props = defineProps({
     }
 })
 
-const form = ref(defaultFormState());
+const form = ref({
+    name    : '',
+    type    : ARGUMENT_TYPES.string.name,
+    default : null,
+    required: false,
+});
 
 function updateModalValue() {
     emit(
