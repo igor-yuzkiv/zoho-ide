@@ -8,9 +8,11 @@ import {useConfirmBeforeAction} from "@/components/confirm-dialog/useConfirmDial
 import {Icon} from "@iconify/vue";
 import XChip from "@/components/chip/x-chip.vue";
 import {SNIPPET_TYPES} from "@/constans/snippet.js";
+import GridList from "@/components/grid-list/GridList.vue";
+import GridListItem from "@/components/grid-list/GridListItem.vue";
 
 export default defineComponent({
-    components: {XChip, Icon, XIconButton, XButton},
+    components: {GridListItem, GridList, XChip, Icon, XIconButton, XButton},
     inject    : ['toast'],
     setup() {
         const confirmBeforeAction = useConfirmBeforeAction();
@@ -91,18 +93,15 @@ export default defineComponent({
         </x-button>
     </div>
 
-    <div class="grid grid-cols-2 xl:grid-cols-4 gap-3" v-if="snippets.length">
-        <div
+    <grid-list v-if="snippets.length" cols="3">
+        <grid-list-item
             v-for="item in snippets"
             :key="item.id"
-            class="flex flex-col min-h-[200px] p-2 bg-white dark:bg-gray-800 hover:bg-purple-200 dark:hover:bg-purple-800 rounded-lg shadow-sm cursor-pointer relative"
+            :title="item.name"
+            :clickable="true"
+            @click="openSnippetIde(item.id)"
         >
-            <div class="absolute top-0 left-0 w-full h-2 bg-purple-800 rounded-t-lg"></div>
-            <div
-                class="flex flex-col flex-grow text-black dark:text-white"
-                @click="openSnippetIde(item.id)"
-            >
-                <h3 class="text-lg mb-1 font-semibold">{{ item.name }}</h3>
+            <template #default>
                 <div class="flex flex-col flex-grow text-sm">
                     {{ item.description }}
                 </div>
@@ -113,15 +112,16 @@ export default defineComponent({
                         {{ item.type }}
                     </x-chip>
                 </div>
-            </div>
-            <div class="flex items-center justify-end border-t pt-2">
+            </template>
+
+            <template #actions>
                 <x-icon-button
                     icon="ic:baseline-delete"
                     @click="handleClickDeleteSnippet(item.id)"
                 />
-            </div>
-        </div>
-    </div>
+            </template>
+        </grid-list-item>
+    </grid-list>
 
     <div class="flex items-center justify-center flex-grow" v-else>
         <Icon icon="formkit:sad" class="text-[100px] text-gray-500"/>

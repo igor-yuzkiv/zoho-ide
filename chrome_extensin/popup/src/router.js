@@ -11,23 +11,8 @@ const routes = [
             {
                 path     : '',
                 name     :  routesName.home,
-                component: () => import('@/views/SnippetsListView.vue'),
-            },
-            {
-                path     : 'snippet',
-                name     :  routesName.snippet_view,
-                component: () => import('@/views/snippet/SnippetView.vue'),
-            },
-            {
-                path     : 'apps-meta',
-                name     :  routesName.apps_meta,
-                component: () => import('@/views/apps-meta/AppsMetaView.vue'),
-            },
-            {
-                path     : 'test',
-                name     :  routesName.test,
-                component: () => import('@/views/TestView.vue'),
-            },
+                component: () => import('@/views/HomeView.vue'),
+            }
         ]
     }
 ]

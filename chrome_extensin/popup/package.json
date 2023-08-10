@@ -20,6 +20,8 @@
         "@vitejs/plugin-vue": "^4.1.0",
         "autoprefixer": "^10.4.14",
         "tailwindcss": "^3.3.2",
-        "vite": "^4.3.9"
+        "vite": "^4.3.9",
+        "@iconify/utils": "^2.1.7",
+        "@iconify/vue": "^4.1.1"
     }
 }

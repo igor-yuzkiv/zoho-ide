@@ -12,7 +12,7 @@ function getUrl(url) {
     return BASE_URI + url;
 }
 
-export async function getRequest(url = "", query = {}) {
+export async function getRequest(url = "") {
     const response = await fetch(getUrl(url), {
         ...defaultConfig,
         method: "GET",
