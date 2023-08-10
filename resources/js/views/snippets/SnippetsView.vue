@@ -8,11 +8,10 @@ import {useConfirmBeforeAction} from "@/components/confirm-dialog/useConfirmDial
 import {Icon} from "@iconify/vue";
 import XChip from "@/components/chip/x-chip.vue";
 import {SNIPPET_TYPES} from "@/constans/snippet.js";
-import GridList from "@/components/grid-list/GridList.vue";
-import GridListItem from "@/components/grid-list/GridListItem.vue";
+import XPanel from "@/components/panel/XPanel.vue";
 
 export default defineComponent({
-    components: {GridListItem, GridList, XChip, Icon, XIconButton, XButton},
+    components: {XPanel, XChip, Icon, XIconButton, XButton},
     inject    : ['toast'],
     setup() {
         const confirmBeforeAction = useConfirmBeforeAction();
@@ -93,8 +92,8 @@ export default defineComponent({
         </x-button>
     </div>
 
-    <grid-list v-if="snippets.length" cols="3">
-        <grid-list-item
+    <div class="grid grid-cols-4 gap-2" v-if="snippets.length">
+        <x-panel
             v-for="item in snippets"
             :key="item.id"
             :title="item.name"
@@ -102,7 +101,7 @@ export default defineComponent({
             @click="openSnippetIde(item.id)"
         >
             <template #default>
-                <div class="flex flex-col flex-grow text-sm">
+                <div class="flex flex-col flex-grow text-sm text-gray-500 mt-1">
                     {{ item.description }}
                 </div>
                 <div class="flex flex-col items-start mb-1">
@@ -120,8 +119,8 @@ export default defineComponent({
                     @click="handleClickDeleteSnippet(item.id)"
                 />
             </template>
-        </grid-list-item>
-    </grid-list>
+        </x-panel>
+    </div>
 
     <div class="flex items-center justify-center flex-grow" v-else>
         <Icon icon="formkit:sad" class="text-[100px] text-gray-500"/>

@@ -1,30 +1,30 @@
 <script>
 import {defineComponent} from "vue";
-import GridList from "@/components/grid-list/GridList.vue";
-import GridListItem from "@/components/grid-list/GridListItem.vue";
-import XChip from "@/components/chip/x-chip.vue";
-import {Icon} from "@iconify/vue";
-import {fetchSnippets} from "@/api/snippets.js";
-import {SNIPPET_TYPES} from "@/constans/snippet.js";
+import XPanel            from "@/components/panel/XPanel.vue";
+import XChip             from "@/components/chip/x-chip.vue";
+import {Icon}            from "@iconify/vue";
+import {fetchSnippets}   from "@/api/snippets.js";
+import {SNIPPET_TYPES}   from "@/constans/snippet.js";
+import XSearchInput       from "@/components/search-input/XSearchInput.vue";
 
 export default defineComponent({
-    components: {XChip, GridList, GridListItem, Icon},
+    components: {XSearchInput, XChip, XPanel, Icon},
     data() {
         return {
-            snippets  : [],
+            snippets:   [],
             pagination: {
-                count       : 0,
+                count:        0,
                 current_page: 1,
-                per_page    : 10,
-                total       : 0,
-                total_pages : 1,
+                per_page:     10,
+                total:        0,
+                total_pages:  1,
             }
         }
     },
     async mounted() {
         await this.loadSnippets();
     },
-    methods : {
+    methods:  {
         async loadSnippets() {
             const {data, meta} = await fetchSnippets()
             if (!Array.isArray(data) || !meta?.pagination) {
@@ -36,7 +36,12 @@ export default defineComponent({
         },
 
         handleClickSnippet(item) {
-            console.log(item)
+            this.$router.push({
+                name:   "snippets.use",
+                params: {
+                    id: item.id
+                }
+            })
         },
     },
     computed: {
@@ -46,8 +51,11 @@ export default defineComponent({
 </script>
 
 <template>
-    <grid-list v-if="snippets.length" cols="3">
-        <grid-list-item
+    <div class="flex items-center justify-end mb-2 p-1">
+        <x-search-input></x-search-input>
+    </div>
+    <div class="grid grid-cols-3 gap-2" v-if="snippets.length">
+        <x-panel
             v-for="item in snippets"
             :key="item.id"
             :title="item.name"
@@ -58,7 +66,7 @@ export default defineComponent({
             <template #title>
                 <h4 class="text-black dark:text-white font-semibold">{{ item.name }}</h4>
             </template>
-            <div class="flex flex-col flex-grow text-sm">
+            <div class="flex flex-col flex-grow text-sm text-gray-500 mt-1">
                 {{ item.description }}
             </div>
             <div class="flex flex-col items-start mb-1">
@@ -68,8 +76,8 @@ export default defineComponent({
                     {{ item.type }}
                 </x-chip>
             </div>
-        </grid-list-item>
-    </grid-list>
+        </x-panel>
+    </div>
 
     <div class="flex flex-col items-center justify-center flex-grow text-center" v-else>
         <Icon icon="formkit:sad" class="text-[100px] text-gray-500"/>

@@ -1,19 +1,15 @@
 import {createRouter, createWebHashHistory} from 'vue-router'
-import routesName                           from "@/constans/routesName.js";
-
-import DefaultLayout from "@/layout/DefaultLayout.vue";
 
 const routes = [
     {
-        path     : "/",
-        component: DefaultLayout,
-        children: [
-            {
-                path     : '',
-                name     :  routesName.home,
-                component: () => import('@/views/HomeView.vue'),
-            }
-        ]
+        path     : '/',
+        name     :  "home",
+        component: () => import('@/views/snippets/SnippetsListView.vue'),
+    },
+    {
+        path     : '/snippets/use/:id',
+        name     :  "snippets.use",
+        component: () => import('@/views/snippets/UseSnippetView.vue'),
     }
 ]
 
