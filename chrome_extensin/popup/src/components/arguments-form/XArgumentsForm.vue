@@ -1,28 +1,40 @@
-<script setup>
-import XInput from "@/components/input/XInput.vue";
-import {ref}  from "vue";
+<script>
+import {defineComponent, h} from "vue";
+import XInput               from "@/components/input/XInput.vue";
+import {ARGUMENT_TYPES}     from "@/constans/snippet.js";
 
-defineProps({
-    arguments: {
-        type: Array,
-        default: () => []
+export default defineComponent({
+    emits: ["update:modelValue"],
+    props: {
+        modelValue: {
+            type:    Object,
+            default: () => {
+            },
+        },
+        argumentsMeta:  {
+            type:    Array,
+            default: () => []
+        },
+        fields: [],
+    },
+    mounted() {
+        for (const argument of this.argumentsMeta){
+            const type = ARGUMENT_TYPES[argument.type];
+            if (!type || !type?.input?.component) {
+                continue;
+            }
+
+
+        }
+    },
+    computed: {
+        getComponents() {
+
+        }
     }
-})
-
-const test = {
-    label: "Test",
-    placeholder: "tesasfdasdsa"
-}
-
-const value = ref("");
-
+});
 </script>
 
 <template>
-    {{value}}
-    <component :is="XInput" v-bind="test" v-model="value"> </component>
+
 </template>
-
-<style scoped>
-
-</style>

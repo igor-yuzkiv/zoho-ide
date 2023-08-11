@@ -5,11 +5,13 @@ import XIconButton from "@/components/icon-button/XIconButton.vue";
 import {Icon} from "@iconify/vue";
 import {fetchSnippet}    from "@/api/snippets.js";
 import XArgumentsForm    from "@/components/arguments-form/XArgumentsForm.vue";
+import XInput            from "@/components/input/XInput.vue";
 
 export default defineComponent({
-    components: {XArgumentsForm, XButton, XIconButton, Icon},
+    components: {XInput, XArgumentsForm, XButton, XIconButton, Icon},
     data() {
         return {
+            isLoaded: false,
             snippetId: null,
             snippet: {
                 id: null,
@@ -17,6 +19,7 @@ export default defineComponent({
                 type: '',
                 arguments: [],
             },
+            snippetData: {},
         }
     },
     async mounted() {
@@ -28,6 +31,10 @@ export default defineComponent({
 
         this.snippetId = id;
         await this.loadSnippet();
+
+        this.$nextTick(() => {
+            this.isLoaded = true;
+        })
     },
     methods: {
         async loadSnippet() {
@@ -51,14 +58,14 @@ export default defineComponent({
         </x-icon-button>
 
         <h1 class="text-black dark:text-white font-semibold text-lg">{{snippet.name}}</h1>
-
+        <x-input></x-input>
         <x-button @click="handleClickInsert">
             Insert
         </x-button>
     </div>
 
-    <div class="flex flex-col flex-grow mt-2">
-        <x-arguments-form :arguments="snippet.arguments"/>
+    <div class="flex flex-col flex-grow mt-2" v-if="isLoaded">
+        <x-arguments-form :argumentsMeta="snippet.arguments" v-model="snippetData"/>
     </div>
 
 </template>

@@ -1,5 +1,5 @@
 <script setup>
-defineEmits(["update:modelValue"]);
+defineEmits(["update:modelValue", "onInput"]);
 
 defineProps({
     modelValue:  {},
@@ -19,8 +19,8 @@ defineProps({
         type:    String,
         default: '',
     },
-
 })
+
 </script>
 
 <template>
