@@ -3,6 +3,7 @@
 namespace App\Containers\Snippets\Http\Controllers;
 
 use App\Containers\Snippets\Actions\SaveArgumentsAction;
+use App\Containers\Snippets\Enums\SnippetType;
 use App\Containers\Snippets\Http\Requests\SaveSnippetRequest;
 use App\Containers\Snippets\Models\Snippet;
 use App\Containers\Snippets\Transformers\SnippetTransformer;
@@ -99,5 +100,27 @@ class SnippetsController extends Controller
     {
         $status = $snippet->delete();
         return \Response::json(compact('status'));
+    }
+
+    /**
+     * @param Snippet $snippet
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function render(Snippet $snippet, Request $request): JsonResponse
+    {
+        if ($snippet->type === SnippetType::SAMPLE) {
+            return response()->json(['status' => true, 'code' => $snippet->content]);
+        }
+
+        $rules = [];
+        foreach ($snippet->arguments as $item) {
+            $rules[$item->name] = $item->required ? 'required' : 'nullable';
+        }
+
+        $data = $request->validate($rules);
+        $code = \Blade::render($snippet->content, $data);
+
+        return response()->json(['status' => true, 'code' => $code]);
     }
 }

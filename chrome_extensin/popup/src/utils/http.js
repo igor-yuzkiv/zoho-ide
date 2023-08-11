@@ -29,7 +29,10 @@ export async function postRequest(url = "", data = {}) {
         },
         body:           JSON.stringify(data),
     });
-    return response.json();
+
+    if (response.ok) {
+        return response.json();
+    }
 }
 
 

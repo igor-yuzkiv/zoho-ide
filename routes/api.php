@@ -34,6 +34,7 @@ Route::prefix("snippets")
         Route::post("", [\App\Containers\Snippets\Http\Controllers\SnippetsController::class, "createSnippet"]);
         Route::put("{snippet}", [\App\Containers\Snippets\Http\Controllers\SnippetsController::class, "updateSnippet"]);
         Route::delete("{snippet}", [\App\Containers\Snippets\Http\Controllers\SnippetsController::class, "deleteSnippet"]);
+        Route::post("{snippet}/render", [\App\Containers\Snippets\Http\Controllers\SnippetsController::class, "render"]);
     });
 
 Route::prefix('connections')

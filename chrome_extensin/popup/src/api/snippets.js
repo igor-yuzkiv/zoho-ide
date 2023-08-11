@@ -1,4 +1,4 @@
-import {getRequest} from "@/utils/http.js";
+import {getRequest, postRequest} from "@/utils/http.js";
 
 export function fetchSnippets(page = 1, limit = 10, includes = []) {
 
@@ -19,4 +19,8 @@ export function fetchSnippet(id, includes = []) {
     }
 
     return getRequest(`snippets/${id}?${new URLSearchParams(query).toString()}`)
+}
+
+export function renderSnippet(id, data) {
+    return postRequest(`snippets/${id}/render`, data);
 }

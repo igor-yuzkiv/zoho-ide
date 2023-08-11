@@ -1,22 +1,28 @@
 <script>
 import {defineComponent} from "vue";
-import XButton     from "@/components/button/XButton.vue";
-import XIconButton from "@/components/icon-button/XIconButton.vue";
-import {Icon} from "@iconify/vue";
-import {fetchSnippet}    from "@/api/snippets.js";
-import XArgumentsForm    from "@/components/arguments-form/XArgumentsForm.vue";
-import XInput            from "@/components/input/XInput.vue";
+import XButton           from "@/components/button/XButton.vue";
+import XIconButton       from "@/components/icon-button/XIconButton.vue";
+import {Icon}            from "@iconify/vue";
+import {
+    fetchSnippet,
+    renderSnippet
+}                        from "@/api/snippets.js";
+import XArgumentsForm from "@/components/arguments-form/XArgumentsForm.vue";
+import {
+    dispatchEvent,
+    EVENT_TYPES
+}                     from "@/utils/chromeApi.js";
 
 export default defineComponent({
-    components: {XInput, XArgumentsForm, XButton, XIconButton, Icon},
+    components: {XArgumentsForm, XButton, XIconButton, Icon},
     data() {
         return {
-            isLoaded: false,
-            snippetId: null,
-            snippet: {
-                id: null,
-                name: '',
-                type: '',
+            isLoaded   : false,
+            snippetId  : null,
+            snippet    : {
+                id       : null,
+                name     : '',
+                type     : '',
                 arguments: [],
             },
             snippetData: {},
@@ -43,8 +49,21 @@ export default defineComponent({
                 this.snippet = response;
             }
         },
-        handleClickInsert() {
+        async handleClickInsert() {
+            const response = await renderSnippet(this.snippet.id, this.snippetData)
+                .catch(e => {
+                    console.log(e);
+                })
 
+            if (!response?.code) {
+                alert("something went wrong")
+                return;
+            }
+
+            await dispatchEvent(EVENT_TYPES.injectCode, response);
+        },
+        async goBack() {
+            this.$router.go(-1);
         }
     }
 })
@@ -53,12 +72,12 @@ export default defineComponent({
 <template>
     <!--Top Toolbar-->
     <div class="flex items-center justify-between mb-2 p-2 bg-white rounded-lg shadow-xs dark:bg-gray-800">
-        <x-icon-button @click="$router.go(-1)">
+        <x-icon-button @click="goBack">
             <Icon icon="simple-line-icons:arrow-left"/>
         </x-icon-button>
 
-        <h1 class="text-black dark:text-white font-semibold text-lg">{{snippet.name}}</h1>
-        <x-input></x-input>
+        <h1 class="text-black dark:text-white font-semibold text-lg">{{ snippet.name }}</h1>
+
         <x-button @click="handleClickInsert">
             Insert
         </x-button>
