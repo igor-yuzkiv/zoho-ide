@@ -13,6 +13,6 @@ class IgorTestCommand extends Command
 
     public function handle(): void
     {
-        dd(view('snippets.test_props', ['test1' => 'test1', 'test2' => 'test2'])->render());
+        dd(view('snippets.s-test')->render());
     }
 }

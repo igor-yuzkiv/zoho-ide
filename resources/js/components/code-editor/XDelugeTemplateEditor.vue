@@ -87,11 +87,6 @@ export default defineComponent({
                 }
             );
 
-            monaco.languages.typescript.typescriptDefaults.setDiagnosticsOptions({
-                noSemanticValidation: true,
-                noSyntaxValidation  : true,
-            });
-
             _editor.onDidChangeModelContent(() => emit('update:modelValue', _editor.getValue()));
         }
 

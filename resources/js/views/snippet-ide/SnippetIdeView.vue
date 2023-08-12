@@ -65,15 +65,14 @@ export default defineComponent({
         }
     },
     computed: {
-        ...mapState(['darkTheme']),
+        ...mapState({
+            darkTheme: state => state.darkTheme
+        }),
         getSnippetArguments() {
             return this.snippet.arguments.filter(argument => !argument?._delete)
         },
         getSnippetTypesOptions() {
             return Object.keys(SNIPPET_TYPES).map(key => ({name: key, value: key}))
-        },
-        isSnippetTypeTemplate() {
-            return this.snippet.type === SNIPPET_TYPES.template.name;
         }
     },
     methods : {
@@ -152,9 +151,11 @@ export default defineComponent({
 
 <template>
     <section class="flex flex-col flex-grow overflow-hidden" v-if="isLoaded">
+
         <!--Top Toolbar-->
         <div
-            class="flex items-center flex-none justify-between mb-2 p-2 bg-white rounded-lg shadow-xs dark:bg-gray-800">
+            class="flex items-center flex-none justify-between mb-2 p-2 bg-white rounded-lg shadow-xs dark:bg-gray-800"
+        >
             <div class="flex items-center gap-x-2">
                 <x-icon-button @click="$router.go(-1)">
                     <Icon icon="simple-line-icons:arrow-left"/>
@@ -171,27 +172,33 @@ export default defineComponent({
         </div>
 
         <div class="grid grid-cols-6 gap-2 flex-grow overflow-hidden">
+            <!--Left Toolbar-->
             <div v-show="!showToolbar" class="col-span-2 flex flex-col flex-gow gap-2 pr-1 overflow-auto">
-                <x-card title="General" expandable>
+                <x-card title="Settings" expandable>
                     <div class="flex flex-col gap-y-2">
-                        <x-input label="Name" v-model="snippet.name"/>
-
-                        <x-input label="Component Name" v-model="snippet.component_name" v-if="isSnippetTypeTemplate"/>
-
-                        <x-select
-                            label="Type"
-                            v-model="snippet.type"
-                            :options="getSnippetTypesOptions"
+                        <x-input
+                            label="Name"
+                            v-model="snippet.name"
                         />
 
-                        <x-textarea v-model="snippet.description" label="Description"/>
+                        <x-input
+                            label="Component Name"
+                            v-model="snippet.component_name"
+                        />
 
-                        <x-textarea v-model="snippet.component_insert_text" label="Component Insert Text"
-                                    v-if="isSnippetTypeTemplate"/>
+                        <x-textarea
+                            v-model="snippet.description"
+                            label="Description"
+                        />
+
+                        <x-textarea
+                            v-model="snippet.component_insert_text"
+                            label="Component Insert Text"
+                        />
                     </div>
                 </x-card>
 
-                <x-card title="Arguments" expandable v-if="isSnippetTypeTemplate">
+                <x-card title="Arguments" expandable>
                     <template #actions>
                         <x-icon-button icon="ph:plus" @click="handleOpenArgumentModal(null)"/>
                     </template>
@@ -212,18 +219,14 @@ export default defineComponent({
                 </x-card>
             </div>
 
+            <!--Editor-->
             <x-deluge-template-editor
-                v-if="isSnippetTypeTemplate"
+                class="flex flex-col flex-grow"
                 :class="{'col-span-4': !showToolbar,'col-span-6': showToolbar}"
                 v-model="snippet.content"
                 :component-props="getSnippetArguments"
                 :theme="darkTheme ? 'vs-dark' : 'vs'"
             />
-
-            <x-code-editor v-else>
-
-            </x-code-editor>
-
         </div>
     </section>
 
