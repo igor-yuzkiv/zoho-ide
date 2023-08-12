@@ -17,7 +17,6 @@ return new class extends Migration {
             $table->string("name");
             $table->string("type")->nullable();
             $table->string("default")->nullable();
-            $table->json("options")->nullable();
             $table->boolean("required")->default(false);
 
             $table->softDeletes();

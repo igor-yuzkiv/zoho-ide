@@ -26,15 +26,7 @@ class SnippetArgument extends Model
         'name',
         'type',
         'default',
-        'required',
-        'options',
-    ];
-
-    /**
-     * @var string[]
-     */
-    protected $casts = [
-        'options' => 'array',
+        'required'
     ];
 
     /**

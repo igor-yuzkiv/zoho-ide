@@ -19,7 +19,19 @@ class IdeSuggestionsPresenter implements PresenterInterface
 
     public function bladeSuggestions(): array
     {
-        return [];
+        return [
+            [
+                "label"      => "<x-slot",
+                "kind"       => MonacoCompletionItemKind::Snippet->value,
+                "insertText" => "<x-slot:></x-slot>",
+            ],
+            [
+                "label"      => '$slot',
+                "kind"       => MonacoCompletionItemKind::Snippet->value,
+                "insertText" => '{!! $slot !!}',
+            ]
+
+        ];
     }
 
     public function snippetsSuggestions(): array

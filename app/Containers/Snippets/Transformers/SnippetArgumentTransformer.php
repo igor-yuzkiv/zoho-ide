@@ -33,7 +33,6 @@ class SnippetArgumentTransformer extends TransformerAbstract
             'type'                 => $snippetArgument->type,
             'default'              => $snippetArgument->default,
             'required'             => (boolean)$snippetArgument->required,
-            'options'              => $snippetArgument->options,
             'deleted_at'           => $snippetArgument->deleted_at,
             'created_at'           => $snippetArgument->created_at,
             'updated_at'           => $snippetArgument->updated_at,
