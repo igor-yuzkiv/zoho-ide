@@ -1,10 +1,11 @@
 <script>
-import {defineComponent, h, onMounted, onUnmounted, watch} from "vue";
-import {fetchDelugeComponents} from "@/api/deluge.js";
+import {defineComponent, h, onMounted, onUnmounted, ref, watch} from "vue";
 import * as monaco from "monaco-editor";
-import {SNIPPET_TYPES} from "@/constans/snippet.js";
 import editorWorker from 'monaco-editor/esm/vs/editor/editor.worker?worker'
 import tsWorker from 'monaco-editor/esm/vs/language/typescript/ts.worker?worker'
+import {fetchIdeSuggestions} from "@/api/snippets.js";
+
+const EDITOR_LANGUAGE = "php";
 
 self.MonacoEnvironment = {
     getWorker(_, label) {
@@ -18,64 +19,47 @@ self.MonacoEnvironment = {
 export default defineComponent({
     emits: ['update:modelValue'],
     props: {
-        modelValue : {
+        modelValue   : {
             type   : String,
             default: '',
         },
-        id         : {
+        id           : {
             type   : String,
             default: "editorContainer"
         },
-        theme      : {
+        theme        : {
             type   : String,
             default: 'vs-dark',
             validator(value) {
                 return ['vs', 'vs-dark', 'hc-black'].includes(value);
             }
         },
-        variables  : {
+        componentProps: {
             type   : Array,
             default: () => []
         },
-        type       : {
-            type   : String,
-            default: SNIPPET_TYPES.template.name,
-            validator(value) {
-                return Object.values(SNIPPET_TYPES).map(i => i.name).includes(value);
-            }
-        },
-        suggestions: {
-            type   : Array,
-            default: () => []
-        }
     },
     setup(props, {emit}) {
-        let delugeComponents;
+        const ideSuggestions = ref([]);
         let _editor;
         let _completionProvider;
 
-        async function loadDelugeComponents() {
-            await fetchDelugeComponents()
+        async function loadIdeSuggestions() {
+            await fetchIdeSuggestions()
                 .then(({data}) => {
                     if (Array.isArray(data)) {
-                        delugeComponents = data;
+                        ideSuggestions.value = data;
                     }
                 })
                 .catch(e => console.error(e))
         }
 
         function provideCompletionItems() {
-            const suggestions = [];
-
-            delugeComponents.map(i => {
-                suggestions.push({
-                    label     : i.name,
-                    kind      : monaco.languages.CompletionItemKind.Text,
-                    insertText: i?.insertText || '',
-                })
+            const suggestions = ideSuggestions.value.map(i => {
+                return {...i};
             })
 
-            props.variables.map(item => {
+            props.componentProps.map(item => {
                 suggestions.push({
                     label     : '$' + item.name,
                     kind      : monaco.languages.CompletionItemKind.Variable,
@@ -89,7 +73,7 @@ export default defineComponent({
         function initEditor() {
             _completionProvider = monaco.languages
                 .registerCompletionItemProvider(
-                    SNIPPET_TYPES.template.language,
+                    EDITOR_LANGUAGE,
                     {provideCompletionItems}
                 );
 
@@ -97,7 +81,7 @@ export default defineComponent({
                 document.getElementById(props.id),
                 {
                     value          : props.modelValue,
-                    language       : SNIPPET_TYPES[props.type].language,
+                    language       : EDITOR_LANGUAGE,
                     theme          : props.theme,
                     automaticLayout: true,
                 }
@@ -111,17 +95,28 @@ export default defineComponent({
             _editor.onDidChangeModelContent(() => emit('update:modelValue', _editor.getValue()));
         }
 
-        function changeModelLanguage() {
-            monaco.editor.setModelLanguage(
-                _editor.getModel(),
-                SNIPPET_TYPES[props.type].language
-            )
+        function declareComponentProps() {
+            const regex = /@props\(\[\s*('[^']*'\s*,?\s*)*\s*\]\)\n*/g;
+            const content = _editor.getValue().replace(regex, "");
+
+            if (!props.componentProps?.length) {
+                _editor.setValue(content);
+                return;
+            }
+
+            let propsString = '';
+            for (const item of props.componentProps) {
+                propsString += `\t'${item.name}',\n`;
+            }
+            propsString = `@props([\n${propsString}])`;
+
+            _editor.setValue(propsString + '\n' + content);
         }
 
-        watch(() => props.type, changeModelLanguage)
+        watch(() => props.componentProps, declareComponentProps)
 
         onMounted(async () => {
-            await loadDelugeComponents();
+            await loadIdeSuggestions();
             initEditor();
         })
 

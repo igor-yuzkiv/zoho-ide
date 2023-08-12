@@ -1,5 +1,4 @@
 <script setup>
-import {Icon} from "@iconify/vue";
 import {ref} from "vue";
 import XIconButton from "@/components/base/icon-button/XIconButton.vue";
 

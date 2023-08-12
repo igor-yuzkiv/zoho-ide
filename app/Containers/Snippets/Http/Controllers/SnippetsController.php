@@ -2,7 +2,7 @@
 
 namespace App\Containers\Snippets\Http\Controllers;
 
-use App\Containers\Snippets\Actions\SaveArgumentsAction;
+use App\Containers\Snippets\Actions\SaveSnippetProcedure;
 use App\Containers\Snippets\Enums\SnippetType;
 use App\Containers\Snippets\Http\Requests\SaveSnippetRequest;
 use App\Containers\Snippets\Models\Snippet;
@@ -60,12 +60,7 @@ class SnippetsController extends Controller
      */
     public function createSnippet(SaveSnippetRequest $request): JsonResponse
     {
-        $snippet = Snippet::create($request->validated());
-        $arguments = $request->get('arguments');
-        if (!empty($arguments)) {
-            (new SaveArgumentsAction($snippet, $arguments))->handle();
-        }
-
+        $snippet = (new SaveSnippetProcedure($request->validated()))->handle();
         return fractal($snippet)
             ->transformWith(new SnippetTransformer())
             ->serializeWith(ArraySerializer::class)
@@ -79,13 +74,7 @@ class SnippetsController extends Controller
      */
     public function updateSnippet(Snippet $snippet, SaveSnippetRequest $request): JsonResponse
     {
-        $snippet->update($request->validated());
-
-        $arguments = $request->get('arguments');
-        if (!empty($arguments)) {
-            (new SaveArgumentsAction($snippet, $arguments))->handle();
-        }
-
+        $snippet = (new SaveSnippetProcedure($request->validated(), $snippet))->handle();
         return fractal($snippet)
             ->transformWith(new SnippetTransformer())
             ->serializeWith(ArraySerializer::class)
@@ -98,6 +87,9 @@ class SnippetsController extends Controller
      */
     public function deleteSnippet(Snippet $snippet): JsonResponse
     {
+        if ($snippet->type === SnippetType::TEMPLATE) {
+            unlink(base_path(config('project.snippets.components_folder') . '/' . $snippet->component_name . '.blade.php'));
+        }
         $status = $snippet->delete();
         return \Response::json(compact('status'));
     }

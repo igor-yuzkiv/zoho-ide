@@ -13,6 +13,10 @@ export default ({mode}) => {
         plugins: [
             laravel({
                 input  : ['resources/css/app.css', 'resources/js/app.js'],
+
+                /**
+                 * https://laravel.com/docs/10.x/vite#blade-refreshing-on-save
+                 */
                 refresh: true,
             }),
             vue({

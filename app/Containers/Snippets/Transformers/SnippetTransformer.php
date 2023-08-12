@@ -3,7 +3,6 @@
 namespace App\Containers\Snippets\Transformers;
 
 use App\Containers\Snippets\Models\Snippet;
-use App\Ship\Utils\TransformersUtil;
 use League\Fractal\Resource\Collection;
 use League\Fractal\TransformerAbstract;
 
@@ -29,14 +28,15 @@ class SnippetTransformer extends TransformerAbstract
     public function transform(Snippet $snippet): array
     {
         return [
-            'id'          => (string)$snippet->id,
-            'name'        => $snippet->name,
-            'content'     => $snippet->content,
-            'description' => $snippet->description,
-            'created_at'  => $snippet->created_at,
-            'updated_at'  => $snippet->updated_at,
-            'type'        => $snippet->type->value,
-            'updated_at_formatted' => TransformersUtil::dateTimeFormatted($snippet->updated_at),
+            'id'                    => (string)$snippet->id,
+            'name'                  => $snippet->name,
+            'component_name'        => $snippet->component_name,
+            'component_insert_text' => $snippet->component_insert_text,
+            'content'               => $snippet->getContent(),
+            'description'           => $snippet->description,
+            'created_at'            => $snippet->created_at,
+            'updated_at'            => $snippet->updated_at,
+            'type'                  => $snippet->type->value,
         ];
     }
 

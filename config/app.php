@@ -171,7 +171,9 @@ return [
         Barryvdh\Debugbar\ServiceProvider::class,
         \App\Ship\Providers\DelugeLanguageServiceProvider::class,
 
-        \App\Ship\Providers\DelugeLanguageServiceProvider::class
+        \App\Ship\Providers\DelugeLanguageServiceProvider::class,
+        \App\Ship\Providers\SnippetServiceProvider::class,
+
     ])->toArray(),
 
     /*

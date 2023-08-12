@@ -1,6 +1,6 @@
 <script>
 import {defineComponent} from "vue";
-import XSnippetEditor from "@/components/snippet-edior/XSnippetEditor.vue";
+import XDelugeTemplateEditor from "@/components/code-editor/XDelugeTemplateEditor.vue";
 import XButton from "@/components/base/button/XButton.vue";
 import XCard from "@/components/base/card/XCard.vue";
 import {ListGroup, ListGroupItem, Modal} from "flowbite-vue";
@@ -14,11 +14,13 @@ import routesName from "@/constans/routesName.js";
 import {mapState} from "vuex";
 import XSelect from "@/components/base/select/XSelect.vue";
 import {SNIPPET_TYPES} from "@/constans/snippet.js";
+import XCodeEditor from "@/components/code-editor/XCodeEditor.vue";
 
 export default defineComponent({
     components: {
+        XCodeEditor,
         XSelect,
-        XSnippetEditor,
+        XDelugeTemplateEditor,
         XTextarea,
         ArgumentForm,
         Modal,
@@ -47,12 +49,14 @@ export default defineComponent({
             showToolbar      : false,
             snippetId        : null,
             snippet          : {
-                id         : null,
-                name       : '',
-                content    : '',
-                description: '',
-                arguments  : [],
-                type       : "template",
+                id                   : null,
+                name                 : '',
+                content              : '',
+                component_name       : '',
+                component_insert_text: '',
+                description          : '',
+                arguments            : [],
+                type                 : "template",
             },
             argumentFormModal: {
                 isOpen    : false,
@@ -96,7 +100,14 @@ export default defineComponent({
         handleUpdateArgument(item) {
             const snippetArguments = [...this.snippet.arguments];
 
-            const index = snippetArguments.findIndex(argument => argument.name === item?.name);
+            const index = snippetArguments.findIndex(argument => {
+                if (item?.id) {
+                    return argument.id === item.id
+                } else {
+                    return argument.name === item?.name
+                }
+            });
+
             if (index >= 0) {
                 snippetArguments[index] = item;
             } else {
@@ -140,9 +151,10 @@ export default defineComponent({
 </script>
 
 <template>
-    <section class="flex flex-col flex-grow" v-if="isLoaded">
+    <section class="flex flex-col flex-grow overflow-hidden" v-if="isLoaded">
         <!--Top Toolbar-->
-        <div class="flex items-center justify-between mb-2 p-2 bg-white rounded-lg shadow-xs dark:bg-gray-800">
+        <div
+            class="flex items-center flex-none justify-between mb-2 p-2 bg-white rounded-lg shadow-xs dark:bg-gray-800">
             <div class="flex items-center gap-x-2">
                 <x-icon-button @click="$router.go(-1)">
                     <Icon icon="simple-line-icons:arrow-left"/>
@@ -163,12 +175,19 @@ export default defineComponent({
                 <x-card title="General" expandable>
                     <div class="flex flex-col gap-y-2">
                         <x-input label="Name" v-model="snippet.name"/>
+
+                        <x-input label="Component Name" v-model="snippet.component_name" v-if="isSnippetTypeTemplate"/>
+
                         <x-select
                             label="Type"
                             v-model="snippet.type"
                             :options="getSnippetTypesOptions"
                         />
+
                         <x-textarea v-model="snippet.description" label="Description"/>
+
+                        <x-textarea v-model="snippet.component_insert_text" label="Component Insert Text"
+                                    v-if="isSnippetTypeTemplate"/>
                     </div>
                 </x-card>
 
@@ -193,13 +212,18 @@ export default defineComponent({
                 </x-card>
             </div>
 
-            <x-snippet-editor
+            <x-deluge-template-editor
+                v-if="isSnippetTypeTemplate"
                 :class="{'col-span-4': !showToolbar,'col-span-6': showToolbar}"
                 v-model="snippet.content"
-                :variables="getSnippetArguments"
+                :component-props="getSnippetArguments"
                 :theme="darkTheme ? 'vs-dark' : 'vs'"
-                :type="snippet.type"
             />
+
+            <x-code-editor v-else>
+
+            </x-code-editor>
+
         </div>
     </section>
 
