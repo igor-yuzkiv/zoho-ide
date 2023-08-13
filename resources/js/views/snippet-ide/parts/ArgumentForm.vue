@@ -55,6 +55,7 @@ onMounted(() => {
         />
 
         <x-checkbox label="Required" v-model="form.required"/>
+
         <x-checkbox label="Is slot" v-model="form.is_slot"/>
     </div>
 
