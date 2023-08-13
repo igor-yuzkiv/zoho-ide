@@ -2,15 +2,15 @@
 
 namespace App\Containers\Snippets\Presenters;
 
-use App\Abstractions\Contracts\PresenterInterface;
-use App\Containers\Snippets\Enums\MonacoCompletionItemKind;
+use App\Abstractions\Contracts\Presenter\IterablePresenter;
+use App\Containers\IDE\Enums\MonacoCompletionItemKind;
 use App\Containers\Snippets\Enums\SnippetType;
 use App\Containers\Snippets\Models\Snippet;
 
 /**
  *
  */
-class IdeSuggestionsPresenter implements PresenterInterface
+class IdeSuggestionsPresenter implements IterablePresenter
 {
     /**
      * @return iterable

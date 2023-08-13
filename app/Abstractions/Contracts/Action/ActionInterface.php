@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Abstractions\Contracts;
+namespace App\Abstractions\Contracts\Action;
 
 interface ActionInterface
 {

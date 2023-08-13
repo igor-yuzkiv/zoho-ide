@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Containers\Snippets\Enums;
+namespace App\Containers\IDE\Enums;
 
 enum MonacoCompletionItemKind: int
 {

@@ -37,5 +37,5 @@ export function deleteSnippet(id) {
 }
 
 export function fetchIdeSuggestions() {
-    return http.get("snippets/ide/suggestions");
+    return http.get("ide/suggestions");
 }

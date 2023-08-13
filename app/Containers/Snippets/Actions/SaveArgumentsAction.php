@@ -2,7 +2,7 @@
 
 namespace App\Containers\Snippets\Actions;
 
-use App\Abstractions\Contracts\ActionInterface;
+use App\Abstractions\Contracts\Action\ActionInterface;
 use App\Containers\Snippets\Models\Snippet;
 
 /**

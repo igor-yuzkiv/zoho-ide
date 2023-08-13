@@ -21,3 +21,9 @@ Route::prefix("snippets")
                 Route::get("suggestions", [\App\Containers\Snippets\Http\Controllers\SnippetIdeController::class, "getSuggestions"]);
             });
     });
+
+
+Route::prefix("ide")
+    ->group(function () {
+        Route::get("suggestions", [\App\Containers\IDE\Http\Controllers\SuggestionController::class, "index"]);
+    });
