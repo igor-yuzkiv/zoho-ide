@@ -170,7 +170,7 @@ return [
         \App\Ship\Providers\RouteServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
 
-        \App\Ship\Providers\SnippetServiceProvider::class,
+        \App\Containers\Snippets\Providers\SnippetServiceProvider::class,
 
     ])->toArray(),
 
