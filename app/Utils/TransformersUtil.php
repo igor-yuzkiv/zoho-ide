@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Ship\Utils;
+namespace App\Utils;
 use Illuminate\Support\Carbon;
+
 class TransformersUtil
 {
     public static function dateTimeFormatted(Carbon $carbon):string {

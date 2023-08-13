@@ -6,8 +6,15 @@ use App\Abstractions\Contracts\ActionInterface;
 use App\Containers\Snippets\Enums\SnippetType;
 use App\Containers\Snippets\Models\Snippet;
 
+/**
+ *
+ */
 class SaveSnippetProcedure implements ActionInterface
 {
+    /**
+     * @param array $data
+     * @param Snippet|null $snippet
+     */
     public function __construct(
         protected array    $data,
         protected ?Snippet $snippet = null
@@ -16,6 +23,9 @@ class SaveSnippetProcedure implements ActionInterface
 
     }
 
+    /**
+     * @return Snippet
+     */
     public function handle(): Snippet
     {
         if (!$this->snippet) {
