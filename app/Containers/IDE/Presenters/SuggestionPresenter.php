@@ -5,8 +5,24 @@ namespace App\Containers\IDE\Presenters;
 use App\Abstractions\Contracts\Presenter\IterablePresenter;
 use App\Containers\IDE\Contracts\SuggestionsProvider;
 
+/**
+ *
+ */
 class SuggestionPresenter implements IterablePresenter
 {
+    /**
+     * @return iterable
+     */
+    public function present(): iterable
+    {
+        $suggestions = [];
+        foreach ($this->getProvider() as $provider) {
+            $suggestions = array_merge($suggestions, $provider->provide());
+        }
+
+        return $suggestions;
+    }
+
 
     /**
      * @return SuggestionsProvider[]
@@ -26,15 +42,5 @@ class SuggestionPresenter implements IterablePresenter
         }
 
         return $result;
-    }
-
-    public function present(): iterable
-    {
-        $suggestions = [];
-        foreach ($this->getProvider() as $provider) {
-            $suggestions = array_merge($suggestions, $provider->provide());
-        }
-
-        return $suggestions;
     }
 }
