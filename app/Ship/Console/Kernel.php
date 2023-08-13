@@ -22,7 +22,6 @@ class Kernel extends ConsoleKernel
     {
         $this->load([
             __DIR__.'/Commands',
-            base_path('app/Containers/Deluge/Console/Commands'),
         ]);
 
 

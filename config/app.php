@@ -169,9 +169,7 @@ return [
         \App\Ship\Providers\EventServiceProvider::class,
         \App\Ship\Providers\RouteServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
-        \App\Ship\Providers\DelugeLanguageServiceProvider::class,
 
-        \App\Ship\Providers\DelugeLanguageServiceProvider::class,
         \App\Ship\Providers\SnippetServiceProvider::class,
 
     ])->toArray(),

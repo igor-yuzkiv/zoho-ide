@@ -19,14 +19,6 @@ Route::prefix("projects")
         Route::get("{project}/connections", [\App\Containers\Projects\Http\Controllers\Project\ProjectController::class, "getProjectConnections"]);
     });
 
-Route::prefix("deluge")
-    ->group(function () {
-        Route::prefix("components")
-            ->group(function () {
-                Route::get("", [\App\Containers\Deluge\Http\Controllers\ComponentsController::class, "getComponents"]);
-            });
-    });
-
 Route::prefix("snippets")
     ->group(function () {
         Route::get("", [\App\Containers\Snippets\Http\Controllers\SnippetsController::class, "getSnippets"]);
