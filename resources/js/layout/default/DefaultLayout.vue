@@ -1,6 +1,5 @@
 <script setup>
 import {ref} from "vue";
-import LeftSidebar from "@/layout/default/parts/left-sidebar/LeftSidebar.vue";
 import DefaultHeader from "@/layout/default/parts/header/DefaultHeader.vue";
 const isSideMenuOpen = ref(false)
 
@@ -11,8 +10,6 @@ const isSideMenuOpen = ref(false)
         class="flex h-screen bg-gray-50 dark:bg-gray-900"
         :class="{ 'overflow-hidden': isSideMenuOpen }"
     >
-        <left-sidebar></left-sidebar>
-
         <div class="flex flex-col flex-1 w-full">
             <default-header></default-header>
 

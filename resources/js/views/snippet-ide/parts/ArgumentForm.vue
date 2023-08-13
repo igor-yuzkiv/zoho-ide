@@ -1,10 +1,10 @@
 <script setup>
 import {ARGUMENT_TYPES} from "@/constans/snippet.js"
-import XInput from "@/components/base/input/XInput.vue";
+import XInput from "@/components/input/XInput.vue";
 import {onMounted, ref} from "vue";
-import XButton from "@/components/base/button/XButton.vue";
-import XSelect from "@/components/base/select/XSelect.vue";
-import XCheckbox from "@/components/base/checkbox/XCheckbox.vue";
+import XButton from "@/components/button/XButton.vue";
+import XSelect from "@/components/select/XSelect.vue";
+import XCheckbox from "@/components/checkbox/XCheckbox.vue";
 
 const defaultFormValue = () => ({
     name    : '',

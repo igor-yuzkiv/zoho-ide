@@ -1,18 +1,18 @@
 <script>
 import {defineComponent} from "vue";
 import XDelugeTemplateEditor from "@/components/code-editor/XDelugeTemplateEditor.vue";
-import XButton from "@/components/base/button/XButton.vue";
-import XCard from "@/components/base/card/XCard.vue";
+import XButton from "@/components/button/XButton.vue";
+import XCard from "@/components/card/XCard.vue";
 import {ListGroup, ListGroupItem, Modal} from "flowbite-vue";
-import XIconButton from "@/components/base/icon-button/XIconButton.vue";
+import XIconButton from "@/components/icon-button/XIconButton.vue";
 import {Icon} from "@iconify/vue";
 import {createSnippet, fetchSnippet, updateSnippet} from "@/api/snippets.js"
-import XInput from "@/components/base/input/XInput.vue";
+import XInput from "@/components/input/XInput.vue";
 import ArgumentForm from "@/views/snippet-ide/parts/ArgumentForm.vue";
-import XTextarea from "@/components/base/textarea/XTextarea.vue";
+import XTextarea from "@/components/textarea/XTextarea.vue";
 import routesName from "@/constans/routesName.js";
 import {mapState} from "vuex";
-import XSelect from "@/components/base/select/XSelect.vue";
+import XSelect from "@/components/select/XSelect.vue";
 import {SNIPPET_TYPES} from "@/constans/snippet.js";
 import XCodeEditor from "@/components/code-editor/XCodeEditor.vue";
 
@@ -79,6 +79,9 @@ export default defineComponent({
         }
     },
     methods : {
+        goBack(){
+            this.$router.push({name: routesName.snippets})
+        },
         async loadSnippet(id) {
             await fetchSnippet(id, ['arguments'])
                 .then(({data}) => {
@@ -160,7 +163,7 @@ export default defineComponent({
             class="flex items-center flex-none justify-between mb-2 p-2 bg-white rounded-lg shadow-xs dark:bg-gray-800"
         >
             <div class="flex items-center gap-x-2">
-                <x-icon-button @click="$router.go(-1)">
+                <x-icon-button @click="goBack">
                     <Icon icon="simple-line-icons:arrow-left"/>
                 </x-icon-button>
 
