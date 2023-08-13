@@ -3,7 +3,7 @@ import {defineComponent, h, onMounted, onUnmounted, ref, watch} from "vue";
 import * as monaco from "monaco-editor";
 import editorWorker from 'monaco-editor/esm/vs/editor/editor.worker?worker'
 import tsWorker from 'monaco-editor/esm/vs/language/typescript/ts.worker?worker'
-import {fetchIdeSuggestions} from "@/api/snippets.js";
+import {fetchIdeSuggestions} from "@/api/ide.js";
 
 const EDITOR_LANGUAGE = "php";
 

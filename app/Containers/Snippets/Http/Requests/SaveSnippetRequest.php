@@ -12,7 +12,6 @@ class SaveSnippetRequest extends FormRequest
         return [
             'name'                  => ['required', 'string'],
             'component_name'        => ['unique:snippets,component_name,' . $this->get('id', ''), 'required_if:type,' . SnippetType::TEMPLATE->value, 'string'],
-            'component_insert_text' => ['nullable', 'string'],
             'content'               => ['nullable', 'string'],
             'description'           => ['nullable', 'string'],
             'type'                  => ['nullable', 'string'],

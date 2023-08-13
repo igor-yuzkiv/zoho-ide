@@ -55,7 +55,6 @@ export default defineComponent({
                 description          : '',
                 content              : '',
                 component_name       : '',
-                component_insert_text: '',
                 arguments            : [],
             },
             argumentFormModal: {
@@ -205,11 +204,6 @@ export default defineComponent({
                         <x-input
                             label="Component Name"
                             v-model="snippet.component_name"
-                        />
-
-                        <x-textarea
-                            v-model="snippet.component_insert_text"
-                            label="Component Insert Text"
                         />
                     </div>
                 </x-card>

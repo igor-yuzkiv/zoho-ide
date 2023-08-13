@@ -28,7 +28,6 @@ class Snippet extends Model
         'description',
         'content',
         'component_name',
-        'component_insert_text',
     ];
 
     /**

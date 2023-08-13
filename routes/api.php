@@ -15,11 +15,6 @@ Route::prefix("snippets")
         Route::put("{snippet}", [\App\Containers\Snippets\Http\Controllers\SnippetsController::class, "updateSnippet"]);
         Route::delete("{snippet}", [\App\Containers\Snippets\Http\Controllers\SnippetsController::class, "deleteSnippet"]);
         Route::post("{snippet}/render", [\App\Containers\Snippets\Http\Controllers\SnippetsController::class, "render"]);
-
-        Route::prefix("ide")
-            ->group(function () {
-                Route::get("suggestions", [\App\Containers\Snippets\Http\Controllers\SnippetIdeController::class, "getSuggestions"]);
-            });
     });
 
 

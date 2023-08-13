@@ -35,7 +35,3 @@ export function updateSnippet(id, data) {
 export function deleteSnippet(id) {
     return http.delete(`snippets/${id}`);
 }
-
-export function fetchIdeSuggestions() {
-    return http.get("ide/suggestions");
-}

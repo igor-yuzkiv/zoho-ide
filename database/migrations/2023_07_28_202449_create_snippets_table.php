@@ -15,7 +15,6 @@ return new class extends Migration {
             $table->longText('content')->nullable();
 
             $table->string("component_name")->nullable()->unique();
-            $table->longText("component_insert_text")->nullable();
 
             $table->softDeletes();
             $table->timestamps();

@@ -34,7 +34,6 @@ class SnippetTransformer extends TransformerAbstract
             'description'           => $snippet->description,
             'content'               => $snippet->getContent(),
             'component_name'        => $snippet->component_name,
-            'component_insert_text' => $snippet->component_insert_text,
             'created_at'            => $snippet->created_at,
             'updated_at'            => $snippet->updated_at,
         ];
