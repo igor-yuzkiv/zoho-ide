@@ -7,8 +7,14 @@ use App\Containers\Snippets\Enums\MonacoCompletionItemKind;
 use App\Containers\Snippets\Enums\SnippetType;
 use App\Containers\Snippets\Models\Snippet;
 
+/**
+ *
+ */
 class IdeSuggestionsPresenter implements PresenterInterface
 {
+    /**
+     * @return iterable
+     */
     public function present(): iterable
     {
         return array_merge(
@@ -17,6 +23,9 @@ class IdeSuggestionsPresenter implements PresenterInterface
         );
     }
 
+    /**
+     * @return array[]
+     */
     public function bladeSuggestions(): array
     {
         return [
@@ -43,6 +52,9 @@ class IdeSuggestionsPresenter implements PresenterInterface
         ];
     }
 
+    /**
+     * @return array
+     */
     public function snippetsSuggestions(): array
     {
         $snippets = Snippet::query()

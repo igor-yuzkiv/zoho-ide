@@ -21,11 +21,3 @@ Route::prefix("snippets")
                 Route::get("suggestions", [\App\Containers\Snippets\Http\Controllers\SnippetIdeController::class, "getSuggestions"]);
             });
     });
-
-Route::prefix('chrome-extension')
-    ->group(function () {
-        Route::prefix('test')
-            ->group(function () {
-                Route::post('inject', [App\Containers\ChromeExtension\Http\Controllers\TestController::class, 'inject']);
-            });
-    });

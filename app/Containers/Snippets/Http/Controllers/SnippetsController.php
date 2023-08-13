@@ -2,6 +2,7 @@
 
 namespace App\Containers\Snippets\Http\Controllers;
 
+use App\Containers\Snippets\Actions\RenderSnippetAction;
 use App\Containers\Snippets\Actions\SaveSnippetProcedure;
 use App\Containers\Snippets\Enums\SnippetType;
 use App\Containers\Snippets\Http\Requests\SaveSnippetRequest;
@@ -102,19 +103,7 @@ class SnippetsController extends Controller
     public function render(Snippet $snippet, Request $request): JsonResponse
     {
         try {
-            if ($snippet->type === SnippetType::SAMPLE) {
-                return response()->json(['status' => true, 'code' => $snippet->content]);
-            }
-
-            $rules = [];
-            foreach ($snippet->arguments as $item) {
-                $rules[$item->name] = $item->required ? 'required' : 'nullable';
-            }
-
-            $data = $request->validate($rules);
-
-            $code = \Blade::render($snippet->getContent(), $data);
-
+            $code = (new RenderSnippetAction($snippet, $request->all()))->handle();
             return response()->json(['status' => true, 'code' => $code]);
         } catch (\Exception $exception) {
             return response()->json(['status' => false, 'message' => $exception->getMessage()]);
