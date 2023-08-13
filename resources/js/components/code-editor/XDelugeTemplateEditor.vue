@@ -19,22 +19,22 @@ self.MonacoEnvironment = {
 export default defineComponent({
     emits: ['update:modelValue'],
     props: {
-        modelValue   : {
+        modelValue      : {
             type   : String,
             default: '',
         },
-        id           : {
+        id              : {
             type   : String,
             default: "editorContainer"
         },
-        theme        : {
+        theme           : {
             type   : String,
             default: 'vs-dark',
             validator(value) {
                 return ['vs', 'vs-dark', 'hc-black'].includes(value);
             }
         },
-        componentProps: {
+        snippetArguments: {
             type   : Array,
             default: () => []
         },
@@ -59,11 +59,15 @@ export default defineComponent({
                 return {...i};
             })
 
-            props.componentProps.map(item => {
+            props.snippetArguments.map(item => {
+                const insertText = item?.is_slot
+                    ? '{!! $' + item.name + ' !!}'
+                    : '{{$' + item.name + '}}'
+
                 suggestions.push({
                     label     : '$' + item.name,
                     kind      : monaco.languages.CompletionItemKind.Variable,
-                    insertText: '{{$' + item.name + '}}'
+                    insertText: insertText,
                 })
             })
 
@@ -93,22 +97,21 @@ export default defineComponent({
         function declareComponentProps() {
             const regex = /@props\(\[\s*('[^']*'\s*,?\s*)*\s*\]\)\n*/g;
             const content = _editor.getValue().replace(regex, "");
+            console.log(props.snippetArguments);
+            const componentProps = new Set();
+            for (const item of props.snippetArguments.filter(i => !i?.is_slot)) {
+                componentProps.add(`\t'${item.name}',\n`)
+            }
 
-            if (!props.componentProps?.length) {
+            if (!componentProps.size) {
                 _editor.setValue(content);
                 return;
             }
 
-            let propsString = '';
-            for (const item of props.componentProps) {
-                propsString += `\t'${item.name}',\n`;
-            }
-            propsString = `@props([\n${propsString}])`;
-
-            _editor.setValue(propsString + '\n' + content);
+            _editor.setValue(`@props([\n${[...componentProps].join('')}])\n${content}`);
         }
 
-        watch(() => props.componentProps, declareComponentProps)
+        watch(() => props.snippetArguments, declareComponentProps)
 
         onMounted(async () => {
             await loadIdeSuggestions();

@@ -101,18 +101,23 @@ class SnippetsController extends Controller
      */
     public function render(Snippet $snippet, Request $request): JsonResponse
     {
-        if ($snippet->type === SnippetType::SAMPLE) {
-            return response()->json(['status' => true, 'code' => $snippet->content]);
+        try {
+            if ($snippet->type === SnippetType::SAMPLE) {
+                return response()->json(['status' => true, 'code' => $snippet->content]);
+            }
+
+            $rules = [];
+            foreach ($snippet->arguments as $item) {
+                $rules[$item->name] = $item->required ? 'required' : 'nullable';
+            }
+
+            $data = $request->validate($rules);
+
+            $code = \Blade::render($snippet->getContent(), $data);
+
+            return response()->json(['status' => true, 'code' => $code]);
+        } catch (\Exception $exception) {
+            return response()->json(['status' => false, 'message' => $exception->getMessage()]);
         }
-
-        $rules = [];
-        foreach ($snippet->arguments as $item) {
-            $rules[$item->name] = $item->required ? 'required' : 'nullable';
-        }
-
-        $data = $request->validate($rules);
-        $code = \Blade::render($snippet->content, $data);
-
-        return response()->json(['status' => true, 'code' => $code]);
     }
 }

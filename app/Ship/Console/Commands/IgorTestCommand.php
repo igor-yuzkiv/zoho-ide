@@ -13,6 +13,6 @@ class IgorTestCommand extends Command
 
     public function handle(): void
     {
-        dd(view('snippets.s-test')->render());
+        dd(view('snippets.s-test', ['crmModuleNmae' => 'test', 'creatorFormName' => 'test'])->render());
     }
 }

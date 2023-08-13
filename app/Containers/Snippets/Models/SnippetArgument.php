@@ -26,7 +26,16 @@ class SnippetArgument extends Model
         'name',
         'type',
         'default',
-        'required'
+        'required',
+        'is_slot',
+    ];
+
+    /**
+     * @var string[]
+     */
+    protected $casts = [
+        'required' => 'boolean',
+        'is_slot'  => 'boolean',
     ];
 
     /**

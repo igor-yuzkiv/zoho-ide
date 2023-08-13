@@ -2,7 +2,6 @@
 
 namespace App\Containers\Snippets\Models;
 
-use App\Containers\Snippets\Enums\SnippetLanguage;
 use App\Containers\Snippets\Enums\SnippetType;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -25,20 +24,18 @@ class Snippet extends Model
      */
     protected $fillable = [
         'name',
+        'type',
+        'description',
         'content',
         'component_name',
         'component_insert_text',
-        'description',
-        'type',
-        'language',
     ];
 
     /**
      * @var string[]
      */
     protected $casts = [
-        'type'     => SnippetType::class,
-        'language' => SnippetLanguage::class,
+        'type'         => SnippetType::class,
     ];
 
     /**

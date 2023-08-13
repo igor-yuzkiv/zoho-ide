@@ -23,6 +23,7 @@ class SaveSnippetRequest extends FormRequest
             'arguments.*.type'      => ['nullable', "string"],
             'arguments.*.default'   => ['nullable', "string"],
             'arguments.*.required'  => ['required', 'boolean'],
+            'arguments.*.is_slot'   => ['required', 'boolean'],
             'arguments.*._delete'   => ['nullable', 'boolean'],
         ];
     }

@@ -11,6 +11,7 @@ const defaultFormValue = () => ({
     type    : ARGUMENT_TYPES.string.name,
     default : null,
     required: false,
+    is_slot: false,
 })
 
 const emit = defineEmits(['update:modalValue']);
@@ -54,6 +55,7 @@ onMounted(() => {
         />
 
         <x-checkbox label="Required" v-model="form.required"/>
+        <x-checkbox label="Is slot" v-model="form.is_slot"/>
     </div>
 
     <div class="flex items-center justify-end mt-3">

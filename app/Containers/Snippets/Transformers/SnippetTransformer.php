@@ -29,14 +29,14 @@ class SnippetTransformer extends TransformerAbstract
     {
         return [
             'id'                    => (string)$snippet->id,
+            'type'                  => $snippet->type->value,
             'name'                  => $snippet->name,
+            'description'           => $snippet->description,
+            'content'               => $snippet->getContent(),
             'component_name'        => $snippet->component_name,
             'component_insert_text' => $snippet->component_insert_text,
-            'content'               => $snippet->getContent(),
-            'description'           => $snippet->description,
             'created_at'            => $snippet->created_at,
             'updated_at'            => $snippet->updated_at,
-            'type'                  => $snippet->type->value,
         ];
     }
 

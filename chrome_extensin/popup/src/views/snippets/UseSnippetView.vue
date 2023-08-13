@@ -56,7 +56,7 @@ export default defineComponent({
                 })
 
             if (!response?.code) {
-                alert("something went wrong")
+                alert(response?.message || "something went wrong")
                 return;
             }
 

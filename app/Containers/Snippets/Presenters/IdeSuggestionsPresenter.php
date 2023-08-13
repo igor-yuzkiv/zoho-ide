@@ -21,6 +21,16 @@ class IdeSuggestionsPresenter implements PresenterInterface
     {
         return [
             [
+                "label"      => "blade-if",
+                "kind"       => MonacoCompletionItemKind::Snippet->value,
+                "insertText" => "@if()\n@endif",
+            ],
+            [
+                "label"      => "blade-foreach",
+                "kind"       => MonacoCompletionItemKind::Snippet->value,
+                "insertText" => "@foreach(\$items as \$key => \$value)\n@endforeach",
+            ],
+            [
                 "label"      => "<x-slot",
                 "kind"       => MonacoCompletionItemKind::Snippet->value,
                 "insertText" => "<x-slot:></x-slot>",
@@ -30,7 +40,6 @@ class IdeSuggestionsPresenter implements PresenterInterface
                 "kind"       => MonacoCompletionItemKind::Snippet->value,
                 "insertText" => '{!! $slot !!}',
             ]
-
         ];
     }
 
