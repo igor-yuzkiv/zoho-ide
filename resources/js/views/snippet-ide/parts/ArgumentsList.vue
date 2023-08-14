@@ -34,13 +34,17 @@ const getArgumentIndex = (item) => {
 }
 
 function handleOpenArgumentModal(item) {
-    argumentFormModal.value.isOpen = true;
-    argumentFormModal.value.modelValue = item || {};
+    argumentFormModal.value = {
+        isOpen: true,
+        modelValue: item || {},
+    };
 }
 
 function handleCloseArgumentModal() {
-    argumentFormModal.value.isOpen = false;
-    argumentFormModal.value.modelValue = {};
+    argumentFormModal.value = {
+        isOpen: false,
+        modelValue: {},
+    };
 }
 
 function handleUpdateArgument(item) {
@@ -54,13 +58,14 @@ function handleUpdateArgument(item) {
     }
 
     emit('update:modelValue', snippetArguments);
+
     handleCloseArgumentModal();
 }
 
 function handleClickDeleteArgument(item) {
-    const snippetArguments = [...props.modelValue];
     const index = getArgumentIndex(item);
     if (index >= 0) {
+        const snippetArguments = [...props.modelValue];
         snippetArguments[index]['_delete'] = true;
         emit('update:modelValue', snippetArguments);
     }
