@@ -3,30 +3,26 @@ import {defineComponent} from "vue";
 import XDelugeTemplateEditor from "@/components/code-editor/XDelugeTemplateEditor.vue";
 import XButton from "@/components/button/XButton.vue";
 import XCard from "@/components/card/XCard.vue";
-import {ListGroup, ListGroupItem, Modal} from "flowbite-vue";
 import XIconButton from "@/components/icon-button/XIconButton.vue";
 import {Icon} from "@iconify/vue";
 import {createSnippet, fetchSnippet, updateSnippet} from "@/api/snippets.js"
 import XInput from "@/components/input/XInput.vue";
-import ArgumentForm from "@/views/snippet-ide/parts/ArgumentForm.vue";
 import XTextarea from "@/components/textarea/XTextarea.vue";
 import routesName from "@/constans/routesName.js";
 import {mapState} from "vuex";
 import XSelect from "@/components/select/XSelect.vue";
 import {SNIPPET_TYPES} from "@/constans/snippet.js";
 import XCodeEditor from "@/components/code-editor/XCodeEditor.vue";
+import ArgumentsList from "@/views/snippet-ide/parts/ArgumentsList.vue";
 
 export default defineComponent({
     components: {
+        ArgumentsList,
         XCodeEditor,
         XSelect,
         XDelugeTemplateEditor,
         XTextarea,
-        ArgumentForm,
-        Modal,
         XInput,
-        ListGroupItem,
-        ListGroup,
         Icon,
         XIconButton,
         XCard,
@@ -45,21 +41,17 @@ export default defineComponent({
     },
     data() {
         return {
-            isLoaded         : false,
-            showToolbar      : false,
-            snippetId        : null,
-            snippet          : {
-                id                   : null,
-                name                 : '',
-                type                 : "template",
-                description          : '',
-                content              : '',
-                component_name       : '',
-                arguments            : [],
-            },
-            argumentFormModal: {
-                isOpen    : false,
-                modelValue: {}
+            isLoaded   : false,
+            showToolbar: false,
+            snippetId  : null,
+            snippet    : {
+                id            : null,
+                name          : '',
+                type          : "template",
+                description   : '',
+                content       : '',
+                component_name: '',
+                arguments     : [],
             }
         }
     },
@@ -77,8 +69,15 @@ export default defineComponent({
             return this.snippet.type === SNIPPET_TYPES.template.name;
         }
     },
+    watch   : {
+        "snippet.name": {
+            handler(value) {
+                this.snippet.component_name = value.replace(/\W+/g, "-").toLowerCase();
+            }
+        }
+    },
     methods : {
-        goBack(){
+        goBack() {
             this.$router.push({name: routesName.snippets})
         },
         async loadSnippet(id) {
@@ -89,37 +88,6 @@ export default defineComponent({
                     }
                 })
                 .catch(e => console.error(e))
-        },
-
-        handleOpenArgumentModal(item) {
-            this.argumentFormModal.isOpen = true;
-            this.argumentFormModal.modelValue = item || {};
-        },
-
-        handleCloseArgumentModal() {
-            this.argumentFormModal.isOpen = false;
-            this.argumentFormModal.modelValue = {};
-        },
-
-        handleUpdateArgument(item) {
-            const snippetArguments = [...this.snippet.arguments];
-
-            const index = snippetArguments.findIndex(argument => {
-                if (item?.id) {
-                    return argument.id === item.id
-                } else {
-                    return argument.name === item?.name
-                }
-            });
-
-            if (index >= 0) {
-                snippetArguments[index] = item;
-            } else {
-                snippetArguments.push(item);
-            }
-
-            this.snippet.arguments = snippetArguments;
-            this.handleCloseArgumentModal();
         },
 
         async handleClickSaveSnippet() {
@@ -142,13 +110,6 @@ export default defineComponent({
                 await this.$router.push({name: routesName.snippets,})
             }
         },
-
-        handleClickDeleteArgument(item) {
-            const snippetArguments = [...this.snippet.arguments];
-            const tmp = snippetArguments.find(argument => argument === item);
-            tmp['_delete'] = true;
-            this.snippet.arguments = snippetArguments;
-        }
     },
 })
 
@@ -179,11 +140,17 @@ export default defineComponent({
         <div class="grid grid-cols-6 gap-2 flex-grow overflow-hidden">
             <!--Left Toolbar-->
             <div v-show="!showToolbar" class="col-span-2 flex flex-col flex-gow gap-2 pr-1 overflow-auto">
-                <x-card title="General" expandable>
+                <x-card title="Options" expandable>
                     <div class="flex flex-col gap-y-2">
                         <x-input
                             label="Name"
                             v-model="snippet.name"
+                        />
+
+                        <x-input
+                            v-if="isSnippetTypeTemplate"
+                            label="Component Name"
+                            v-model="snippet.component_name"
                         />
 
                         <x-select
@@ -199,34 +166,7 @@ export default defineComponent({
                     </div>
                 </x-card>
 
-                <x-card title="Component" expandable v-if="isSnippetTypeTemplate">
-                    <div class="flex flex-col gap-y-2">
-                        <x-input
-                            label="Component Name"
-                            v-model="snippet.component_name"
-                        />
-                    </div>
-                </x-card>
-
-                <x-card title="Arguments" expandable v-if="isSnippetTypeTemplate">
-                    <template #actions>
-                        <x-icon-button icon="ph:plus" @click="handleOpenArgumentModal(null)"/>
-                    </template>
-
-                    <ListGroup class="w-full">
-                        <ListGroupItem
-                            v-for="item in getSnippetArguments"
-                            :key="item.name"
-                            class="flex items-center justify-between"
-                        >
-                            <div class="flex flex-col v-full" @click="handleOpenArgumentModal(item)">
-                                <span>{{ item.name }}</span>
-                                <span class="text-black">type: {{ item.type }}</span>
-                            </div>
-                            <x-icon-button icon="ph:x-bold" @click="handleClickDeleteArgument(item)"/>
-                        </ListGroupItem>
-                    </ListGroup>
-                </x-card>
+                <arguments-list v-if="isSnippetTypeTemplate" v-model="snippet.arguments"/>
             </div>
 
             <!--Editor-->
@@ -252,22 +192,9 @@ export default defineComponent({
 
         </div>
     </section>
-
-    <teleport to="#x__application">
-        <!--Argument form modal-->
-        <Modal v-if="argumentFormModal.isOpen" @close="handleCloseArgumentModal">
-            <template #header>
-                <div class="text-black dark:text-white">
-                    {{ argumentFormModal.modelValue.name || 'New Argument' }}
-                </div>
-            </template>
-            <template #body>
-                <argument-form :model-value="argumentFormModal.modelValue" @update:modalValue="handleUpdateArgument"/>
-            </template>
-        </Modal>
-    </teleport>
 </template>
 
 <style scoped>
 
 </style>
+`

@@ -53,10 +53,11 @@ class SaveArgumentsAction implements ActionInterface
         });
 
         foreach ($items as $item) {
-            $this->snippet->arguments()->updateOrCreate(
-                ['name' => $item['name']],
-                $item
-            );
+            if (\Arr::get($item, "id")) {
+                $this->snippet->arguments()->find($item['id'])->update($item);
+            } else {
+                $this->snippet->arguments()->create($item);
+            }
         }
     }
 }

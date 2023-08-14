@@ -49,7 +49,6 @@ class TemplatesSuggestionProvider implements SuggestionsProvider
         }
         $insertText .= "$props>$slots\n</x-" . $snippet->component_name . ">";
 
-
         return [
             "label"      => $snippet->name,
             "kind"       => MonacoCompletionItemKind::Snippet->value,
