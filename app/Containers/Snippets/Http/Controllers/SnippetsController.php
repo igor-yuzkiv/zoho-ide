@@ -61,7 +61,7 @@ class SnippetsController extends Controller
      */
     public function createSnippet(SaveSnippetRequest $request): JsonResponse
     {
-        $snippet = (new SaveSnippetProcedure($request->validated()))->handle();
+        $snippet = (new SaveSnippetProcedure($request->getDto()))->handle();
         return fractal($snippet)
             ->transformWith(new SnippetTransformer())
             ->serializeWith(ArraySerializer::class)
@@ -75,7 +75,7 @@ class SnippetsController extends Controller
      */
     public function updateSnippet(Snippet $snippet, SaveSnippetRequest $request): JsonResponse
     {
-        $snippet = (new SaveSnippetProcedure($request->validated(), $snippet))->handle();
+        $snippet = (new SaveSnippetProcedure($request->getDto(), $snippet))->handle();
         return fractal($snippet)
             ->transformWith(new SnippetTransformer())
             ->serializeWith(ArraySerializer::class)

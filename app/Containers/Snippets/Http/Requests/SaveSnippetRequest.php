@@ -2,11 +2,18 @@
 
 namespace App\Containers\Snippets\Http\Requests;
 
+use App\Containers\Snippets\DTO\SnippetDto;
 use App\Containers\Snippets\Enums\SnippetType;
 use Illuminate\Foundation\Http\FormRequest;
 
+/**
+ *
+ */
 class SaveSnippetRequest extends FormRequest
 {
+    /**
+     * @return array[]
+     */
     public function rules(): array
     {
         return [
@@ -28,8 +35,19 @@ class SaveSnippetRequest extends FormRequest
         ];
     }
 
+    /**
+     * @return bool
+     */
     public function authorize(): bool
     {
         return true;
+    }
+
+    /**
+     * @return SnippetDto
+     */
+    public function getDto(): SnippetDto
+    {
+        return SnippetDto::of($this->validated());
     }
 }

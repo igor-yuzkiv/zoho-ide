@@ -3,6 +3,7 @@
 namespace App\Containers\Snippets\Actions;
 
 use App\Abstractions\Contracts\Action\ActionInterface;
+use App\Containers\Snippets\DTO\SnippetDto;
 use App\Containers\Snippets\Enums\SnippetType;
 use App\Containers\Snippets\Models\Snippet;
 
@@ -12,12 +13,12 @@ use App\Containers\Snippets\Models\Snippet;
 class SaveSnippetProcedure implements ActionInterface
 {
     /**
-     * @param array $data
+     * @param SnippetDto $snippetDto
      * @param Snippet|null $snippet
      */
     public function __construct(
-        protected array    $data,
-        protected ?Snippet $snippet = null
+        protected SnippetDto $snippetDto,
+        protected ?Snippet   $snippet = null
     )
     {
 
@@ -32,7 +33,7 @@ class SaveSnippetProcedure implements ActionInterface
             $this->snippet = new Snippet();
         }
 
-        $this->snippet->fill($this->data);
+        $this->snippet->fill($this->snippetDto->toArray());
 
         if ($this->snippet->type === SnippetType::TEMPLATE) {
             $this->saveTemplateComponent();
@@ -51,11 +52,11 @@ class SaveSnippetProcedure implements ActionInterface
      */
     private function saveArguments(): void
     {
-        if (empty(\Arr::get($this->data, 'arguments'))) {
+        if (empty($this->snippetDto->arguments)) {
             return;
         }
 
-        (new SaveArgumentsAction($this->snippet, $this->data['arguments']))->handle();
+        (new SaveArgumentsAction($this->snippet, $this->snippetDto->arguments))->handle();
     }
 
 
@@ -75,7 +76,7 @@ class SaveSnippetProcedure implements ActionInterface
 
         return (bool)file_put_contents(
             $basePath . $this->snippet->component_name . '.blade.php',
-            $this->data['content']
+            $this->snippet->content
         );
     }
 }

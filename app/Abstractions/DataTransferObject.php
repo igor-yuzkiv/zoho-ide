@@ -7,7 +7,7 @@ use Illuminate\Contracts\Support\Arrayable;
 /**
  *
  */
-abstract class ValueObject implements Arrayable
+abstract class DataTransferObject implements Arrayable
 {
     /**
      * @param array $data
@@ -24,19 +24,6 @@ abstract class ValueObject implements Arrayable
         }
 
         return $static;
-    }
-
-    /**
-     * @return array
-     */
-    abstract protected function rules(): array;
-
-    /**
-     * @return array
-     */
-    public function validate(): array
-    {
-        return \Validator::validate($this->toArray(), $this->rules());
     }
 
     /**
