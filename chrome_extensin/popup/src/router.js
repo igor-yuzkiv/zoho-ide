@@ -9,7 +9,7 @@ const routes = [
     {
         path     : '/snippets/use/:id',
         name     :  "snippets.use",
-        component: () => import('@/views/snippets/UseSnippetView.vue'),
+        component: () => import('@/views/snippets/use-snippet/UseSnippetView.vue'),
     }
 ]
 

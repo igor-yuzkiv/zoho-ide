@@ -17,17 +17,17 @@ const router = createRouter({
                     path     : '',
                     name     : routesName.home,
                     component: () => import('@/views/home/HomeView.vue'),
-                    redirect: "/snippets"
+                    redirect : "/snippets"
                 },
                 {
                     path     : 'snippets',
                     name     : routesName.snippets,
-                    component: () => import('@/views/snippets/SnippetsView.vue'),
+                    component: () => import('@/views/snippets/SnippetsListView.vue'),
                 },
                 {
                     path     : 'snippets/ide/:id?',
                     name     : routesName.snippet_ide,
-                    component: () => import('@/views/snippet-ide/SnippetIdeView.vue'),
+                    component: () => import('@/views/snippets/snippet-ide/SnippetIdeView.vue'),
                 },
             ],
         },

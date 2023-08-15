@@ -13,7 +13,7 @@ import {mapState} from "vuex";
 import XSelect from "@/components/form/select/XSelect.vue";
 import {SNIPPET_TYPES} from "@/constans/snippet.js";
 import XCodeEditor from "@/components/code-editor/XCodeEditor.vue";
-import ArgumentsList from "@/views/snippet-ide/parts/ArgumentsList.vue";
+import ArgumentsList from "@/views/snippets/snippet-ide/parts/ArgumentsList.vue";
 
 export default defineComponent({
     components: {
