@@ -4,9 +4,10 @@ import XDivider from "@/components/divider/XDivider.vue";
 export const XTabsSymbol = Symbol();
 
 import {defineComponent, onMounted, ref, provide} from "vue";
+import {Icon} from "@iconify/vue";
 
 export default defineComponent({
-    components: {XDivider},
+    components: {Icon, XDivider},
     emits     : ['update:modelValue'],
     props     : {
         modelValue: {
@@ -22,7 +23,8 @@ export default defineComponent({
         const currentTab = ref(props.modelValue);
         const tabs = slots.default().map(i => ({
             name : i.props.name,
-            title: i.props?.title || i.props.name
+            title: i.props?.title || i.props.name,
+            icon: i.props?.icon
         }));
 
         function handleSelectTab(tabName) {
@@ -63,11 +65,13 @@ export default defineComponent({
                     class="x_nav-list-item"
                     :class="{
                         'underline dark:!text-white !text-black': currentTab === item.name,
-                        'rotate-180': vertical,
                     }"
                     @click="handleSelectTab(item.name)"
                 >
-                    {{ item.title }}
+                    <div class="flex items-center gap-x-1">
+                        <Icon  :icon="item.icon" v-if="item.icon" class="text-xl"/>
+                        <span :class="{'rotate-180': vertical}">{{ item.title }}</span>
+                    </div>
                 </li>
                 <x-divider/>
             </template>

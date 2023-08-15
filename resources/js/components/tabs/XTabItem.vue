@@ -11,6 +11,10 @@ export default defineComponent({
         title: {
             type: String,
         },
+        icon: {
+            type: String,
+            default: null,
+        },
     },
     setup() {
         const {currentTab} = inject(XTabsSymbol);

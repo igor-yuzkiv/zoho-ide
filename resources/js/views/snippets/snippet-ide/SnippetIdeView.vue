@@ -14,9 +14,13 @@ import XSelect from "@/components/form/select/XSelect.vue";
 import {SNIPPET_TYPES} from "@/constans/snippet.js";
 import XCodeEditor from "@/components/code-editor/XCodeEditor.vue";
 import ArgumentsList from "@/views/snippets/snippet-ide/parts/ArgumentsList.vue";
+import XTabs from "@/components/tabs/XTabs.vue";
+import XTabItem from "@/components/tabs/XTabItem.vue";
 
 export default defineComponent({
     components: {
+        XTabItem,
+        XTabs,
         ArgumentsList,
         XCodeEditor,
         XSelect,
@@ -53,7 +57,8 @@ export default defineComponent({
                 content       : '',
                 component_name: '',
                 arguments     : [],
-            }
+            },
+            currentTab: '',
         }
     },
     computed: {
@@ -146,33 +151,52 @@ export default defineComponent({
         <div class="grid grid-cols-6 gap-2 flex-grow overflow-hidden">
             <!--Left Toolbar-->
             <div v-show="!showToolbar" class="col-span-2 flex flex-col flex-gow gap-2 pr-1 overflow-auto">
-                <x-card title="Options" expandable>
-                    <div class="flex flex-col gap-y-2">
-                        <x-input
-                            label="Name"
-                            v-model="snippet.title"
-                        />
+                <x-tabs vertical>
+                    <x-tab-item
+                        name="Options"
+                        class="p-1"
+                        icon="fluent:options-16-filled"
+                    >
+                        <x-card title="Options" expandable>
+                            <div class="flex flex-col gap-y-2">
+                                <x-input
+                                    label="Name"
+                                    v-model="snippet.title"
+                                />
 
-                        <x-input
-                            v-if="isSnippetTypeTemplate"
-                            label="Component Name"
-                            v-model="snippet.component_name"
-                        />
+                                <x-input
+                                    v-if="isSnippetTypeTemplate"
+                                    label="Component Name"
+                                    v-model="snippet.component_name"
+                                />
 
-                        <x-select
-                            label="Type"
-                            v-model="snippet.type"
-                            :options="getSnippetTypesOptions"
-                        />
+                                <x-select
+                                    label="Type"
+                                    v-model="snippet.type"
+                                    :options="getSnippetTypesOptions"
+                                />
 
-                        <x-textarea
-                            v-model="snippet.description"
-                            label="Description"
-                        />
-                    </div>
-                </x-card>
+                                <x-textarea
+                                    v-model="snippet.description"
+                                    label="Description"
+                                />
+                            </div>
+                        </x-card>
+                    </x-tab-item>
+                    <x-tab-item
+                        name="Arguments"
+                        class="p-1"
+                        v-if="isSnippetTypeTemplate"
+                        icon="carbon:property-relationship"
+                    >
+                        <arguments-list v-model="snippet.arguments"/>
+                    </x-tab-item>
 
-                <arguments-list v-if="isSnippetTypeTemplate" v-model="snippet.arguments"/>
+                    <x-tab-item name="Snippets" icon="ph:folders">
+
+                    </x-tab-item>
+                </x-tabs>
+
             </div>
 
             <!--Editor-->
