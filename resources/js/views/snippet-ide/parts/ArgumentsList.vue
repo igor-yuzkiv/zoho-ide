@@ -1,6 +1,6 @@
 <script setup>
 import XCard from "@/components/card/XCard.vue";
-import XIconButton from "@/components/icon-button/XIconButton.vue";
+import XIconButton from "@/components/form/icon-button/XIconButton.vue";
 import {computed, ref} from "vue";
 import ArgumentForm from "@/views/snippet-ide/parts/ArgumentForm.vue";
 import {Modal} from "flowbite-vue";

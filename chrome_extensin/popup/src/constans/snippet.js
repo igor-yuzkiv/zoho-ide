@@ -1,45 +1,34 @@
-import XInput from "@/components/input/XInput.vue";
+import XInput from "@/components/form/input/XInput.vue";
+import XMapping from "@/components/form/mapping/XMapping.vue";
 
 export const ARGUMENT_TYPES = {
-    string:  {
-        name:  'string',
+    string : {
+        name : 'string',
         value: 'string',
         input: {
             component: XInput,
-            props:     {
-                type: "text",
-            }
+            props    : {type: "text"}
         }
     },
-    number:  {
-        name:  'number',
-        value: 'number',
+    mapping: {
+        name     : 'mapping',
+        value    : 'mapping',
         input: {
-            component: XInput,
-            props:     {
-                type: "number",
-            }
+            component: XMapping,
+            props    : {}
         }
-    },
-    boolean: {
-        name:  'boolean',
-        value: 'boolean',
-    },
-    any:     {
-        name:  'any',
-        value: 'any',
-    },
+    }
 }
 
 export const SNIPPET_TYPES = {
     template: {
-        name:     "template",
-        variant:  "success",
+        name    : "template",
+        variant : "success",
         language: "php"
     },
-    sample:   {
-        name:     "sample",
-        variant:  "info",
+    sample  : {
+        name    : "sample",
+        variant : "info",
         language: 'typescript'
     }
 }

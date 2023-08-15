@@ -44,7 +44,8 @@ class TemplatesSuggestionProvider implements SuggestionsProvider
             if ($argument->is_slot) {
                 $slots .= "\n<x-slot:" . $argument->name . "> </x-slot>";
             } else {
-                $props .= " " . $argument->name . "=";
+                $value = $argument->default ?? "";
+                $props .= " " . $argument->name . "=\"$value\"";
             }
         }
         $insertText .= "$props>$slots\n</x-" . $snippet->component_name . ">";

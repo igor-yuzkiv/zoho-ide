@@ -2,3 +2,7 @@
     <h1>Hello, {{ $name }}</h1>
 
 @endif
+
+@foreach()
+
+@endforeach

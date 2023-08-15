@@ -2,6 +2,10 @@ export const ARGUMENT_TYPES = {
     string : {
         name : 'string',
         value: 'string',
+    },
+    mapping: {
+        name: 'mapping',
+        value: 'mapping',
     }
 }
 

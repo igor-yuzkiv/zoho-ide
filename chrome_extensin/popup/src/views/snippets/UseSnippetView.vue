@@ -1,17 +1,17 @@
 <script>
 import {defineComponent} from "vue";
-import XButton           from "@/components/button/XButton.vue";
-import XIconButton       from "@/components/icon-button/XIconButton.vue";
-import {Icon}            from "@iconify/vue";
+import XButton from "@/components/form/button/XButton.vue";
+import XIconButton from "@/components/form/icon-button/XIconButton.vue";
+import {Icon} from "@iconify/vue";
 import {
     fetchSnippet,
     renderSnippet
-}                        from "@/api/snippets.js";
+} from "@/api/snippets.js";
 import XArgumentsForm from "@/components/arguments-form/XArgumentsForm.vue";
 import {
     dispatchEvent,
     EVENT_TYPES
-}                     from "@/utils/chromeApi.js";
+} from "@/utils/chromeApi.js";
 
 export default defineComponent({
     components: {XArgumentsForm, XButton, XIconButton, Icon},
@@ -64,7 +64,7 @@ export default defineComponent({
         },
         async goBack() {
             this.$router.go(-1);
-        }
+        },
     }
 })
 </script>

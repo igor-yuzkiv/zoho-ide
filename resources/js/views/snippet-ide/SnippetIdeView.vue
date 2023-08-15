@@ -1,16 +1,16 @@
 <script>
 import {defineComponent} from "vue";
 import XDelugeTemplateEditor from "@/components/code-editor/XDelugeTemplateEditor.vue";
-import XButton from "@/components/button/XButton.vue";
+import XButton from "@/components/form/button/XButton.vue";
 import XCard from "@/components/card/XCard.vue";
-import XIconButton from "@/components/icon-button/XIconButton.vue";
+import XIconButton from "@/components/form/icon-button/XIconButton.vue";
 import {Icon} from "@iconify/vue";
 import {createSnippet, fetchSnippet, updateSnippet} from "@/api/snippets.js"
-import XInput from "@/components/input/XInput.vue";
-import XTextarea from "@/components/textarea/XTextarea.vue";
+import XInput from "@/components/form/input/XInput.vue";
+import XTextarea from "@/components/form/textarea/XTextarea.vue";
 import routesName from "@/constans/routesName.js";
 import {mapState} from "vuex";
-import XSelect from "@/components/select/XSelect.vue";
+import XSelect from "@/components/form/select/XSelect.vue";
 import {SNIPPET_TYPES} from "@/constans/snippet.js";
 import XCodeEditor from "@/components/code-editor/XCodeEditor.vue";
 import ArgumentsList from "@/views/snippet-ide/parts/ArgumentsList.vue";
@@ -114,13 +114,6 @@ export default defineComponent({
                 await this.$router.push({name: routesName.snippets,})
             }
         },
-
-        async handleClickPreview() {
-            const response = await this.saveSnippet();
-            if (response?.id) {
-
-            }
-        }
     },
 })
 

@@ -20,8 +20,15 @@ export default defineComponent({
             fields: []
         }
     },
-    mounted() {
-        this.prepareFields();
+    watch: {
+        modelValue: {
+            handler: function (value) {
+                console.log("modelValue", value);
+                this.prepareFields();
+            },
+            deep   : true,
+            immediate: true
+        }
     },
     methods: {
         prepareFields() {
@@ -40,11 +47,11 @@ export default defineComponent({
                     },
                     id       : argument.id,
                     name     : argument.name,
-                    value    : argument.default,
+                    value    : this.modelValue[argument.name] || argument.default,
                 })
             }
 
-            console.log(fields);
+            console.log("fields", fields);
 
             this.fields = fields;
         },
@@ -58,7 +65,7 @@ export default defineComponent({
 </script>
 
 <template>
-    <div class="grid grid-cols-2 gap-2">
+    <div class="grid grid-cols-1 gap-2">
         <div v-for="field in fields" :key="field.id">
             <component
                 :is="field.component"

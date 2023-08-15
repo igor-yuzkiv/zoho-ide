@@ -7,7 +7,7 @@ import {
     options
 } from "@/components/confirm-dialog/useConfirmDialogWrapper.js"
 import {Modal} from "flowbite-vue";
-import XButton from "@/components/button/XButton.vue";
+import XButton from "@/components/form/button/XButton.vue";
 import {Icon} from "@iconify/vue";
 </script>
 
