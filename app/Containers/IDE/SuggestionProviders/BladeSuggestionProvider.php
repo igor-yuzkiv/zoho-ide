@@ -35,6 +35,11 @@ class BladeSuggestionProvider implements SuggestionsProvider
                 "label"      => '$slot',
                 "kind"       => MonacoCompletionItemKind::Snippet->value,
                 "insertText" => '{!! $slot !!}',
+            ],
+            [
+                "label"      => 'isset',
+                "kind"       => MonacoCompletionItemKind::Function->value,
+                "insertText" => 'isset($)',
             ]
         ];
     }

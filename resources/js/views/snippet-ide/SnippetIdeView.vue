@@ -91,19 +91,22 @@ export default defineComponent({
                 .catch(e => console.error(e))
         },
 
-        async handleClickSaveSnippet() {
+        async saveSnippet() {
             const upsertSnippet = async () => {
                 return this.snippetId
                     ? updateSnippet(this.snippetId, this.snippet)
                     : createSnippet(this.snippet)
             }
 
-            const response = await upsertSnippet(this.snippetId, this.snippet)
+            return await upsertSnippet(this.snippetId, this.snippet)
                 .then(({data}) => data)
                 .catch(({response}) => {
                     this.toast.error(response?.data?.message || 'Something went wrong');
                 })
+        },
 
+        async handleClickSaveSnippet() {
+            const response = await this.saveSnippet();
             if (response?.id) {
                 this.toast.success('Snippet saved');
                 this.snippetId = response.id;
@@ -111,6 +114,13 @@ export default defineComponent({
                 await this.$router.push({name: routesName.snippets,})
             }
         },
+
+        async handleClickPreview() {
+            const response = await this.saveSnippet();
+            if (response?.id) {
+
+            }
+        }
     },
 })
 
@@ -133,9 +143,11 @@ export default defineComponent({
                 </x-icon-button>
             </div>
 
-            <x-button @click="handleClickSaveSnippet">
-                Save
-            </x-button>
+            <div class="flex items-center gap-x-2">
+                <x-button @click="handleClickSaveSnippet">
+                    Save
+                </x-button>
+            </div>
         </div>
 
         <div class="grid grid-cols-6 gap-2 flex-grow overflow-hidden">
@@ -190,7 +202,6 @@ export default defineComponent({
                     :theme="darkTheme ? 'vs-dark' : 'vs'"
                 />
             </div>
-
         </div>
     </section>
 </template>
