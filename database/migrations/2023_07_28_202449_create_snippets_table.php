@@ -9,14 +9,14 @@ return new class extends Migration {
     {
         Schema::create('snippets', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string("type")->default(\App\Containers\Snippets\Enums\SnippetType::TEMPLATE->value);
+
+            $table->string('title');
             $table->longText("description")->nullable();
-            $table->longText('content')->nullable();
 
             $table->string("component_name")->nullable()->unique();
+            $table->string("type")->default(\App\Containers\Snippets\Enums\SnippetType::TEMPLATE->value);
+            $table->string('language')->nullable();
 
-            $table->softDeletes();
             $table->timestamps();
         });
     }

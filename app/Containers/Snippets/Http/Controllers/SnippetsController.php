@@ -8,6 +8,7 @@ use App\Containers\Snippets\Enums\SnippetType;
 use App\Containers\Snippets\Http\Requests\SaveSnippetRequest;
 use App\Containers\Snippets\Models\Snippet;
 use App\Containers\Snippets\Transformers\SnippetTransformer;
+use App\Containers\Snippets\Utils\SnippetUtil;
 use App\Ship\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -89,7 +90,7 @@ class SnippetsController extends Controller
     public function deleteSnippet(Snippet $snippet): JsonResponse
     {
         if ($snippet->type === SnippetType::TEMPLATE) {
-            unlink(base_path(config('project.snippets.components_folder') . '/' . $snippet->component_name . '.blade.php'));
+            unlink(SnippetUtil::getFullPath($snippet->component_name));
         }
         $status = $snippet->delete();
         return \Response::json(compact('status'));

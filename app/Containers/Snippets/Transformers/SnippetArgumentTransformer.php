@@ -28,16 +28,15 @@ class SnippetArgumentTransformer extends TransformerAbstract
     public function transform(SnippetArgument $snippetArgument): array
     {
         return [
-            'id'         => (string)$snippetArgument->id,
-            'snippet_id' => (string)$snippetArgument->snippet_id,
-            'name'       => $snippetArgument->name,
-            'type'       => $snippetArgument->type,
-            'default'    => $snippetArgument->default,
-            'required'   => (boolean)$snippetArgument->required,
-            'is_slot'    => (boolean)$snippetArgument->is_slot,
-            'deleted_at' => $snippetArgument->deleted_at,
-            'created_at' => $snippetArgument->created_at,
-            'updated_at' => $snippetArgument->updated_at,
+            'id'          => (string)$snippetArgument->id,
+            'snippet_id'  => (string)$snippetArgument->snippet_id,
+            'name'        => $snippetArgument->name,
+            'type'        => $snippetArgument->type,
+            'default'     => $snippetArgument->default,
+            'is_required' => (boolean)$snippetArgument->is_required,
+            'is_slot'     => (boolean)$snippetArgument->is_slot,
+            'created_at'  => $snippetArgument->created_at,
+            'updated_at'  => $snippetArgument->updated_at,
         ];
     }
 

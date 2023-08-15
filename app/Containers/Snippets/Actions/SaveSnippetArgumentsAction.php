@@ -8,7 +8,7 @@ use App\Containers\Snippets\Models\Snippet;
 /**
  *
  */
-class SaveArgumentsAction implements ActionInterface
+class SaveSnippetArgumentsAction implements ActionInterface
 {
     /**
      * @param Snippet $snippet

@@ -2,7 +2,6 @@
 
 namespace App\Ship\Console\Commands;
 
-use App\Containers\IDE\Presenters\SuggestionPresenter;
 use Illuminate\Console\Command;
 
 class TestCommand extends Command
@@ -13,9 +12,6 @@ class TestCommand extends Command
 
     public function handle(): void
     {
-        $suggestions = (new SuggestionPresenter())->present();
 
-
-        dd($suggestions);
     }
 }

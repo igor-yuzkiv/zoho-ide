@@ -23,6 +23,6 @@ class SnippetServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Blade::anonymousComponentPath(base_path(config('project.snippets.components_folder')));
+        Blade::anonymousComponentPath(base_path(config('project.snippets.path')));
     }
 }

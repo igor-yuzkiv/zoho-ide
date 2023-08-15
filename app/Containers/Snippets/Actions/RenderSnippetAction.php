@@ -5,6 +5,7 @@ namespace App\Containers\Snippets\Actions;
 use App\Abstractions\Contracts\Action\ActionInterface;
 use App\Containers\Snippets\Enums\SnippetType;
 use App\Containers\Snippets\Models\Snippet;
+use App\Containers\Snippets\Utils\SnippetUtil;
 
 /**
  *
@@ -28,12 +29,13 @@ class RenderSnippetAction implements ActionInterface
      */
     public function handle(): string
     {
-        $content = $this->snippet->getContent();
+        $content = SnippetUtil::getContent($this->snippet->component_name);
+
         if ($this->snippet->type === SnippetType::SAMPLE) {
             return $content;
         }
 
-        return \Blade::render($this->snippet->getContent(), $this->getData());
+        return \Blade::render($content, $this->getData());
     }
 
     /**

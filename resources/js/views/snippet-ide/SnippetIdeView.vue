@@ -46,8 +46,9 @@ export default defineComponent({
             snippetId  : null,
             snippet    : {
                 id            : null,
-                name          : '',
+                title         : '',
                 type          : "template",
+                language      : null,
                 description   : '',
                 content       : '',
                 component_name: '',
@@ -70,7 +71,7 @@ export default defineComponent({
         }
     },
     watch   : {
-        "snippet.name": {
+        "snippet.title": {
             handler(value) {
                 this.snippet.component_name = value.replace(/\W+/g, "-").toLowerCase();
             }
@@ -144,7 +145,7 @@ export default defineComponent({
                     <div class="flex flex-col gap-y-2">
                         <x-input
                             label="Name"
-                            v-model="snippet.name"
+                            v-model="snippet.title"
                         />
 
                         <x-input

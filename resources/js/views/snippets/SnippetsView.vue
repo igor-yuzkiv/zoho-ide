@@ -32,12 +32,12 @@ export default defineComponent({
     async beforeMount() {
         await this.loadSnippets();
     },
-    computed  : {
+    computed: {
         SNIPPET_TYPES() {
             return SNIPPET_TYPES
         }
     },
-    methods: {
+    methods : {
         async loadSnippets(page = 1) {
             const {data, meta} = await fetchSnippets(page, this.pagination.per_page)
                 .then(({data}) => data)
@@ -96,7 +96,7 @@ export default defineComponent({
         <x-panel
             v-for="item in snippets"
             :key="item.id"
-            :title="item.name"
+            :title="item.title"
             :clickable="true"
             @click="openSnippetIde(item.id)"
         >

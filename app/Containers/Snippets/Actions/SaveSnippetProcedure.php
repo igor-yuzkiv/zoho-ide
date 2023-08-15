@@ -35,10 +35,7 @@ class SaveSnippetProcedure implements ActionInterface
 
         $this->snippet->fill($this->snippetDto->toArray());
 
-        if ($this->snippet->type === SnippetType::TEMPLATE) {
-            $this->saveTemplateComponent();
-            $this->snippet->content = null;
-        }
+        $this->saveTemplateComponent();
 
         $this->snippet->save();
 
@@ -56,7 +53,7 @@ class SaveSnippetProcedure implements ActionInterface
             return;
         }
 
-        (new SaveArgumentsAction($this->snippet, $this->snippetDto->arguments))->handle();
+        (new SaveSnippetArgumentsAction($this->snippet, $this->snippetDto->arguments))->handle();
     }
 
 
@@ -65,18 +62,10 @@ class SaveSnippetProcedure implements ActionInterface
      */
     protected function saveTemplateComponent(): bool
     {
-        $basePath = base_path(config('project.snippets.components_folder')) . '/';
-
-        if ($this->snippet->isDirty('component_name')) {
-            $oldFilePath = $basePath . $this->snippet->getOriginal('component_name') . '.blade.php';
-            if (file_exists($oldFilePath)) {
-                unlink($oldFilePath);
-            }
-        }
-
-        return (bool)file_put_contents(
-            $basePath . $this->snippet->component_name . '.blade.php',
-            $this->snippet->content
-        );
+        return (new SaveSnippetContentAction(
+            snippet: $this->snippet,
+            content: $this->snippetDto->content,
+            prevComponentName: $this->snippet->getOriginal('component_name')
+        ))->handle();
     }
 }

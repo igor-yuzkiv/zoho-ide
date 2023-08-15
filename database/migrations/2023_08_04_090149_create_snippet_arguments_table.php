@@ -17,10 +17,10 @@ return new class extends Migration {
             $table->string("name");
             $table->string("type")->nullable();
             $table->string("default")->nullable();
-            $table->boolean("required")->default(false);
+
+            $table->boolean("is_required")->default(false);
             $table->string("is_slot")->default(false);
 
-            $table->softDeletes();
             $table->timestamps();
         });
     }

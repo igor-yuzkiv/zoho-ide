@@ -92,7 +92,7 @@ function handleClickDeleteArgument(item) {
                     <div class="flex items-center gap-x-2 mt-2">
                         <x-chip variant="success">{{ item.type }}</x-chip>
                         <x-chip variant="info" v-if="item?.is_slot">slot</x-chip>
-                        <x-chip variant="warning" v-if="item?.required">required</x-chip>
+                        <x-chip variant="warning" v-if="item?.is_required">required</x-chip>
                     </div>
                 </div>
                 <div>

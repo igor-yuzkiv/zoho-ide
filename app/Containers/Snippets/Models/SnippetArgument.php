@@ -4,15 +4,12 @@ namespace App\Containers\Snippets\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  *
  */
 class SnippetArgument extends Model
 {
-    use SoftDeletes;
-
     /**
      * @var string
      */
@@ -26,7 +23,7 @@ class SnippetArgument extends Model
         'name',
         'type',
         'default',
-        'required',
+        'is_required',
         'is_slot',
     ];
 
@@ -34,8 +31,8 @@ class SnippetArgument extends Model
      * @var string[]
      */
     protected $casts = [
-        'required' => 'boolean',
-        'is_slot'  => 'boolean',
+        'is_required' => 'boolean',
+        'is_slot'     => 'boolean',
     ];
 
     /**

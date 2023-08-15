@@ -10,7 +10,7 @@ const defaultFormValue = () => ({
     name    : '',
     type    : ARGUMENT_TYPES.string.name,
     default : null,
-    required: false,
+    is_required: false,
     is_slot: false,
 })
 
@@ -18,7 +18,7 @@ const emit = defineEmits(['update:modalValue']);
 const props = defineProps({
     modelValue: {
         type    : Object,
-        required: true,
+        is_required: true,
     }
 })
 
@@ -54,7 +54,7 @@ onMounted(() => {
             v-model="form.default"
         />
 
-        <x-checkbox label="Required" v-model="form.required"/>
+        <x-checkbox label="Required" v-model="form.is_required"/>
 
         <x-checkbox label="Is slot" v-model="form.is_slot"/>
     </div>

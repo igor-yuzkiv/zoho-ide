@@ -1,4 +1,5 @@
 <?php
 return [
-    'components_folder' => 'resources/views/snippets'
+    'path' => 'storage/app/snippets/',
+    'extension' => '.blade.php',
 ];
