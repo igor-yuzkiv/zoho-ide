@@ -2,6 +2,8 @@
 
 namespace App\Containers\Snippets\Models;
 
+use App\Containers\Snippets\Casts\ArgumentValueCast;
+use App\Containers\Snippets\Enums\ArgumentType;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
@@ -32,8 +34,10 @@ class SnippetArgument extends Model
      * @var string[]
      */
     protected $casts = [
+        'type'        => ArgumentType::class,
         'is_required' => 'boolean',
         'is_slot'     => 'boolean',
+        'default'     => ArgumentValueCast::class,
     ];
 
     /**

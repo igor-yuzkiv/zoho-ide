@@ -18,6 +18,7 @@ const props = defineProps({
 })
 
 const getItems = computed(() => {
+    console.log("getItems", props.modelValue);
     if (props.modelValue?.length) {
         return props.modelValue;
     }

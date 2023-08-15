@@ -1,11 +1,22 @@
+import XInput from "@/components/form/input/XInput.vue";
+import XMapping from "@/components/form/mapping/XMapping.vue";
+
 export const ARGUMENT_TYPES = {
     string : {
         name : 'string',
         value: 'string',
+        input: {
+            component: XInput,
+            props    : {type: "text"}
+        }
     },
     mapping: {
-        name: 'mapping',
-        value: 'mapping',
+        name     : 'mapping',
+        value    : 'mapping',
+        input: {
+            component: XMapping,
+            props    : {}
+        }
     }
 }
 

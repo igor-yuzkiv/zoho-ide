@@ -4,6 +4,7 @@ namespace App\Containers\Snippets\SuggestionProviders;
 
 use App\Containers\IDE\Contracts\SuggestionsProvider;
 use App\Containers\IDE\Enums\MonacoCompletionItemKind;
+use App\Containers\Snippets\Enums\ArgumentType;
 use App\Containers\Snippets\Enums\SnippetType;
 use App\Containers\Snippets\Models\Snippet;
 
@@ -44,16 +45,15 @@ class TemplatesSuggestionProvider implements SuggestionsProvider
             if ($argument->is_slot) {
                 $slots .= "\n<x-slot:" . $argument->name . "> </x-slot>";
             } else {
-                $value = $argument->default ?? "";
-                $props .= " " . $argument->name . "=\"$value\"";
+                $props .= " " . $argument->name . "=\"\"";
             }
         }
         $insertText .= "$props>$slots\n</x-" . $snippet->component_name . ">";
 
         return [
-            "label"      => $snippet->title,
-            "kind"       => MonacoCompletionItemKind::Snippet->value,
-            "insertText" => $insertText,
+            "label"         => $snippet->title,
+            "kind"          => MonacoCompletionItemKind::Snippet->value,
+            "insertText"    => $insertText,
             "documentation" => $snippet->description ?? "",
         ];
     }

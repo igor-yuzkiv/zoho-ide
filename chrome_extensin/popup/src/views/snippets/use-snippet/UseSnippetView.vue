@@ -28,6 +28,15 @@ export default defineComponent({
             snippetData: {},
         }
     },
+    watch: {
+        snippetData: {
+            handler: function () {
+                console.log("snippetData", this.snippetData);
+            },
+            deep   : true,
+            immediate: true
+        }
+    },
     async mounted() {
         const {id} = this.$route.params;
         if (!id) {
@@ -50,6 +59,7 @@ export default defineComponent({
             }
         },
         async handleClickInsert() {
+            console.log(this.snippetData);
             const response = await renderSnippet(this.snippet.id, this.snippetData)
                 .catch(e => {
                     console.log(e);

@@ -22,13 +22,15 @@ export default defineComponent({
     },
     watch: {
         modelValue: {
-            handler: function (value) {
-                console.log("modelValue", value);
+            handler: function () {
                 this.prepareFields();
             },
             deep   : true,
             immediate: true
         }
+    },
+    mounted() {
+        this.setDefaultValue();
     },
     methods: {
         prepareFields() {
@@ -47,14 +49,24 @@ export default defineComponent({
                     },
                     id       : argument.id,
                     name     : argument.name,
-                    value    : this.modelValue[argument.name] || argument.default,
+                    value    : this.modelValue[argument.name],
                 })
             }
-
-            console.log("fields", fields);
-
             this.fields = fields;
         },
+
+        setDefaultValue() {
+            const data = {};
+            for (const argument of this.argumentsMeta) {
+                if (!this.modelValue[argument.name]) {
+                    continue;
+                }
+
+                data[argument.name] = argument.default;
+            }
+            this.$emit("update:modelValue", data);
+        },
+
         handleFieldInput(field, value) {
             const data = {...this.modelValue};
             data[field.name] = value;

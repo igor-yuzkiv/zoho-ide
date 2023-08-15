@@ -2,6 +2,10 @@
 
 namespace App\Ship\Console\Commands;
 
+use App\Containers\Snippets\Actions\RenderSnippetAction;
+use App\Containers\Snippets\Enums\ArgumentType;
+use App\Containers\Snippets\Models\Snippet;
+use App\Containers\Snippets\Models\SnippetArgument;
 use Illuminate\Console\Command;
 
 class TestCommand extends Command
@@ -12,6 +16,22 @@ class TestCommand extends Command
 
     public function handle(): void
     {
+        $snippet = Snippet::find(1);
+
+        $result = (new RenderSnippetAction(
+            $snippet, [
+                'formName' => 'Accounts',
+                'insertMapping' => [
+                    [
+                        'name' => "test",
+                        'value' => 'test'
+                    ],
+                ],
+                'responseField' => "test",
+            ]
+        ))->handle();
+
+        dd($result);
 
     }
 }

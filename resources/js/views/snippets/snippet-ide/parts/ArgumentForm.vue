@@ -1,7 +1,7 @@
 <script setup>
 import {ARGUMENT_TYPES} from "@/constans/snippet.js"
 import XInput from "@/components/form/input/XInput.vue";
-import {onMounted, ref} from "vue";
+import {computed, onMounted, ref} from "vue";
 import XButton from "@/components/form/button/XButton.vue";
 import XSelect from "@/components/form/select/XSelect.vue";
 import XCheckbox from "@/components/form/checkbox/XCheckbox.vue";
@@ -25,6 +25,17 @@ const props = defineProps({
 })
 
 const form = ref(defaultFormValue());
+
+const defaultValueField = computed(() => {
+    const type = ARGUMENT_TYPES[form.value.type] || ARGUMENT_TYPES.string;
+    return {
+        component: type.input.component,
+        props    : {
+            label: 'Default Value',
+            ...type.input.props,
+        },
+    }
+})
 
 function updateModalValue() {
     emit(
@@ -51,19 +62,24 @@ onMounted(() => {
             v-model="form.type"
         />
 
-        <x-input
-            label="Default"
-            v-model="form.default"
-        />
-
         <x-textarea
             label="Description"
             v-model="form.description"
         />
 
-        <x-checkbox label="Required" v-model="form.is_required"/>
+        <div class="grid grid-cols-2 my-1">
+            <x-checkbox label="Is Required" v-model="form.is_required"/>
+            <x-checkbox label="Is Slot" v-model="form.is_slot"/>
+        </div>
 
-        <x-checkbox label="Is slot" v-model="form.is_slot"/>
+        <div class="flex flex-col overflow-hidden max-h-[300px] pt-2 border-t border-gray-500">
+            <component
+                class="overflow-y-auto"
+                :is="defaultValueField.component"
+                v-bind="defaultValueField.props"
+                v-model="form.default"
+            />
+        </div>
     </div>
 
     <div class="flex items-center justify-end mt-3">

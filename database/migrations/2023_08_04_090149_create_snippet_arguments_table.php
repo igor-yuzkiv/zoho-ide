@@ -17,7 +17,7 @@ return new class extends Migration {
             $table->string("name");
             $table->string("type")->nullable();
             $table->longText("description")->nullable();
-            $table->string("default")->nullable();
+            $table->longText("default")->nullable();
 
             $table->boolean("is_required")->default(false);
             $table->string("is_slot")->default(false);
