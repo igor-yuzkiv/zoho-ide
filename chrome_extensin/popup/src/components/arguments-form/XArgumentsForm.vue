@@ -44,6 +44,8 @@ export default defineComponent({
                 })
             }
 
+            console.log(fields);
+
             this.fields = fields;
         },
         handleFieldInput(field, value) {

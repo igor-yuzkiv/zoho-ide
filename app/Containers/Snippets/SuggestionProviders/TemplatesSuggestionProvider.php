@@ -53,6 +53,7 @@ class TemplatesSuggestionProvider implements SuggestionsProvider
             "label"      => $snippet->title,
             "kind"       => MonacoCompletionItemKind::Snippet->value,
             "insertText" => $insertText,
+            "documentation" => $snippet->description ?? "",
         ];
     }
 }

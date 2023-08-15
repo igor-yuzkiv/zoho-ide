@@ -5,19 +5,21 @@ import {onMounted, ref} from "vue";
 import XButton from "@/components/button/XButton.vue";
 import XSelect from "@/components/select/XSelect.vue";
 import XCheckbox from "@/components/checkbox/XCheckbox.vue";
+import XTextarea from "@/components/textarea/XTextarea.vue";
 
 const defaultFormValue = () => ({
-    name    : '',
-    type    : ARGUMENT_TYPES.string.name,
-    default : null,
+    name       : '',
+    type       : ARGUMENT_TYPES.string.name,
+    default    : null,
     is_required: false,
-    is_slot: false,
+    is_slot    : false,
+    description: '',
 })
 
 const emit = defineEmits(['update:modalValue']);
 const props = defineProps({
     modelValue: {
-        type    : Object,
+        type       : Object,
         is_required: true,
     }
 })
@@ -52,6 +54,11 @@ onMounted(() => {
         <x-input
             label="Default"
             v-model="form.default"
+        />
+
+        <x-textarea
+            label="Description"
+            v-model="form.description"
         />
 
         <x-checkbox label="Required" v-model="form.is_required"/>

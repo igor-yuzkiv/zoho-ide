@@ -63,12 +63,20 @@ function handleUpdateArgument(item) {
 }
 
 function handleClickDeleteArgument(item) {
-    const index = getArgumentIndex(item);
-    if (index >= 0) {
-        const snippetArguments = [...props.modelValue];
-        snippetArguments[index]['_delete'] = true;
+
+    if (item?.id) {
+        const index = getArgumentIndex(item);
+        if (index >= 0) {
+            const snippetArguments = [...props.modelValue];
+            snippetArguments[index]['_delete'] = true;
+            emit('update:modelValue', snippetArguments);
+        }
+    }else {
+        const snippetArguments = props.modelValue.filter(argument => argument !== item);
         emit('update:modelValue', snippetArguments);
     }
+
+    setTimeout(() => console.log(props.modelValue), 1000);
 }
 
 </script>
@@ -88,7 +96,7 @@ function handleClickDeleteArgument(item) {
             >
                 <div class="w-full truncate" @click="handleOpenArgumentModal(item)">
                     <h3 class="dark:text-gray-400 text-md font-medium truncate">{{ item.name }}</h3>
-                    <span class="text-gray-500 text-sm">{{ item.default }}</span>
+                    <span class="text-gray-500 text-sm">{{ item.description }}</span>
                     <div class="flex items-center gap-x-2 mt-2">
                         <x-chip variant="success">{{ item.type }}</x-chip>
                         <x-chip variant="info" v-if="item?.is_slot">slot</x-chip>

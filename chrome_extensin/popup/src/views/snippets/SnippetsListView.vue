@@ -54,17 +54,17 @@ export default defineComponent({
     <div class="flex items-center justify-end mb-2 p-1">
         <x-search-input></x-search-input>
     </div>
+
     <div class="grid grid-cols-3 gap-2" v-if="snippets.length">
         <x-panel
             v-for="item in snippets"
             :key="item.id"
-            :title="item.name"
             :clickable="true"
             @click="handleClickSnippet(item)"
             min-height="150px"
         >
             <template #title>
-                <h4 class="text-black dark:text-white font-semibold">{{ item.name }}</h4>
+                <h4 class="text-black dark:text-white font-semibold">{{ item.title }}</h4>
             </template>
             <div class="flex flex-col flex-grow text-sm text-gray-500 mt-1">
                 {{ item.description }}

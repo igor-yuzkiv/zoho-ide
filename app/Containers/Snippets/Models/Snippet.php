@@ -12,7 +12,6 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  */
 class Snippet extends Model
 {
-
     /**
      * @var string
      */

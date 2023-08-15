@@ -92,8 +92,10 @@ class SnippetsController extends Controller
         if ($snippet->type === SnippetType::TEMPLATE) {
             unlink(SnippetUtil::getFullPath($snippet->component_name));
         }
-        $status = $snippet->delete();
-        return \Response::json(compact('status'));
+
+        return \Response::json([
+            'status' => $snippet->delete()
+        ]);
     }
 
     /**
@@ -105,9 +107,9 @@ class SnippetsController extends Controller
     {
         try {
             $code = (new RenderSnippetAction($snippet, $request->all()))->handle();
-            return response()->json(['status' => true, 'code' => $code]);
+            return \Response::json(['status' => true, 'code' => $code]);
         } catch (\Exception $exception) {
-            return response()->json(['status' => false, 'message' => $exception->getMessage()]);
+            return \Response::json(['status' => false, 'message' => $exception->getMessage()]);
         }
     }
 }

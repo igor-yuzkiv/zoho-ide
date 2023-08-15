@@ -16,7 +16,7 @@ class SuggestionPresenter implements IterablePresenter
     public function present(): iterable
     {
         $suggestions = [];
-        foreach ($this->getProvider() as $provider) {
+        foreach ($this->getProviders() as $provider) {
             $suggestions = array_merge($suggestions, $provider->provide());
         }
 
@@ -27,7 +27,7 @@ class SuggestionPresenter implements IterablePresenter
     /**
      * @return SuggestionsProvider[]
      */
-    private function getProvider(): array
+    private function getProviders(): array
     {
         $result = [];
 

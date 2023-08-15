@@ -60,9 +60,13 @@ class SaveSnippetProcedure implements ActionInterface
     /**
      * @return bool
      */
-    protected function saveTemplateComponent(): bool
+    protected function saveTemplateComponent(): void
     {
-        return (new SaveSnippetContentAction(
+        if (!$this->snippetDto->content) {
+            return;
+        }
+
+        (new SaveSnippetContentAction(
             snippet: $this->snippet,
             content: $this->snippetDto->content,
             prevComponentName: $this->snippet->getOriginal('component_name')

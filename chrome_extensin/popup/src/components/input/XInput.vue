@@ -33,6 +33,7 @@ defineProps({
             :type="type"
             :placeholder="placeholder"
             :aria-label="ariaLabel"
+            :value="modelValue"
             @input="$emit('update:modelValue', $event.target.value)"
         />
     </div>

@@ -2,6 +2,7 @@
 
 namespace App\Containers\Snippets\Providers;
 
+use App\Containers\Snippets\Utils\SnippetUtil;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 
@@ -23,6 +24,6 @@ class SnippetServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Blade::anonymousComponentPath(base_path(config('project.snippets.path')));
+        Blade::anonymousComponentPath(SnippetUtil::getBasePath());
     }
 }

@@ -23,6 +23,7 @@ class SnippetArgument extends Model
         'name',
         'type',
         'default',
+        'description',
         'is_required',
         'is_slot',
     ];
