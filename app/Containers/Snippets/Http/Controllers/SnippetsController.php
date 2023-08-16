@@ -30,9 +30,13 @@ class SnippetsController extends Controller
             $parseIncludes = explode(',', $request->get('includes', ''));
         }
 
-        $snippets = Snippet::paginate($request->get('per_page', 10));
+        $snippets = Snippet::query();
 
-        return fractal($snippets)
+        if (is_array($request->get('filter'))) {
+            $snippets->filter($request->get('filter'));
+        }
+
+        return fractal($snippets->paginate($request->get('per_page', 10)))
             ->transformWith(new SnippetTransformer())
             ->parseIncludes($parseIncludes)
             ->respond();

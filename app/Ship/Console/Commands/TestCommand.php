@@ -18,10 +18,12 @@ class TestCommand extends Command
 
     public function handle(): void
     {
-        $typeFilter = new SnippetTypeFilter(SnippetType::TEMPLATE);
+        $typeFilter = new SnippetTypeFilter(SnippetType::TEMPLATE->value);
 
         $snippet = Snippet::query()
-            ->filter($typeFilter)
+            ->filter([
+                0 => "type:template"
+            ])
             ->get();
 
 

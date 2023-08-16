@@ -5,6 +5,7 @@ namespace App\Containers\Snippets\Models;
 use App\Abstractions\Filter\HasFilter;
 use App\Containers\Snippets\Enums\SnippetLanguage;
 use App\Containers\Snippets\Enums\SnippetType;
+use App\Containers\Snippets\Filters\SnippetTypeFilter;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
@@ -37,6 +38,13 @@ class Snippet extends Model
     protected $casts = [
         'type'     => SnippetType::class,
         'language' => SnippetLanguage::class,
+    ];
+
+    /**
+     * @var array|string[]
+     */
+    protected array $filters = [
+        'type' => SnippetTypeFilter::class,
     ];
 
     /**

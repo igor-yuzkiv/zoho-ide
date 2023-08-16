@@ -20,14 +20,36 @@ trait HasFilter
             return $filters->apply($query);
         }
 
+        $modelFilters = $this->getModelFilters();
+
         foreach ($filters as $item) {
-            if ($item instanceof FilterInterface) {
-                return $item->apply($query);
-            } else {
-                throw new \InvalidArgumentException('Invalid filter');
+            if (is_string($item)) {
+                [$name, $attributes] = explode(':', $item);
+                $attributes = explode(',', $attributes);
+
+                if (isset($modelFilters[$name])) {
+                    $filter = new $modelFilters[$name](...$attributes);
+                    $query = $filter->apply($query);
+                } else {
+                    throw new \InvalidArgumentException('Invalid filter');
+                }
+
+                continue;
             }
+
+            if ($item instanceof FilterInterface) {
+                $query = $item->apply($query);
+                continue;
+            }
+
+            throw new \InvalidArgumentException('Invalid filter');
         }
 
         return $query;
+    }
+
+    protected function getModelFilters(): array
+    {
+        return $this->filters ?? [];
     }
 }
