@@ -2,6 +2,7 @@
 
 namespace App\Containers\Snippets\Models;
 
+use App\Abstractions\Filter\UseFilter;
 use App\Containers\Snippets\Enums\SnippetLanguage;
 use App\Containers\Snippets\Enums\SnippetType;
 use Illuminate\Database\Eloquent\Model;
@@ -12,6 +13,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  */
 class Snippet extends Model
 {
+    use UseFilter;
+
     /**
      * @var string
      */
