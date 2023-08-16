@@ -4,17 +4,17 @@ namespace App\Containers\Snippets\Filters;
 
 use App\Abstractions\Filter\FilterInterface;
 use App\Containers\Snippets\Enums\SnippetType;
-use App\Containers\Snippets\Models\Snippet;
+use Illuminate\Database\Eloquent\Builder;
 
 class SnippetTypeFilter implements FilterInterface
 {
-    public function __construct(private readonly SnippetType $type)
+    public function __construct(private readonly string|SnippetType $type)
     {
 
     }
 
-    public function apply($query)
+    public function apply(Builder $query): Builder
     {
-        // TODO: Implement apply() method.
+        return $query->where('type', $this->type);
     }
 }

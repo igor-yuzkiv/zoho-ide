@@ -25,6 +25,6 @@ class TestCommand extends Command
             ->get();
 
 
-
+        dd($snippet->toArray());
     }
 }
