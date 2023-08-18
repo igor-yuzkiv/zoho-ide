@@ -7,7 +7,8 @@
         "tabs",
         "activeTab",
         "scripting",
-        "webRequest"
+        "webRequest",
+        "sidePanel"
     ],
     "action": {
         "default_popup": "popup/dist/index.html",
@@ -44,5 +45,8 @@
     "optional_host_permissions":[
         "https://*/*",
         "http://*/*"
-    ]
+    ],
+    "side_panel": {
+        "default_path": "side-panel/index.html"
+    }
 }
