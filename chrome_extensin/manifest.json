@@ -20,33 +20,38 @@
                 "content-script.js"
             ],
             "css": [
-                "embedded/src/zla_style.css"
+                "embedded/zla_style.css",
+                "embedded/cd-theme/ayu-dark.css"
             ],
             "matches": [
-                "https://creator.zoho.com/*"
+                "https://creator.zoho.com/*",
+                "https://creatorapp.zoho.com/*",
+                "https://crm.zoho.com/*"
             ]
         }
     ],
     "web_accessible_resources": [
         {
             "resources": [
-                "embedded/src/toolbar/zla_toolbar.js",
-                "embedded/src/zla_eventListener.js",
-                "embedded/src/toolbar/zla_toolbar.html"
+                "embedded/toolbar/zla_toolbar.js",
+                "embedded/zla_eventListener.js",
+                "embedded/toolbar/zla_toolbar.html"
             ],
             "matches": [
-                "https://creator.zoho.com/*"
+                "https://creator.zoho.com/*",
+                "https://creatorapp.zoho.com/*",
+                "https://crm.zoho.com/*"
             ]
         }
     ],
     "host_permissions": [
         "https://store.igoryuzkiv.tech/*"
     ],
-    "optional_host_permissions":[
+    "optional_host_permissions": [
         "https://*/*",
         "http://*/*"
     ],
     "side_panel": {
-        "default_path": "side-panel/index.html"
+        "default_path": "popup/dist/index.html"
     }
 }

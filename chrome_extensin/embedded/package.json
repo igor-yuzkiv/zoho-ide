@@ -1,8 +1,0 @@
-{
-  "scripts": {
-    "watch:css": "tailwindcss -i ./style.css -o src/zla_style.css --watch"
-  },
-  "devDependencies": {
-    "tailwindcss": "^3.3.2"
-  }
-}

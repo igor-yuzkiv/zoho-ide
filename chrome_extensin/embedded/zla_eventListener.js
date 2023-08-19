@@ -3,7 +3,7 @@ function getCodeMirrorInstance() {
     return cm.getDoc();
 }
 
-const eventHandler = {
+const eventHandlers = {
     injectCode: (payload) => {
         if (payload?.code) {
             console.log("eventHandler:injectCode", payload)
@@ -13,7 +13,6 @@ const eventHandler = {
         }
     }
 };
-
 
 async function listener(e) {
     console.log("zla__message", e)
@@ -29,12 +28,9 @@ async function listener(e) {
         return;
     }
 
-    if (eventHandler[type]) {
-        eventHandler[type](payload);
+    if (eventHandlers[type]) {
+        eventHandlers[type](payload);
     }
 }
 
-document.addEventListener(
-    "zla__message",
-    listener
-)
+document.addEventListener("zla__message", listener)
