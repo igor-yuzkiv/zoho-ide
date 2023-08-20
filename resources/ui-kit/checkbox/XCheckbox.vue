@@ -1,14 +1,31 @@
 <script>
-import {defineComponent, h} from "vue"
-import {Checkbox} from "flowbite-vue"
+import {defineComponent} from "vue"
 
-/**
- * Wrapper for Flowbite component
- * TODO: write custom select component
- */
 export default defineComponent({
-    setup() {
-        return () => h(Checkbox)
+    emits: ["update:modelValue"],
+    props: {
+        modelValue: {
+            type   : Boolean,
+            default: false,
+        },
+        label     : {
+            type   : String,
+            default: "",
+        },
     }
 });
 </script>
+
+<template>
+    <label class="flex items-center dark:text-gray-400">
+        <input
+            :checked="modelValue"
+            @change="$emit('update:modelValue', $event.target.checked)"
+            type="checkbox"
+            class="text-purple-600 form-checkbox focus:border-purple-400 rounded-sm focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
+        />
+        <slot name="label">
+            <span class="ml-2">{{ label }}</span>
+        </slot>
+    </label>
+</template>
