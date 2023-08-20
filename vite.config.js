@@ -12,8 +12,7 @@ export default ({mode}) => {
     return defineConfig({
         plugins: [
             laravel({
-                input  : ['resources/css/app.css', 'resources/js/app.js'],
-
+                input  : ['resources/js/app.js'],
                 /**
                  * https://laravel.com/docs/10.x/vite#blade-refreshing-on-save
                  */
@@ -42,7 +41,7 @@ export default ({mode}) => {
         resolve: {
             alias     : {
                 '@': fileURLToPath(new URL('./resources/js', import.meta.url)),
-                '@ui-kit': fileURLToPath(new URL('./ui-kit', import.meta.url))
+                '@ui-kit': fileURLToPath(new URL('./resources/ui-kit', import.meta.url))
             },
             extensions: [
                 '.js',

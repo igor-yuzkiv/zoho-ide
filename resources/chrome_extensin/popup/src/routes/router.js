@@ -4,12 +4,17 @@ const routes = [
     {
         path     : '/',
         name     :  "home",
+        component: () => import('@/views/home/HomeView.vue'),
+    },
+    {
+        path     : '/snippets',
+        name     :  "snippets.list",
         component: () => import('@/views/snippets/SnippetsListView.vue'),
     },
     {
         path     : '/snippets/use/:id',
         name     :  "snippets.use",
-        component: () => import('@/views/snippets/use-snippet/UseSnippetView.vue'),
+        component: () => import('@/views/use-snippet/UseSnippetView.vue'),
     }
 ]
 

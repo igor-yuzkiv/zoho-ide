@@ -1,6 +1,6 @@
 <script setup>
 
-import XInput from "@ui-kit/input/XInput.vue";
+import XInput from "../input/XInput.vue";
 import {computed} from "vue";
 
 const emit = defineEmits(['update:modelValue'])

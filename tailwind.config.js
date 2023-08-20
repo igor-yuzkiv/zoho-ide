@@ -6,8 +6,8 @@ module.exports = {
         "./resources/**/*.blade.php",
         "./resources/**/*.js",
         "./resources/**/*.vue",
-        'node_modules/flowbite-vue/**/*.{js,jsx,ts,tsx}',
-        'node_modules/flowbite/**/*.{js,jsx,ts,tsx}'
+        'node_modules/flowbite-vue/**/*.{js,jsx,ts,tsx}', //TODO: remove this
+        'node_modules/flowbite/**/*.{js,jsx,ts,tsx}' //TODO: remove this
     ],
     darkMode: 'class',
     theme: {

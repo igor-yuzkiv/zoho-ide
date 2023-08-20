@@ -1,5 +1,5 @@
 <script>
-import XDivider from "@/components/divider/XDivider.vue";
+import XDivider from "@ui-kit/divider/XDivider.vue";
 
 export const XTabsSymbol = Symbol();
 
