@@ -155,7 +155,7 @@ export default defineComponent({
                     <x-tab-item
                         name="Options"
                         class="p-1"
-                        icon="fluent:options-16-filled"
+                        icon="clarity:cog-line"
                     >
                         <x-card title="Options" expandable>
                             <div class="flex flex-col gap-y-2">
@@ -189,7 +189,7 @@ export default defineComponent({
                         name="Arguments"
                         class="p-1"
                         v-if="isSnippetTypeTemplate"
-                        icon="carbon:property-relationship"
+                        icon="carbon:parameter"
                     >
                         <arguments-list v-model="snippet.arguments"/>
                     </x-tab-item>
