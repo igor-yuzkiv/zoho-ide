@@ -41,7 +41,8 @@ export default ({mode}) => {
         define : {'process.env': {}},
         resolve: {
             alias     : {
-                '@': fileURLToPath(new URL('./resources/js', import.meta.url))
+                '@': fileURLToPath(new URL('./resources/js', import.meta.url)),
+                '@ui-kit': fileURLToPath(new URL('./ui-kit', import.meta.url))
             },
             extensions: [
                 '.js',

@@ -1,6 +1,6 @@
 <script setup>
 import {ref} from "vue";
-import XIconButton from "@/components/form/icon-button/XIconButton.vue";
+import XIconButton from "@ui-kit/icon-button/XIconButton.vue";
 
 const props = defineProps({
     title     : {

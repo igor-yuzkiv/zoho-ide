@@ -1,12 +1,12 @@
 <script>
 import {defineComponent} from "vue";
 import {deleteSnippet, fetchSnippets} from "@/api/snippets.js";
-import XButton from "@/components/form/button/XButton.vue";
-import XIconButton from "@/components/form/icon-button/XIconButton.vue";
+import XButton from "@ui-kit/button/XButton.vue";
+import XIconButton from "@ui-kit/icon-button/XIconButton.vue";
 import routesName from "@/constans/routesName.js";
 import {useConfirmBeforeAction} from "@/components/confirm-dialog/useConfirmDialog.js";
 import {Icon} from "@iconify/vue";
-import XChip from "@/components/chip/x-chip.vue";
+import XChip from "@ui-kit/chip/x-chip.vue";
 import {SNIPPET_TYPES} from "@/constans/snippet.js";
 import XPanel from "@/components/panel/XPanel.vue";
 

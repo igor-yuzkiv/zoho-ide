@@ -1,5 +1,5 @@
-import XInput from "@/components/form/input/XInput.vue";
-import XMapping from "@/components/form/mapping/XMapping.vue";
+import XInput from "@ui-kit/input/XInput.vue";
+import XMapping from "@ui-kit/mapping/XMapping.vue";
 
 export const ARGUMENT_TYPES = {
     string : {

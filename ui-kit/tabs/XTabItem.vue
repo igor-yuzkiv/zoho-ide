@@ -1,6 +1,6 @@
 <script>
 import {defineComponent, inject} from "vue";
-import {XTabsSymbol} from "@/components/tabs/XTabs.vue";
+import {XTabsSymbol} from "@ui-kit/tabs/XTabs.vue";
 
 export default defineComponent({
     props: {

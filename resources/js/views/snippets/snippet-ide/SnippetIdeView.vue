@@ -1,21 +1,21 @@
 <script>
 import {defineComponent} from "vue";
 import XDelugeTemplateEditor from "@/components/code-editor/XDelugeTemplateEditor.vue";
-import XButton from "@/components/form/button/XButton.vue";
-import XCard from "@/components/card/XCard.vue";
-import XIconButton from "@/components/form/icon-button/XIconButton.vue";
+import XButton from "@ui-kit/button/XButton.vue";
+import XCard from "@ui-kit/card/XCard.vue";
+import XIconButton from "@ui-kit/icon-button/XIconButton.vue";
 import {Icon} from "@iconify/vue";
 import {createSnippet, fetchSnippet, updateSnippet} from "@/api/snippets.js"
-import XInput from "@/components/form/input/XInput.vue";
-import XTextarea from "@/components/form/textarea/XTextarea.vue";
+import XInput from "@ui-kit/input/XInput.vue";
+import XTextarea from "@ui-kit/textarea/XTextarea.vue";
 import routesName from "@/constans/routesName.js";
 import {mapState} from "vuex";
-import XSelect from "@/components/form/select/XSelect.vue";
+import XSelect from "@ui-kit/select/XSelect.vue";
 import {SNIPPET_TYPES} from "@/constans/snippet.js";
 import XCodeEditor from "@/components/code-editor/XCodeEditor.vue";
 import ArgumentsList from "@/views/snippets/snippet-ide/parts/ArgumentsList.vue";
-import XTabs from "@/components/tabs/XTabs.vue";
-import XTabItem from "@/components/tabs/XTabItem.vue";
+import XTabs from "@ui-kit/tabs/XTabs.vue";
+import XTabItem from "@ui-kit/tabs/XTabItem.vue";
 
 export default defineComponent({
     components: {

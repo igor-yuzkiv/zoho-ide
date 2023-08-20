@@ -1,10 +1,10 @@
 <script setup>
-import XCard from "@/components/card/XCard.vue";
-import XIconButton from "@/components/form/icon-button/XIconButton.vue";
+import XCard from "@ui-kit/card/XCard.vue";
+import XIconButton from "@ui-kit/icon-button/XIconButton.vue";
 import {computed, ref} from "vue";
 import ArgumentForm from "@/views/snippets/snippet-ide/parts/ArgumentForm.vue";
 import {Modal} from "flowbite-vue";
-import XChip from "@/components/chip/x-chip.vue";
+import XChip from "@ui-kit/chip/x-chip.vue";
 
 const emit = defineEmits(['update:modelValue']);
 const props = defineProps({
