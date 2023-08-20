@@ -24,16 +24,17 @@ export default defineComponent({
 </script>
 
 <template>
-    <label class="block mt-4 text-sm">
-        <slot name="label">
-            <span class="text-gray-700 dark:text-gray-400">{{ label }}</span>
+    <div class="flex flex-col relative w-full focus-within:text-purple-700">
+        <slot>
+            <label class="text-sm pb-1 dark:text-gray-300 font-medium">{{ label }}</label>
         </slot>
+
         <textarea
-            class="block w-full mt-1 rounded-md text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-textarea focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
+            class="w-full mt-1 p-2 border border-gray-500 bg-gray-100 rounded-md text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:ring-1 focus:ring-purple-700 focus:bg-white dark:focus:bg-cool-gray-700 focus:outline-none focus:shadow-outline-purple"
             :rows="rows"
             :placeholder="placeholder"
             :value="modelValue"
             @input="$emit('update:modelValue', $event.target.value)"
         ></textarea>
-    </label>
+    </div>
 </template>

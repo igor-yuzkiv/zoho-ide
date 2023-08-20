@@ -5,22 +5,11 @@ module.exports = {
     content: [
         "./resources/**/*.blade.php",
         "./resources/**/*.js",
-        "./resources/**/*.vue",
-        'node_modules/flowbite-vue/**/*.{js,jsx,ts,tsx}', //TODO: remove this
-        'node_modules/flowbite/**/*.{js,jsx,ts,tsx}' //TODO: remove this
+        "./resources/**/*.vue"
     ],
     darkMode: 'class',
     theme: {
         themeVariants: ['dark'],
-        customForms: (theme) => ({
-            default: {
-                'input, textarea': {
-                    '&::placeholder': {
-                        color: theme('colors.gray.400'),
-                    },
-                },
-            },
-        }),
         colors: {
             transparent: 'transparent',
             white: '#ffffff',
@@ -36,14 +25,6 @@ module.exports = {
                 '700': '#24262d',
                 '800': '#1a1c23',
                 '900': '#121317',
-                // default values from Tailwind UI palette
-                // '300': '#d2d6dc',
-                // '400': '#9fa6b2',
-                // '500': '#6b7280',
-                // '600': '#4b5563',
-                // '700': '#374151',
-                // '800': '#252f3f',
-                // '900': '#161e2e',
             },
             'cool-gray': {
                 '50': '#fbfdfe',
@@ -176,35 +157,5 @@ module.exports = {
             },
         },
     },
-    variants: {
-        backgroundColor: [
-            'hover',
-            'focus',
-            'active',
-            'odd',
-            'dark',
-            'dark:hover',
-            'dark:focus',
-            'dark:active',
-            'dark:odd',
-        ],
-        display: ['responsive', 'dark'],
-        textColor: [
-            'focus-within',
-            'hover',
-            'active',
-            'dark',
-            'dark:focus-within',
-            'dark:hover',
-            'dark:active',
-        ],
-        placeholderColor: ['focus', 'dark', 'dark:focus'],
-        borderColor: ['focus', 'hover', 'dark', 'dark:focus', 'dark:hover'],
-        divideColor: ['dark'],
-        boxShadow: ['focus', 'dark:focus'],
-    },
-    plugins: [
-        require('flowbite/plugin')
-    ]
 }
 

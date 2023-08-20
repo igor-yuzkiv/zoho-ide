@@ -24,8 +24,6 @@
     "dependencies": {
         "codemirror": "^5.65.13",
         "codemirror-editor-vue3": "^2.3.0",
-        "flowbite": "^1.8.0",
-        "flowbite-vue": "^0.0.17-next.0",
         "monaco-editor": "^0.40.0",
         "uid": "^2.0.2",
         "uuid": "^9.0.0",
