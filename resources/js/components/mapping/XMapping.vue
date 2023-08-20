@@ -1,8 +1,8 @@
 <script setup>
 import {computed} from "vue";
 import XMappingItem from "./XMappingItem.vue";
-import XCard from "../card/XCard.vue";
-import XIconButton from "../icon-button/XIconButton.vue";
+import XCard from "@ui-kit/card/XCard.vue";
+import XIconButton from "@ui-kit/icon-button/XIconButton.vue";
 import {uid} from "uid";
 
 const emit = defineEmits(['update:modelValue'])

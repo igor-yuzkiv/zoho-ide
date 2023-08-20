@@ -8,7 +8,7 @@ import {useConfirmBeforeAction} from "@/components/confirm-dialog/useConfirmDial
 import {Icon} from "@iconify/vue";
 import XChip from "@ui-kit/chip/x-chip.vue";
 import {SNIPPET_TYPES} from "@/constans/snippet.js";
-import XPanel from "@/components/panel/XPanel.vue";
+import XPanel from "@ui-kit/panel/XPanel.vue";
 
 export default defineComponent({
     components: {XPanel, XChip, Icon, XIconButton, XButton},
