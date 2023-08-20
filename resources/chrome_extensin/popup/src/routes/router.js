@@ -5,6 +5,7 @@ const routes = [
         path     : '/',
         name     :  "home",
         component: () => import('@/views/home/HomeView.vue'),
+        redirect : {name: "snippets.list"}
     },
     {
         path     : '/snippets',

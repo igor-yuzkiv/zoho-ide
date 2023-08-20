@@ -1,7 +1,7 @@
 <script>
 import {defineComponent} from "vue";
-import XButton from "@/components/form/button/XButton.vue";
-import XIconButton from "@/components/form/icon-button/XIconButton.vue";
+import XButton from "@ui-kit/button/XButton.vue";
+import XIconButton from "@ui-kit/icon-button/XIconButton.vue";
 import {Icon} from "@iconify/vue";
 import {
     fetchSnippet,

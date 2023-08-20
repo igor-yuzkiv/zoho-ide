@@ -1,7 +1,7 @@
 <script setup>
 import {computed} from "vue";
 import {useStore} from "vuex";
-import XSnippetsSearch from "@/components/snippets-search/XSnippetsSearch.vue";
+import XSearchInput from "@ui-kit/search-input/XSearchInput.vue";
 
 const store = useStore();
 
@@ -29,7 +29,7 @@ function toggleTheme() {
             <h1 class="dark:text-white font-semibold font-xl uppercase">Snippets Storage</h1>
             <!-- Search input -->
             <div class="flex justify-center flex-1 lg:mr-32">
-                <x-snippets-search></x-snippets-search>
+                <x-search-input></x-search-input>
             </div>
             <ul class="flex items-center flex-shrink-0 space-x-6">
                 <!-- Theme toggler -->

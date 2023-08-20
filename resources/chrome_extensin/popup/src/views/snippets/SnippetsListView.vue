@@ -1,11 +1,11 @@
 <script>
 import {defineComponent} from "vue";
-import XPanel            from "@/components/panel/XPanel.vue";
-import XChip             from "@/components/chip/x-chip.vue";
+import XPanel            from "@ui-kit/panel/XPanel.vue";
+import XChip             from "@ui-kit/chip/x-chip.vue";
 import {Icon}            from "@iconify/vue";
 import {fetchSnippets}   from "@/api/snippets.js";
 import {SNIPPET_TYPES}   from "@/constans/snippet.js";
-import XSearchInput       from "@/components/search-input/XSearchInput.vue";
+import XSearchInput       from "@ui-kit/search-input/XSearchInput.vue";
 
 export default defineComponent({
     components: {XSearchInput, XChip, XPanel, Icon},
@@ -51,7 +51,7 @@ export default defineComponent({
 </script>
 
 <template>
-    <div class="flex items-center justify-end mb-2 p-1">
+    <div class="flex items-center flex-none justify-end mb-2 p-1">
         <x-search-input></x-search-input>
     </div>
 

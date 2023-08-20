@@ -1,10 +1,9 @@
 <script setup>
-    import "@ui-kit/tabs/XTabs.vue";
-
+    import XInput from "@ui-kit/input/XInput.vue";
 </script>
 
 <template>
-    <x-tabs></x-tabs>
+    <x-input></x-input>
 </template>
 
 <style scoped>
