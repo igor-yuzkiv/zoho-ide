@@ -30,10 +30,15 @@ function toggleBar() {
  */
 function changeTheme() {
     const instance = getCodeMirrorInstance();
+    const body = document.querySelector("body");
     if (data.darkTheme) {
+        body.setAttribute("data-theme", THEMES.default)
+        body.classList.remove('zlaBar-darkTheme');
         instance.cm.setOption("theme", THEMES.default);
     } else {
+        body.classList.add('zlaBar-darkTheme');
         instance.cm.setOption("theme", THEMES.dark);
+        body.setAttribute("data-theme", THEMES.dark)
     }
     data.darkTheme = !data.darkTheme;
 }
@@ -43,6 +48,7 @@ function hideCmLeftPanel() {
     if (!node) {
         return;
     }
+    document.querySelector("#delugeEditorCont").style.width = "100%";
 
     if (data.leftPanel) {
         node.style.display = "none";
