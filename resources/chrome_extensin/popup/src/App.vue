@@ -3,7 +3,7 @@
         <div class="flex flex-grow w-auto min-w-[400px] h-full min-h-screen overflow-hidden bg-gray-50 dark:bg-gray-900">
             <x-tabs-navigation
                 vertical
-                :items="items"
+                :items="navItems"
                 @click:item="clickNavItemHandle"
             />
             <main class="flex-1 flex flex-col p-1 overflow-auto">
@@ -15,8 +15,7 @@
 
 <script setup>
 import XTabsNavigation from "@ui-kit/tabs/XTabsNavigation.vue";
-
-const items = [
+const navItems = [
     {
         name: 'home',
         title: 'Home',
@@ -37,5 +36,4 @@ const items = [
 function clickNavItemHandle(item) {
     console.log(item);
 }
-
 </script>
