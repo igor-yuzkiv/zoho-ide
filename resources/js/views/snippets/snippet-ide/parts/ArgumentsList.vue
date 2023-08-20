@@ -3,8 +3,8 @@ import XCard from "@ui-kit/card/XCard.vue";
 import XIconButton from "@ui-kit/icon-button/XIconButton.vue";
 import {computed, ref} from "vue";
 import ArgumentForm from "@/views/snippets/snippet-ide/parts/ArgumentForm.vue";
-import {Modal} from "flowbite-vue";
 import XChip from "@ui-kit/chip/x-chip.vue";
+import XModal from "@ui-kit/modal/XModal.vue";
 
 const emit = defineEmits(['update:modelValue']);
 const props = defineProps({
@@ -112,16 +112,14 @@ function handleClickDeleteArgument(item) {
 
     <teleport to="#x__application">
         <!--Argument form modal-->
-        <Modal v-if="argumentFormModal.isOpen" @close="handleCloseArgumentModal">
+        <x-modal :model-value="argumentFormModal.isOpen" @close="handleCloseArgumentModal" :dialogClass="{'sm:w-2/6': true}">
             <template #header>
                 <div class="text-black dark:text-white">
                     {{ argumentFormModal.modelValue.name || 'New Argument' }}
                 </div>
             </template>
-            <template #body>
-                <argument-form :model-value="argumentFormModal.modelValue" @update:modalValue="handleUpdateArgument"/>
-            </template>
-        </Modal>
+            <argument-form :model-value="argumentFormModal.modelValue" @update:modalValue="handleUpdateArgument"/>
+        </x-modal>
     </teleport>
 </template>
 
