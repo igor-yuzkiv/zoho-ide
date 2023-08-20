@@ -4,7 +4,7 @@ import {deleteSnippet, fetchSnippets} from "@/api/snippets.js";
 import XButton from "@ui-kit/button/XButton.vue";
 import XIconButton from "@ui-kit/icon-button/XIconButton.vue";
 import routesName from "@/constans/routesName.js";
-import {useConfirmBeforeAction} from "@/components/confirm-dialog/useConfirmDialog.js";
+import {useConfirmBeforeAction} from "@ui-kit/confirm-dialog/useConfirmDialog.js";
 import {Icon} from "@iconify/vue";
 import XChip from "@ui-kit/chip/x-chip.vue";
 import {SNIPPET_TYPES} from "@/constans/snippet.js";

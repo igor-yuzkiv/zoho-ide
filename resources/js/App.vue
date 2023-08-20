@@ -1,7 +1,7 @@
 <script setup>
 import {computed} from "vue";
 import {useStore} from "vuex";
-import ConfirmDialogWrapper from "@/components/confirm-dialog/ConfirmDialogWrapper.vue";
+import ConfirmDialogWrapper from "@ui-kit/confirm-dialog/ConfirmDialogWrapper.vue";
 
 const store = useStore();
 const darkTheme = computed(() => store.state.darkTheme);

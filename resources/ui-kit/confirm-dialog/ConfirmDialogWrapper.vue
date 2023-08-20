@@ -5,7 +5,7 @@ import {
     confirmHandle,
     cancelHandle,
     options
-} from "@/components/confirm-dialog/useConfirmDialogWrapper.js"
+} from "@ui-kit/confirm-dialog/useConfirmDialogWrapper.js"
 import XButton from "@ui-kit/button/XButton.vue";
 import {Icon} from "@iconify/vue";
 import XModal from "@ui-kit/modal/XModal.vue";
