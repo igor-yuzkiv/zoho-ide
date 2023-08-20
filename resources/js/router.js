@@ -17,7 +17,7 @@ const router = createRouter({
                     path     : '',
                     name     : routesName.home,
                     component: () => import('@/views/home/HomeView.vue'),
-                    redirect : "/snippets"
+                    //redirect : "/snippets"
                 },
                 {
                     path     : 'snippets',

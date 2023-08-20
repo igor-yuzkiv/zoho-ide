@@ -174,6 +174,8 @@ export default defineComponent({
                                     label="Type"
                                     v-model="snippet.type"
                                     :options="getSnippetTypesOptions"
+                                    item-value="value"
+                                    item-title="name"
                                 />
 
                                 <x-textarea

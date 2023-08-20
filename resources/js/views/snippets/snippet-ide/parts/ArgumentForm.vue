@@ -55,11 +55,12 @@ onMounted(() => {
             label="Name"
             v-model="form.name"
         />
-
         <x-select
             label="Type"
             :options="Object.values(ARGUMENT_TYPES)"
             v-model="form.type"
+            item-value="value"
+            item-title="name"
         />
 
         <x-textarea
