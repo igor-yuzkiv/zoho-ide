@@ -1,7 +1,7 @@
 <script>
 import {defineComponent, h} from "vue";
 
-const commonClasses = "block items-center px-2 rounded-xl";
+const commonClasses = "inline-flex items-center px-2 rounded-xl";
 
 const variants = {
     default: "bg-gray-700 text-gray-100",

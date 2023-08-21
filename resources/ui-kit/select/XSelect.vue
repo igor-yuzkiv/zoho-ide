@@ -1,11 +1,6 @@
 <script>
 import {defineComponent} from "vue"
-
-const uid = () =>
-    String(
-        Date.now().toString(32) +
-        Math.random().toString(16)
-    ).replace(/\./g, '')
+import {uid} from "uid";
 
 export default defineComponent({
     emits   : ['update:modelValue'],

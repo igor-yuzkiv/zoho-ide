@@ -1,16 +1,26 @@
 <script>
 import {defineComponent} from "vue";
-import XPanel            from "@ui-kit/panel/XPanel.vue";
 import XChip             from "@ui-kit/chip/x-chip.vue";
 import {Icon}            from "@iconify/vue";
 import {fetchSnippets}   from "@/api/snippets.js";
 import {SNIPPET_TYPES}   from "@/constans/snippet.js";
+import XSimpleTable from "@ui-kit/simple-table/XSimpleTable.vue";
 
 export default defineComponent({
-    components: {XChip, XPanel, Icon},
+    components: {XSimpleTable, XChip, Icon},
     data() {
         return {
             isLoaded: false,
+            header: [
+                {
+                    title: 'Title',
+                    itemKey  : 'title',
+                },
+                {
+                    title: 'Type',
+                    itemKey  : 'type',
+                },
+            ],
             snippets:   [],
             pagination: {
                 count:        0,
@@ -52,28 +62,18 @@ export default defineComponent({
 </script>
 
 <template>
-    <div class="grid grid-cols-3 gap-2" v-if="snippets.length">
-        <x-panel
-            v-for="item in snippets"
-            :key="item.id"
-            :clickable="true"
-            @click="handleClickSnippet(item)"
-            min-height="150px"
-        >
-            <template #title>
-                <h4 class="text-black dark:text-white font-semibold">{{ item.title }}</h4>
+    <div class="flex flex-col flex-grow" v-if="snippets.length">
+        <x-simple-table :items="snippets" :header="header" @click:item="handleClickSnippet">
+            <template #cell:title="{item}">
+                <div class="truncate">{{item.title}}</div>
+                <div v-if="item?.description" class="text-gray-500 text-sm">
+                    {{item.description}}
+                </div>
             </template>
-            <div class="flex flex-col flex-grow text-sm text-gray-500 mt-1">
-                {{ item.description }}
-            </div>
-            <div class="flex flex-col items-start mb-1">
-                <x-chip
-                    :variant="SNIPPET_TYPES[item.type]['variant']"
-                >
-                    {{ item.type }}
-                </x-chip>
-            </div>
-        </x-panel>
+            <template #cell:type="{item}">
+                <x-chip :variant="SNIPPET_TYPES[item.type]['variant']">{{ item.type }}</x-chip>
+            </template>
+        </x-simple-table>
     </div>
 
     <div class="flex flex-col items-center justify-center flex-grow text-center" v-else v-show="isLoaded">
