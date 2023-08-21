@@ -34,3 +34,11 @@ async function listener(e) {
 }
 
 document.addEventListener("zla__message", listener)
+
+
+function test() {
+    const cm = getCodeMirrorInstance();
+    console.log("cm", cm)
+}
+
+setTimeout(() => test(), 1000);

@@ -8,11 +8,17 @@
         "activeTab",
         "scripting",
         "webRequest",
-        "sidePanel"
+        "sidePanel",
+        "contextMenus",
+        "storage"
     ],
     "action": {
-        "default_popup": "popup/dist/index.html",
         "default_icon": "logo.png"
+    },
+    "icons": {
+        "16": "logo.png",
+        "48": "logo.png",
+        "128": "logo.png"
     },
     "content_scripts": [
         {
@@ -45,7 +51,10 @@
         }
     ],
     "host_permissions": [
-        "https://store.igoryuzkiv.tech/*"
+        "https://store.igoryuzkiv.tech/*",
+        "https://creator.zoho.com/*",
+        "https://creatorapp.zoho.com/*",
+        "https://crm.zoho.com/*"
     ],
     "optional_host_permissions": [
         "https://*/*",
@@ -54,5 +63,8 @@
     "side_panel": {
         "default_path": "popup/dist/index.html",
         "default_icon": "logo.png"
+    },
+    "background": {
+        "service_worker": "service-worker.js"
     }
 }

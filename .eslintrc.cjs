@@ -8,7 +8,7 @@ module.exports = {
     'eslint:recommended',
   ],
   globals: {
-    "ZOHO": "readonly",
+    "chrome": "readonly",
     "toast": "readonly",
   }
 }
