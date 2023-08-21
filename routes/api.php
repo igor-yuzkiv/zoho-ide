@@ -20,5 +20,5 @@ Route::prefix("snippets")
 
 Route::prefix("ide")
     ->group(function () {
-        Route::get("suggestions", [\App\Containers\IDE\Http\Controllers\SuggestionController::class, "index"]);
+        Route::get("suggestions", [\App\Containers\CodeEditor\Http\Controllers\SuggestionController::class, "index"]);
     });

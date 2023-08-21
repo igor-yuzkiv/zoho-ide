@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Containers\IDE\Presenters;
+namespace App\Containers\CodeEditor\Presenters;
 
 use App\Abstractions\Contracts\Presenter\IterablePresenter;
-use App\Containers\IDE\Contracts\SuggestionsProvider;
+use App\Containers\CodeEditor\Contracts\SuggestionsProvider;
 
 /**
  *
@@ -31,7 +31,7 @@ class SuggestionPresenter implements IterablePresenter
     {
         $result = [];
 
-        foreach (config('project.ide.suggestions_providers') as $providerClass) {
+        foreach (config('project.code_editor.suggestions_providers') as $providerClass) {
             $provider = app($providerClass);
 
             if ($provider instanceof SuggestionsProvider) {

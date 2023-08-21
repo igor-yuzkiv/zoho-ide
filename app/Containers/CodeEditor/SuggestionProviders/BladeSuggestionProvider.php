@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Containers\IDE\SuggestionProviders;
+namespace App\Containers\CodeEditor\SuggestionProviders;
 
-use App\Containers\IDE\Contracts\SuggestionsProvider;
-use App\Containers\IDE\Enums\MonacoCompletionItemKind;
+use App\Containers\CodeEditor\Contracts\SuggestionsProvider;
+use App\Containers\CodeEditor\Enums\MonacoCompletionItemKind;
 
 /**
  *

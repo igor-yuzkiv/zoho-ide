@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Containers\IDE\Contracts;
+namespace App\Containers\CodeEditor\Contracts;
 
 interface SuggestionsProvider
 {

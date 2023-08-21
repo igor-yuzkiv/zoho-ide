@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Containers\IDE\Http\Controllers;
+namespace App\Containers\CodeEditor\Http\Controllers;
 
-use App\Containers\IDE\Presenters\SuggestionPresenter;
+use App\Containers\CodeEditor\Presenters\SuggestionPresenter;
 
 /**
  *

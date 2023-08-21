@@ -2,8 +2,8 @@
 
 namespace App\Containers\Snippets\SuggestionProviders;
 
-use App\Containers\IDE\Contracts\SuggestionsProvider;
-use App\Containers\IDE\Enums\MonacoCompletionItemKind;
+use App\Containers\CodeEditor\Contracts\SuggestionsProvider;
+use App\Containers\CodeEditor\Enums\MonacoCompletionItemKind;
 use App\Containers\Snippets\Enums\ArgumentType;
 use App\Containers\Snippets\Enums\SnippetType;
 use App\Containers\Snippets\Models\Snippet;
