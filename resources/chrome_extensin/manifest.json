@@ -27,7 +27,7 @@
             ],
             "css": [
                 "embedded/zla_style.css",
-                "embedded/cd-theme/ayu-dark.css"
+                "embedded/cd-theme/dark.css"
             ],
             "matches": [
                 "https://creator.zoho.com/*",

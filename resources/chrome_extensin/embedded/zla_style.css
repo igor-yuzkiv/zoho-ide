@@ -5,7 +5,7 @@
     --zla-gray-color: #707275;
 }
 
-body[data-theme='ayu-dark'] {
+body[data-theme='dark'] {
     --zla-background-color: #121e31;
 }
 

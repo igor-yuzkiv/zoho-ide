@@ -1,17 +1,14 @@
 <template>
-    <section :class="{dark: darkTheme}">
-        <div id="zohoIde-application" class="relative flex flex-col flex-grow w-auto min-w-[400px] h-full min-h-screen overflow-hidden">
+    <section :class="{dark: isDarkTheme}">
+        <div id="zohoIde-application"
+             class="relative flex flex-col flex-grow w-auto min-w-[400px] h-full min-h-screen overflow-hidden">
             <header class="flex flex-col flex-none z-10 py-2 bg-white shadow-md dark:bg-gray-800">
-                <div class="container flex items-center justify-between h-full px-6 mx-auto text-purple-600 dark:text-purple-300">
+                <div
+                    class="container flex items-center justify-between h-full px-6 mx-auto text-purple-600 dark:text-purple-300"
+                >
                     <div class="flex justify-center flex-1 lg:mr-32">
                         <x-search-input></x-search-input>
                     </div>
-                    <ul class="flex items-center flex-shrink-0 space-x-6">
-                        <!-- Theme toggler -->
-                        <li class="flex">
-                            <x-theme-switch :status="darkTheme" @click="toggleTheme"/>
-                        </li>
-                    </ul>
                 </div>
             </header>
 
@@ -34,14 +31,18 @@
 import XTabsNavigation from "@ui-kit/tabs/XTabsNavigation.vue";
 import {useRoute, useRouter} from "vue-router";
 import routesName from "@/constans/routesName.js";
-import {ref} from "vue";
-import XThemeSwitch from "@ui-kit/theme-swith/XThemeSwitch.vue";
+import {computed} from "vue";
 import XSearchInput from "@ui-kit/search-input/XSearchInput.vue";
+import {THEMES} from "@/constans/appearances.js";
+import {useStore} from "vuex";
 
 const route = useRoute();
 const router = useRouter();
+const store = useStore();
 
-const darkTheme = ref(true);
+const isDarkTheme = computed(() => {
+    return store.state.theme === THEMES.dark.value
+});
 
 const navItems = [
     {
@@ -69,11 +70,6 @@ function clickNavItemHandle(item) {
 function checkIsActiveItem({name}) {
     return route.name === name;
 }
-
-function toggleTheme() {
-    darkTheme.value = !darkTheme.value;
-}
-
 </script>
 
 <style scoped>

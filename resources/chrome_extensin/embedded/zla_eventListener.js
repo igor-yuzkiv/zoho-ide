@@ -1,3 +1,8 @@
+const ZLA_THEMES = {
+    default: "default",
+    dark:    "dark",
+}
+
 function getCodeMirrorInstance() {
     const cm = document.querySelector(".CodeMirror").CodeMirror;
     return cm.getDoc();
@@ -10,6 +15,28 @@ const eventHandlers = {
             const cm = getCodeMirrorInstance();
             const currentPosition = cm.getCursor();
             cm.replaceRange(payload.code, currentPosition);
+        }
+    },
+    changeTheme: (payload) => {
+        /**
+         * https://codemirror.net/5/demo/theme.html
+         * https://github.com/codemirror/codemirror5/blob/master/demo/theme.html
+         * https://github.com/codemirror/codemirror5/tree/master/theme
+         */
+        if (payload?.theme) {
+            const instance = getCodeMirrorInstance();
+            const isDark = payload.theme === "dark";
+            const body = document.querySelector("body");
+
+            if (isDark) {
+                body.classList.add('zlaBar-darkTheme');
+                instance.cm.setOption("theme", ZLA_THEMES.dark);
+                body.setAttribute("data-theme", ZLA_THEMES.dark)
+            } else {
+                body.classList.remove('zlaBar-darkTheme');
+                body.setAttribute("data-theme", ZLA_THEMES.default)
+                instance.cm.setOption("theme", ZLA_THEMES.default);
+            }
         }
     }
 };
