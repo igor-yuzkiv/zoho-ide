@@ -5,10 +5,17 @@ import XAccordionItem from "@ui-kit/accordion/XAccordionItem.vue";
 export const XAccordionSymbol = Symbol();
 
 export default defineComponent({
+    props: {
+        fullHeight: {
+            type   : Boolean,
+            default: false
+        }
+    },
     setup(props, {slots}) {
         const currentTab = ref();
 
         function selectTabHandler (name) {
+            console.log(name);
             if (currentTab.value === name) {
                 currentTab.value = null;
             }else {
@@ -29,13 +36,23 @@ export default defineComponent({
             selectTabHandler
         });
 
-        return () => h('div', {class: "x_accordion", role: "listbox"}, slots.default())
+        return () => h(
+            'div',
+            {
+                class: {
+                    "x_accordion": true,
+                    "flex-grow h-full": currentTab.value && props.fullHeight
+                },
+                role: "listbox"
+            },
+            slots.default()
+        )
     }
 })
 </script>
 
 <style scoped>
     .x_accordion {
-        @apply rounded-md border-x border-b border-gray-200 dark:border-gray-600
+        @apply flex flex-col rounded-md border-x border-b border-gray-200 dark:border-gray-600
     }
 </style>
