@@ -51,10 +51,6 @@ export default defineComponent({
 </script>
 
 <template>
-    <div class="flex items-center flex-none justify-end mb-2 p-1">
-        <x-search-input></x-search-input>
-    </div>
-
     <div class="grid grid-cols-3 gap-2" v-if="snippets.length">
         <x-panel
             v-for="item in snippets"

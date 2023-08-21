@@ -17,6 +17,18 @@ export default defineComponent({
         items     : {
             type   : Array,
             default: () => []
+        },
+        checkIsActive: {
+            type: Function,
+            default: null,
+        }
+    },
+    methods: {
+        isActiveItem(item) {
+            if (typeof this.checkIsActive === 'function') {
+                return this.checkIsActive(item);
+            }
+            return  false;
         }
     }
 })
@@ -30,7 +42,7 @@ export default defineComponent({
         <template v-for="item in items" :key="item.name">
             <li
                 class="x_tabsNav-item"
-                :class="{'underline dark:!text-white !text-black': currentTab === item.name}"
+                :class="{'underline dark:!text-white !text-black': isActiveItem(item)}"
                 @click="$emit('click:item', item)"
                 :title="item.title"
             >

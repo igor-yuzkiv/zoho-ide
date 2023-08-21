@@ -25,7 +25,7 @@ export default defineComponent({
         const tabs = slots.default().map(i => ({
             name : i.props.name,
             title: i.props?.title || i.props.name,
-            icon : i.props?.icon
+            icon : i.props?.icon,
         }));
 
         function handleSelectTab({name}) {
@@ -40,8 +40,12 @@ export default defineComponent({
             }
         });
 
+        function checkIsActive(item) {
+            return item.name === currentTab.value;
+        }
+
         provide(XTabsSymbol, {currentTab});
-        return {tabs, currentTab, handleSelectTab}
+        return {tabs, currentTab, handleSelectTab, checkIsActive}
     }
 })
 </script>
@@ -56,6 +60,7 @@ export default defineComponent({
             :show-titles="showTitles"
             :items="tabs"
             @click:item="handleSelectTab"
+            :check-is-active="checkIsActive"
         />
         <div class="flex flex-col flex-grow">
             <slot></slot>

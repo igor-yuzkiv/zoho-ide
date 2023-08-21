@@ -7,7 +7,7 @@ import {
     fetchSnippet,
     renderSnippet
 } from "@/api/snippets.js";
-import XArgumentsForm from "@/views/use-snippet/parts/XArgumentsForm.vue";
+import XArgumentsForm from "@/views/snippets/use/parts/XArgumentsForm.vue";
 import {
     dispatchEvent,
     EVENT_TYPES
