@@ -5,10 +5,9 @@ import XChip             from "@ui-kit/chip/x-chip.vue";
 import {Icon}            from "@iconify/vue";
 import {fetchSnippets}   from "@/api/snippets.js";
 import {SNIPPET_TYPES}   from "@/constans/snippet.js";
-import XSearchInput       from "@ui-kit/search-input/XSearchInput.vue";
 
 export default defineComponent({
-    components: {XSearchInput, XChip, XPanel, Icon},
+    components: {XChip, XPanel, Icon},
     data() {
         return {
             snippets:   [],
