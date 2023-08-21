@@ -54,8 +54,5 @@
     "side_panel": {
         "default_path": "popup/dist/index.html",
         "default_icon": "logo.png"
-    },
-    "background": {
-        "service_worker": "service-worker.js"
     }
 }

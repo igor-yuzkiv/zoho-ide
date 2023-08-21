@@ -10,6 +10,7 @@ export default defineComponent({
     components: {XChip, XPanel, Icon},
     data() {
         return {
+            isLoaded: false,
             snippets:   [],
             pagination: {
                 count:        0,
@@ -22,6 +23,7 @@ export default defineComponent({
     },
     async mounted() {
         await this.loadSnippets();
+        this.$nextTick(() => this.isLoaded = true);
     },
     methods:  {
         async loadSnippets() {
@@ -74,7 +76,7 @@ export default defineComponent({
         </x-panel>
     </div>
 
-    <div class="flex flex-col items-center justify-center flex-grow text-center" v-else>
+    <div class="flex flex-col items-center justify-center flex-grow text-center" v-else v-show="isLoaded">
         <Icon icon="formkit:sad" class="text-[100px] text-gray-500"/>
         <h1 class="text-xl text-gray-500">No Snippets Found</h1>
     </div>

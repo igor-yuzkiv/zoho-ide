@@ -1,16 +1,13 @@
 export const EVENT_TYPES = {
     injectCode: 'injectCode',
 };
-
-export const CONFIG = {
-    eventMessage: "zla__message",
-};
+export const EVENT_MESSAGE = "zla__message";
 
 export function dispatchEvent(type, payload) {
     // eslint-disable-next-line no-undef
     chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
         function handler(type, payload, config) {
-            const event = new CustomEvent(config.eventMessage, {"detail": {type, payload}});
+            const event = new CustomEvent(config.message, {"detail": {type, payload}});
             document.dispatchEvent(event);
         }
 
@@ -19,7 +16,7 @@ export function dispatchEvent(type, payload) {
             .executeScript({
                 target: {tabId: tabs[0].id},
                 func:   handler,
-                args:   [type, payload, CONFIG]
+                args:   [type, payload, {message: EVENT_MESSAGE}]
             })
             .then((r) => console.log('dispatchEvent', r));
     })
