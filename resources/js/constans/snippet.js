@@ -23,10 +23,14 @@ export const ARGUMENT_TYPES = {
 export const SNIPPET_TYPES = {
     template: {
         name: "template",
-        variant: "success"
+        variant: "success",
+        icon: "bxs:component",
+        color: "#046c4e",
     },
     sample: {
         name: "sample",
-        variant: "info"
+        variant: "info",
+        icon: "ph:file-code",
+        color: "#1a56db",
     }
 }

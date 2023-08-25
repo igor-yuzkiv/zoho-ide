@@ -153,7 +153,8 @@ module.exports = {
                 xl: '36rem',
             },
             fontFamily: {
-                sans: ['Inter', ...defaultTheme.fontFamily.sans],
+                body: ['"Ubuntu"'],
+                sans: ['"Ubuntu"'],
             },
         },
     },

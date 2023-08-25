@@ -13,12 +13,14 @@ import {mapState} from "vuex";
 import XSelect from "@ui-kit/select/XSelect.vue";
 import {SNIPPET_TYPES} from "@/constans/snippet.js";
 import XCodeEditor from "@/components/code-editor/XCodeEditor.vue";
-import ArgumentsList from "@/views/snippets/snippet-ide/parts/ArgumentsList.vue";
+import ArgumentsList from "@/views/snippet-ide/parts/ArgumentsList.vue";
 import XTabs from "@ui-kit/tabs/XTabs.vue";
 import XTabItem from "@ui-kit/tabs/XTabItem.vue";
+import XSnippetsExplorer from "@/components/snippets-explorer/XSnippetsExplorer.vue";
 
 export default defineComponent({
     components: {
+        XSnippetsExplorer,
         XTabItem,
         XTabs,
         ArgumentsList,
@@ -35,7 +37,6 @@ export default defineComponent({
     inject    : ['toast'],
     async beforeMount() {
         if (this.$route.params?.id) {
-            this.snippetId = this.$route.params.id;
             await this.loadSnippet(this.$route.params.id);
         }
 
@@ -45,10 +46,9 @@ export default defineComponent({
     },
     data() {
         return {
-            isLoaded   : false,
-            showToolbar: false,
-            snippetId  : null,
-            snippet    : {
+            isLoaded  : false,
+            minimize  : false,
+            snippet   : {
                 id            : null,
                 title         : '',
                 type          : "template",
@@ -98,12 +98,12 @@ export default defineComponent({
 
         async saveSnippet() {
             const upsertSnippet = async () => {
-                return this.snippetId
-                    ? updateSnippet(this.snippetId, this.snippet)
+                return this.snippet?.id
+                    ? updateSnippet(this.snippet.id, this.snippet)
                     : createSnippet(this.snippet)
             }
 
-            return await upsertSnippet(this.snippetId, this.snippet)
+            return await upsertSnippet(this.snippet.id, this.snippet)
                 .then(({data}) => data)
                 .catch(({response}) => {
                     this.toast.error(response?.data?.message || 'Something went wrong');
@@ -114,11 +114,19 @@ export default defineComponent({
             const response = await this.saveSnippet();
             if (response?.id) {
                 this.toast.success('Snippet saved');
-                this.snippetId = response.id;
+                this.snippet.id = response.id;
                 await this.loadSnippet(response.id);
                 await this.$router.push({name: routesName.snippets,})
             }
         },
+
+        async handleSnippetChange(item) {
+            await this.loadSnippet(item.id);
+
+            this.$nextTick(() => {
+                this.$router.replace({name: routesName.snippet_ide, params: {id: item.id}});
+            });
+        }
     },
 })
 
@@ -136,8 +144,8 @@ export default defineComponent({
                     <Icon icon="simple-line-icons:arrow-left"/>
                 </x-icon-button>
 
-                <x-icon-button @click="showToolbar = !showToolbar">
-                    <Icon :icon="showToolbar ? 'simple-line-icons:size-actual' : 'simple-line-icons:size-fullscreen'"/>
+                <x-icon-button @click="minimize = !minimize">
+                    <Icon :icon="minimize ? 'simple-line-icons:size-actual' : 'simple-line-icons:size-fullscreen'"/>
                 </x-icon-button>
             </div>
 
@@ -150,7 +158,7 @@ export default defineComponent({
 
         <div class="grid grid-cols-6 gap-2 flex-grow overflow-hidden">
             <!--Left Toolbar-->
-            <div v-show="!showToolbar" class="col-span-2 flex flex-col flex-gow gap-2 pr-1 overflow-auto">
+            <div v-show="!minimize" class="col-span-2 flex flex-col flex-gow gap-2 pr-1 overflow-auto">
                 <x-tabs vertical>
                     <x-tab-item
                         name="Options"
@@ -195,7 +203,11 @@ export default defineComponent({
                     </x-tab-item>
 
                     <x-tab-item name="Snippets" icon="ph:folders">
-
+                        <x-snippets-explorer
+                            class="ml-2"
+                            :current-id="snippet.id"
+                            @item:click="handleSnippetChange"
+                        />
                     </x-tab-item>
                 </x-tabs>
 
@@ -204,12 +216,12 @@ export default defineComponent({
             <!--Editor-->
             <div
                 class="flex flex-col flex-grow"
-                :class="{'col-span-4': !showToolbar,'col-span-6': showToolbar}"
+                :class="{'col-span-4': !minimize,'col-span-6': minimize}"
             >
                 <x-deluge-template-editor
                     v-if="isSnippetTypeTemplate"
                     class="flex-grow"
-                    :class="{'col-span-4': !showToolbar,'col-span-6': showToolbar}"
+                    :class="{'col-span-4': !minimize,'col-span-6': minimize}"
                     v-model="snippet.content"
                     :snippet-arguments="getSnippetArguments"
                     :theme="darkTheme ? 'vs-dark' : 'vs'"

@@ -2,7 +2,7 @@
 import XCard from "@ui-kit/card/XCard.vue";
 import XIconButton from "@ui-kit/icon-button/XIconButton.vue";
 import {computed, ref} from "vue";
-import ArgumentForm from "@/views/snippets/snippet-ide/parts/ArgumentForm.vue";
+import ArgumentForm from "@/views/snippet-ide/parts/ArgumentForm.vue";
 import XChip from "@ui-kit/chip/x-chip.vue";
 import XModal from "@ui-kit/modal/XModal.vue";
 
