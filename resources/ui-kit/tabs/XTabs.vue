@@ -22,11 +22,18 @@ export default defineComponent({
     },
     setup(props, {slots, emit}) {
         const currentTab = ref(props.modelValue);
-        const tabs = slots.default().map(i => ({
-            name : i.props.name,
-            title: i.props?.title || i.props.name,
-            icon : i.props?.icon,
-        }));
+
+        const tabs = [];
+        for (const tab of slots.default()) {
+            if (!tab?.props?.name) {
+                continue;
+            }
+            tabs.push({
+                name : tab.props.name,
+                title: tab.props?.title || tab.props.name,
+                icon : tab.props?.icon,
+            });
+        }
 
         function handleSelectTab({name}) {
             currentTab.value = name;
