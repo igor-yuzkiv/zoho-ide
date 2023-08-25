@@ -8,8 +8,9 @@ const store = createStore({
     actions  : {},
     mutations: {
         SET_THEME: (state, value) =>  {
-            localStorage.setItem('theme', value);
+            console.log(value);
             state.theme = value;
+            localStorage.setItem('theme', value);
             dispatchEvent(EVENT_TYPES.changeTheme, {theme: value});
         },
     }

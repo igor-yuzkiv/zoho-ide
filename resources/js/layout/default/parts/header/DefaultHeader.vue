@@ -1,4 +1,6 @@
 <script setup>
+
+import * as monaco from "monaco-editor";
 import {computed} from "vue";
 import {useStore} from "vuex";
 import XSearchInput from "@ui-kit/search-input/XSearchInput.vue";
@@ -12,11 +14,12 @@ const dark = computed({
     set: (value) => {
         localStorage.setItem("darkTheme", value);
         store.commit("SET_DARK_THEME", value);
-        window.location.reload();
+        monaco.editor.setTheme(value ? "vs-dark" : "vs-light");
     }
 });
 
 function toggleTheme() {
+    console.log("toggleTheme")
     dark.value = !dark.value;
 }
 
