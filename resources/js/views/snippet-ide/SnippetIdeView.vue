@@ -17,6 +17,7 @@ import ArgumentsList from "@/views/snippet-ide/parts/ArgumentsList.vue";
 import XTabs from "@ui-kit/tabs/XTabs.vue";
 import XTabItem from "@ui-kit/tabs/XTabItem.vue";
 import XSnippetsExplorer from "@/components/snippets-explorer/XSnippetsExplorer.vue";
+import {useConfirmDialog} from "@ui-kit/confirm-dialog/useConfirmDialog.js";
 
 export default defineComponent({
     components: {
@@ -35,6 +36,10 @@ export default defineComponent({
         XButton
     },
     inject    : ['toast'],
+    setup() {
+        const confirmDialog = useConfirmDialog();
+        return {confirmDialog}
+    },
     async beforeMount() {
         if (this.$route.params?.id) {
             await this.loadSnippet(this.$route.params.id);
@@ -46,9 +51,10 @@ export default defineComponent({
     },
     data() {
         return {
-            isLoaded  : false,
-            minimize  : false,
-            snippet   : {
+            isLoaded         : false,
+            minimizeView     : false,
+            snippetIsModified: false,
+            snippet          : {
                 id            : null,
                 title         : '',
                 type          : "template",
@@ -58,7 +64,7 @@ export default defineComponent({
                 component_name: '',
                 arguments     : [],
             },
-            currentTab: '',
+            currentTab       : '',
         }
     },
     computed: {
@@ -71,11 +77,17 @@ export default defineComponent({
         getSnippetTypesOptions() {
             return Object.keys(SNIPPET_TYPES).map(key => ({name: key, value: key}))
         },
-        isSnippetTypeTemplate() {
+        isTemplate() {
             return this.snippet.type === SNIPPET_TYPES.template.name;
         }
     },
     watch   : {
+        "snippet"      : {
+            handler() {
+                this.snippetIsModified = true;
+            },
+            deep: true
+        },
         "snippet.title": {
             handler(value) {
                 this.snippet.component_name = value.replace(/\W+/g, "-").toLowerCase();
@@ -121,10 +133,19 @@ export default defineComponent({
         },
 
         async handleSnippetChange(item) {
-            await this.loadSnippet(item.id);
+            if (this.snippetIsModified) {
+                const isConfirmed = await this.confirmDialog.open('Save current snippet?');
+                if (isConfirmed) {
+                    if (!await this.saveSnippet()) {
+                        return;
+                    }
+                }
+            }
 
+            await this.loadSnippet(item.id);
             this.$nextTick(() => {
                 this.$router.replace({name: routesName.snippet_ide, params: {id: item.id}});
+                this.snippetIsModified = false;
             });
         }
     },
@@ -134,8 +155,6 @@ export default defineComponent({
 
 <template>
     <section class="flex flex-col flex-grow overflow-hidden" v-if="isLoaded">
-
-        <!--Top Toolbar-->
         <div
             class="flex items-center flex-none justify-between mb-2 p-2 bg-white rounded-lg shadow-xs dark:bg-gray-800"
         >
@@ -144,8 +163,8 @@ export default defineComponent({
                     <Icon icon="simple-line-icons:arrow-left"/>
                 </x-icon-button>
 
-                <x-icon-button @click="minimize = !minimize">
-                    <Icon :icon="minimize ? 'simple-line-icons:size-actual' : 'simple-line-icons:size-fullscreen'"/>
+                <x-icon-button @click="minimizeView = !minimizeView">
+                    <Icon :icon="minimizeView ? 'simple-line-icons:size-actual' : 'simple-line-icons:size-fullscreen'"/>
                 </x-icon-button>
             </div>
 
@@ -157,8 +176,7 @@ export default defineComponent({
         </div>
 
         <div class="grid grid-cols-6 gap-2 flex-grow overflow-hidden">
-            <!--Left Toolbar-->
-            <div v-show="!minimize" class="col-span-2 flex flex-col flex-gow gap-2 pr-1 overflow-auto">
+            <div v-show="!minimizeView" class="col-span-2 flex flex-col flex-gow gap-2 pr-1 overflow-auto">
                 <x-tabs vertical>
                     <x-tab-item
                         name="Options"
@@ -173,7 +191,7 @@ export default defineComponent({
                                 />
 
                                 <x-input
-                                    v-if="isSnippetTypeTemplate"
+                                    v-if="isTemplate"
                                     label="Component Name"
                                     v-model="snippet.component_name"
                                 />
@@ -196,7 +214,7 @@ export default defineComponent({
                     <x-tab-item
                         name="Arguments"
                         class="p-1"
-                        v-if="isSnippetTypeTemplate"
+                        v-if="isTemplate"
                         icon="carbon:parameter"
                     >
                         <arguments-list v-model="snippet.arguments"/>
@@ -216,12 +234,12 @@ export default defineComponent({
             <!--Editor-->
             <div
                 class="flex flex-col flex-grow"
-                :class="{'col-span-4': !minimize,'col-span-6': minimize}"
+                :class="{'col-span-4': !minimizeView,'col-span-6': minimizeView}"
             >
                 <x-deluge-template-editor
-                    v-if="isSnippetTypeTemplate"
+                    v-if="isTemplate"
                     class="flex-grow"
-                    :class="{'col-span-4': !minimize,'col-span-6': minimize}"
+                    :class="{'col-span-4': !minimizeView,'col-span-6': minimizeView}"
                     v-model="snippet.content"
                     :snippet-arguments="getSnippetArguments"
                     :theme="darkTheme ? 'vs-dark' : 'vs'"
