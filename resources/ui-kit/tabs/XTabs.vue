@@ -1,5 +1,5 @@
 <script>
-import {defineComponent, onMounted, ref, provide} from "vue";
+import {defineComponent, onMounted, ref, provide, computed} from "vue";
 import XTabsNavigation from "@ui-kit/tabs/XTabsNavigation.vue";
 
 export const XTabsSymbol = Symbol();
@@ -23,17 +23,20 @@ export default defineComponent({
     setup(props, {slots, emit}) {
         const currentTab = ref(props.modelValue);
 
-        const tabs = [];
-        for (const tab of slots.default()) {
-            if (!tab?.props?.name) {
-                continue;
-            }
-            tabs.push({
-                name : tab.props.name,
-                title: tab.props?.title || tab.props.name,
-                icon : tab.props?.icon,
-            });
-        }
+        const tabs = computed(() => {
+            return slots.default()
+                .map(tab => {
+                    if (!tab?.props?.name) {
+                        return;
+                    }
+                    return {
+                        name : tab.props.name,
+                        title: tab.props?.title || tab.props.name,
+                        icon : tab.props?.icon,
+                    }
+                })
+                .filter(Boolean);
+        })
 
         function handleSelectTab({name}) {
             currentTab.value = name;
@@ -41,8 +44,8 @@ export default defineComponent({
         }
 
         onMounted(() => {
-            if (!props.modelValue && tabs.length > 0) {
-                currentTab.value = tabs[0].name;
+            if (!props.modelValue && tabs.value.length > 0) {
+                currentTab.value = tabs.value[0]['name'];
                 handleSelectTab({name: currentTab.value});
             }
         });
