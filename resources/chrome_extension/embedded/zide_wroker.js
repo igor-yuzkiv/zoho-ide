@@ -55,7 +55,11 @@ function zide___setFullscreen() {
 }
 
 function zide_getCodeMirrorInstance() {
-    const cm = document.querySelector(".CodeMirror").CodeMirror;
+    const node = document.querySelector("#delugeEditorCont .CodeMirror");
+    if (!node || !node?.CodeMirror) {
+        return;
+    }
+    const cm = node.CodeMirror;
     return cm.getDoc();
 }
 
