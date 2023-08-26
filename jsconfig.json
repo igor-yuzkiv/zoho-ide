@@ -8,7 +8,7 @@
             "@/*": [
                 "resources/js/*"
             ],
-            "@uikit/*": [
+            "@ui-kit/*": [
                 "resources/ui-kit/*"
             ]
         },
