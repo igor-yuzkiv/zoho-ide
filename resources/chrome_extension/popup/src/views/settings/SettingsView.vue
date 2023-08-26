@@ -28,11 +28,20 @@ const showLeftPanel = computed({
         store.commit("settings/SET_SHOW_LEFT_PANEL", value)
     }
 })
+const fullScreen = computed({
+    get() {
+        return store.state.settings.fullScreen
+    },
+    set(value) {
+        store.commit("settings/SET_FULL_SCREEN", value)
+    }
+})
 
 function applySettings() {
     dispatchEvent(EVENT_TYPES.setAppearancesSettings, {
         theme        : currentTheme.value,
-        showLeftPanel: showLeftPanel.value
+        showLeftPanel: showLeftPanel.value,
+        fullScreen   : fullScreen.value
     });
 }
 
@@ -54,6 +63,7 @@ function applySettings() {
                     v-model="currentTheme"
                 />
 
+                <x-switch v-model="fullScreen">Full Screen</x-switch>
                 <x-switch v-model="showLeftPanel">Show Left Panel</x-switch>
             </div>
         </x-accordion-item>

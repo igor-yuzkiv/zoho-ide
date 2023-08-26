@@ -45,11 +45,11 @@ const isDarkTheme = computed(() => {
 });
 
 const navItems = [
-    {
-        name : routesName.home,
-        title: 'Home',
-        icon : 'majesticons:home-line',
-    },
+    // {
+    //     name : routesName.home,
+    //     title: 'Home',
+    //     icon : 'majesticons:home-line',
+    // },
     {
         name : routesName.snippets,
         title: 'Snippets',

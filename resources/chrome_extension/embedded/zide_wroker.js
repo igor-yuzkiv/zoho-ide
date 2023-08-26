@@ -28,6 +28,32 @@ function zide_toggleLeftPanel(value) {
     node.style.display = value ? "inline-block" : "none";
 }
 
+function zide___setFullscreen() {
+    const instance = zide_getCodeMirrorInstance();
+
+    const wrap = instance.cm.getWrapperElement();
+    instance.cm.state.fullScreenRestore = {
+        scrollTop: window.pageYOffset, scrollLeft: window.pageXOffset,
+        width    : wrap.style.width, height: wrap.style.height
+    };
+
+    const delugeEditorCont = document.querySelector("#delugeEditorCont");
+    delugeEditorCont.style.position = "fixed";
+    delugeEditorCont.style.top = 0;
+    delugeEditorCont.style.left = 0;
+    delugeEditorCont.style.width = "100%";
+    delugeEditorCont.style.height = "100vh";
+
+    const scroll = document.querySelector("#codemirror_scroll");
+    scroll.style.height = "96vh";
+
+    wrap.style.width = "";
+    wrap.style.height = "auto";
+    wrap.className += " CodeMirror-fullscreen";
+    document.documentElement.style.overflow = "hidden";
+    instance.cm.refresh();
+}
+
 function zide_getCodeMirrorInstance() {
     const cm = document.querySelector(".CodeMirror").CodeMirror;
     return cm.getDoc();
@@ -44,8 +70,13 @@ const zide_eventHandlers = {
     },
     setAppearancesSettings: (payload) => {
         console.log("eventHandler:setAppearancesSettings", payload)
+
         zide_setTheme(payload?.theme);
         zide_toggleLeftPanel(payload?.showLeftPanel);
+
+        if (payload?.fullScreen) {
+            zide___setFullscreen();
+        }
 
         try {
             localStorage.setItem("zohoIdeSettings", JSON.stringify(payload));

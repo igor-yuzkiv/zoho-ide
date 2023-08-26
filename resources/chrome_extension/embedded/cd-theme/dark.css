@@ -170,6 +170,7 @@
 .zide-theme-dark .CodeMirror-gutter-elt,
 .zide-theme-dark .zc-dem-btnactions,
 .zide-theme-dark .zc-dem-dialogue-container,
-.zide-theme-dark .wms-chatwindowcontainer {
+.zide-theme-dark .wms-chatwindowcontainer,
+.zide-theme-dark #dreEditorFooter {
     filter: invert(1);
 }

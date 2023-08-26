@@ -5,7 +5,8 @@ const routes = [
     {
         path     : '/',
         name     : routesName.home,
-        component: () => import('@/views/home/HomeView.vue')
+        component: () => import('@/views/home/HomeView.vue'),
+        redirect : {name: routesName.snippets}
     },
     {
         path     : '/snippets',

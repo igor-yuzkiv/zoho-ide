@@ -32,7 +32,8 @@
             "matches": [
                 "https://creator.zoho.com/*",
                 "https://creatorapp.zoho.com/*",
-                "https://crm.zoho.com/crm/*/settings/functions/*"
+                "https://crm.zoho.com/crm/*/settings/functions/*",
+                "https://books.zoho.com/*"
             ]
         }
     ],
@@ -41,12 +42,14 @@
             "resources": [
                 "embedded/toolbar/zide_toolbar.js",
                 "embedded/zide_wroker.js",
-                "embedded/toolbar/zide_toolbar.html"
+                "embedded/toolbar/zide_toolbar.html",
+                "https://books.zoho.com/*"
             ],
             "matches": [
                 "https://creator.zoho.com/*",
                 "https://creatorapp.zoho.com/*",
-                "https://crm.zoho.com/*"
+                "https://crm.zoho.com/*",
+                "https://books.zoho.com/*"
             ]
         }
     ],
@@ -54,7 +57,8 @@
         "https://store.igoryuzkiv.tech/*",
         "https://creator.zoho.com/*",
         "https://creatorapp.zoho.com/*",
-        "https://crm.zoho.com/*"
+        "https://crm.zoho.com/*",
+        "https://books.zoho.com/*"
     ],
     "optional_host_permissions": [
         "https://*/*",
