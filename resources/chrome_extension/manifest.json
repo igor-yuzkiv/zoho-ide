@@ -40,7 +40,7 @@
         {
             "resources": [
                 "embedded/toolbar/zide_toolbar.js",
-                "embedded/zide_Wroker.js",
+                "embedded/zide_wroker.js",
                 "embedded/toolbar/zide_toolbar.html"
             ],
             "matches": [

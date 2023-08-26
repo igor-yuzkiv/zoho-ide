@@ -18,7 +18,7 @@ function injectScript(file_path, tag = 'body') {
 
 const jsFiles = [
     'embedded/toolbar/zide_toolbar.js',
-    'embedded/zide_Wroker.js',
+    'embedded/zide_wroker.js',
 ];
 
 const htmlFiles = [
