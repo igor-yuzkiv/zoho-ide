@@ -12,7 +12,7 @@ import XModal from "@ui-kit/modal/XModal.vue";
 </script>
 
 <template>
-    <x-modal :model-value="isOpen" @close="closeDialog">
+    <x-modal :model-value="isOpen" @close="closeDialog" :dialog-class="{'w-2/5': true}">
         <template #header>
             <div class="flex items-center gap-2 text-black dark:text-white text-xl font-medium">
                 <Icon icon="icon-park-outline:attention"></Icon>
@@ -23,13 +23,15 @@ import XModal from "@ui-kit/modal/XModal.vue";
             {{ options.message }}
         </div>
         <template #footer>
-            <x-button @click="cancelHandle">
-                Cancel
-            </x-button>
+            <div class="flex items-center justify-between mt-2 w-full">
+                <x-button @click="cancelHandle">
+                    Cancel
+                </x-button>
 
-            <x-button @click="confirmHandle">
-                Confirm
-            </x-button>
+                <x-button @click="confirmHandle">
+                    Confirm
+                </x-button>
+            </div>
         </template>
     </x-modal>
 </template>

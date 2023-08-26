@@ -63,7 +63,6 @@ function handleUpdateArgument(item) {
 }
 
 function handleClickDeleteArgument(item) {
-
     if (item?.id) {
         const index = getArgumentIndex(item);
         if (index >= 0) {
@@ -112,10 +111,10 @@ function handleClickDeleteArgument(item) {
 
     <teleport to="#x__application">
         <!--Argument form modal-->
-        <x-modal :model-value="argumentFormModal.isOpen" @close="handleCloseArgumentModal" :dialogClass="{'sm:w-2/6': true}">
+        <x-modal :model-value="argumentFormModal.isOpen" @close="handleCloseArgumentModal" :dialogClass="{'sm:w-3/6': true}">
             <template #header>
                 <div class="text-black dark:text-white">
-                    {{ argumentFormModal.modelValue.name || 'New Argument' }}
+                    {{ `Argument: ${argumentFormModal.modelValue.name}` || 'New Argument' }}
                 </div>
             </template>
             <argument-form :model-value="argumentFormModal.modelValue" @update:modalValue="handleUpdateArgument"/>

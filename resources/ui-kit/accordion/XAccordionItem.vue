@@ -27,7 +27,7 @@ export default defineComponent({
     <!--Heading-->
     <div
         class="x_accordionItem-heading"
-        :class="{'border border-purple-600 bg-purple-400/25 dark:bg-purple-500/25 text-purple-800': isActiveTab}"
+        :class="{'border border-purple-600 bg-gray-200 text-black dark:bg-gray-800 dark:text-white': isActiveTab}"
         @click="selectTabHandler(name)"
     >
         <div class="w-full">

@@ -28,12 +28,14 @@ function onChangeItem(name, value) {
 <template>
     <li class="flex items-center gap-x-2">
         <x-input
+            class="w-full"
             label="Name"
             :model-value="itemName"
             @update:model-value="onChangeItem('name', $event)"
         />
 
         <x-input
+            class="w-full"
             label="Value"
             :model-value="itemValue"
             @update:model-value="onChangeItem('value', $event)"

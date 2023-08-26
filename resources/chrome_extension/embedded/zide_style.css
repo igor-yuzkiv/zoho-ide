@@ -9,7 +9,7 @@ body[data-theme='dark'] {
     --zla-background-color: #121e31;
 }
 
-.zide {
+.zide_toolBar {
     position: fixed;
     bottom: 27px;
     left: 0;
@@ -25,19 +25,11 @@ body[data-theme='dark'] {
     opacity: 0.9;
 }
 
-.zide-minimized {
+.zide_toolBar-minimize {
     width: 37px;
 }
 
-.zide-container {
-    display: none;
-    flex-direction: column;
-    width: 100%;
-    height: 100%;
-    padding: 3px 5px;
-}
-
-.zide_button {
+.zide_toolBar-button {
     border-radius: 15px;
     border: none;
     outline: none;
@@ -50,12 +42,11 @@ body[data-theme='dark'] {
     font-weight: 500;
 }
 
-.zide_button:hover {
+.zide_toolBar-button:hover {
     background: #9061f9
 }
 
-
-#zla_btn_toggleBar {
+#zide_toolBar-toggle-btn {
     outline: none;
     cursor: pointer;
     border: none;
@@ -70,15 +61,6 @@ body[data-theme='dark'] {
     font-size: 12px;
 }
 
-#zla_btn_toggleBar:hover {
+#zide_toolBar-toggle-btn:hover {
     background-color: #0694a2;
-}
-
-
-#delugeEditorCont.zide_fullScreen  {
-    position: fixed;
-    top: 0;
-    left: 0;
-    height: 100vh;
-    width: 100%;
 }

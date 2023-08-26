@@ -8,6 +8,7 @@ import {THEMES} from "@/constans/appearances.js";
 import {computed} from "vue";
 import {useStore} from "vuex";
 import {dispatchEvent, EVENT_TYPES} from "@/utils/chromeApi.js";
+import {Icon} from "@iconify/vue";
 
 const store = useStore();
 
@@ -41,11 +42,17 @@ function applySettings() {
 <template>
     <x-accordion full-height>
         <x-accordion-item name="Appearances">
-            <div class="flex items-center justify-end my-1">
-                <x-button @click="applySettings">Apply</x-button>
+            <div class="flex items-center justify-end py-2">
+                <x-button
+                    class="w-full text-center"
+                    @click="applySettings"
+                >
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="m9.55 18l-5.7-5.7l1.425-1.425L9.55 15.15l9.175-9.175L20.15 7.4L9.55 18Z"/></svg>
+                    Apply
+                </x-button>
             </div>
 
-            <div class="flex flex-col gap-y-2">
+            <div class="flex flex-col gap-y-2 mt-2">
                 <x-select
                     label="Theme"
                     :options="Object.values(THEMES)"

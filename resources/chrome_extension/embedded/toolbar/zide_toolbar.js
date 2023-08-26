@@ -1,6 +1,4 @@
-const rootElement = document.getElementById("zide");
-const container = document.getElementById("zide-container");
-
+const rootElement = document.getElementById("zide_toolBar");
 const data = {
     minimized: true,
     darkTheme: false,
@@ -11,12 +9,10 @@ function toggleBar() {
     data.minimized = !data.minimized;
 
     if (data.minimized) {
-        rootElement.classList.add("zide-minimized");
-        container.style.display = "none";
+        rootElement.classList.add("zide_toolBar-minimize");
     } else {
-        rootElement.classList.remove("zide-minimized");
-        container.style.display = "block";
+        rootElement.classList.remove("zide_toolBar-minimize");
     }
 }
 
-document.getElementById("zla_btn_toggleBar").addEventListener("click", toggleBar);
+document.getElementById("zide_toolBar-toggle-btn").addEventListener("click", toggleBar);
