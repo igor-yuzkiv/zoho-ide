@@ -9,7 +9,7 @@ body[data-theme='dark'] {
     --zla-background-color: #121e31;
 }
 
-.zlaBar {
+.zide {
     position: fixed;
     bottom: 27px;
     left: 0;
@@ -25,11 +25,11 @@ body[data-theme='dark'] {
     opacity: 0.9;
 }
 
-.zlaBar-minimized {
+.zide-minimized {
     width: 37px;
 }
 
-.zlaBar-container {
+.zide-container {
     display: none;
     flex-direction: column;
     width: 100%;
@@ -37,7 +37,7 @@ body[data-theme='dark'] {
     padding: 3px 5px;
 }
 
-.zlaBar_button {
+.zide_button {
     border-radius: 15px;
     border: none;
     outline: none;
@@ -50,7 +50,7 @@ body[data-theme='dark'] {
     font-weight: 500;
 }
 
-.zlaBar_button:hover {
+.zide_button:hover {
     background: #9061f9
 }
 

@@ -1,6 +1,7 @@
 export const EVENT_TYPES = {
     injectCode: 'injectCode',
     changeTheme: 'changeTheme',
+    setAppearancesSettings: 'setAppearancesSettings',
 };
 export const EVENT_MESSAGE = "zla__message";
 

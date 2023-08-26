@@ -41,7 +41,7 @@ const router = useRouter();
 const store = useStore();
 
 const isDarkTheme = computed(() => {
-    return store.state.theme === THEMES.dark.value
+    return store.state.settings.theme === THEMES.dark.value
 });
 
 const navItems = [

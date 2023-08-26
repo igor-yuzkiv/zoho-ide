@@ -162,14 +162,14 @@
     color: #0694a2 !important;
 }
 
-.zlaBar-darkTheme #dreTopBar,
-.zlaBar-darkTheme .deluge-top-bar,
-.zlaBar-darkTheme #delugeLeftPane,
-.zlaBar-darkTheme .CodeMirror-linenumber,
-.zlaBar-darkTheme .CodeMirror-gutter,
-.zlaBar-darkTheme .CodeMirror-gutter-elt,
-.zlaBar-darkTheme .zc-dem-btnactions,
-.zlaBar-darkTheme .zc-dem-dialogue-container,
-.zlaBar-darkTheme .wms-chatwindowcontainer {
+.zide-theme-dark #dreTopBar,
+.zide-theme-dark .deluge-top-bar,
+.zide-theme-dark #delugeLeftPane,
+.zide-theme-dark .CodeMirror-linenumber,
+.zide-theme-dark .CodeMirror-gutter,
+.zide-theme-dark .CodeMirror-gutter-elt,
+.zide-theme-dark .zc-dem-btnactions,
+.zide-theme-dark .zc-dem-dialogue-container,
+.zide-theme-dark .wms-chatwindowcontainer {
     filter: invert(1);
 }

@@ -2,24 +2,49 @@
 import XAccordion from "@ui-kit/accordion/XAccordion.vue";
 import XAccordionItem from "@ui-kit/accordion/XAccordionItem.vue";
 import XSelect from "@ui-kit/select/XSelect.vue";
+import XSwitch from "@ui-kit/switch/XSwitch.vue";
+import XButton from "@ui-kit/button/XButton.vue";
 import {THEMES} from "@/constans/appearances.js";
 import {computed} from "vue";
 import {useStore} from "vuex";
+import {dispatchEvent, EVENT_TYPES} from "@/utils/chromeApi.js";
+
 const store = useStore();
 
 const currentTheme = computed({
     get() {
-        return store.state.theme
+        return store.state.settings.theme
     },
     set(value) {
-        store.commit("SET_THEME", value)
+        store.commit("settings/SET_THEME", value)
     }
 })
+
+const showLeftPanel = computed({
+    get() {
+        return store.state.settings.showLeftPanel
+    },
+    set(value) {
+        store.commit("settings/SET_SHOW_LEFT_PANEL", value)
+    }
+})
+
+function applySettings() {
+    dispatchEvent(EVENT_TYPES.setAppearancesSettings, {
+        theme        : currentTheme.value,
+        showLeftPanel: showLeftPanel.value
+    });
+}
+
 </script>
 
 <template>
     <x-accordion full-height>
         <x-accordion-item name="Appearances">
+            <div class="flex items-center justify-end my-1">
+                <x-button @click="applySettings">Apply</x-button>
+            </div>
+
             <div class="flex flex-col gap-y-2">
                 <x-select
                     label="Theme"
@@ -28,6 +53,8 @@ const currentTheme = computed({
                     item-title="name"
                     v-model="currentTheme"
                 />
+
+                <x-switch v-model="showLeftPanel">Show Left Panel</x-switch>
             </div>
         </x-accordion-item>
 

@@ -17,12 +17,12 @@ function injectScript(file_path, tag = 'body') {
 }
 
 const jsFiles = [
-    'embedded/toolbar/zla_toolbar.js',
-    'embedded/zla_eventListener.js',
+    'embedded/toolbar/zide_toolbar.js',
+    'embedded/zide_Wroker.js',
 ];
 
 const htmlFiles = [
-    'embedded/toolbar/zla_toolbar.html'
+    'embedded/toolbar/zide_toolbar.html'
 ];
 
 console.log("location.href", location.href);

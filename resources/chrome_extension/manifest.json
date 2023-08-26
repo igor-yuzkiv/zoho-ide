@@ -26,7 +26,7 @@
                 "content-script.js"
             ],
             "css": [
-                "embedded/zla_style.css",
+                "embedded/zide_style.css",
                 "embedded/cd-theme/dark.css"
             ],
             "matches": [
@@ -39,9 +39,9 @@
     "web_accessible_resources": [
         {
             "resources": [
-                "embedded/toolbar/zla_toolbar.js",
-                "embedded/zla_eventListener.js",
-                "embedded/toolbar/zla_toolbar.html"
+                "embedded/toolbar/zide_toolbar.js",
+                "embedded/zide_Wroker.js",
+                "embedded/toolbar/zide_toolbar.html"
             ],
             "matches": [
                 "https://creator.zoho.com/*",
