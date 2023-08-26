@@ -25,10 +25,7 @@ const htmlFiles = [
     'embedded/toolbar/zide_toolbar.html'
 ];
 
-console.log("location.href", location.href);
-
-
-async function main() {
+(async () => {
     for (const path of htmlFiles) {
         await injectHtml(path, 'body')
     }
@@ -36,6 +33,4 @@ async function main() {
     for (const file of jsFiles) {
         injectScript(chrome.runtime.getURL(file), 'body')
     }
-}
-
-main();
+})()

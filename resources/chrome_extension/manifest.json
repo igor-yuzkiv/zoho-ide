@@ -32,7 +32,7 @@
             "matches": [
                 "https://creator.zoho.com/*",
                 "https://creatorapp.zoho.com/*",
-                "https://crm.zoho.com/*"
+                "https://crm.zoho.com/crm/*/settings/functions/*"
             ]
         }
     ],

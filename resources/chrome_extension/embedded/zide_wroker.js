@@ -1,8 +1,8 @@
-function setTheme(theme) {
+function zide_setTheme(theme) {
     if (!theme) {
         return;
     }
-    const instance = getCodeMirrorInstance();
+    const instance = zide_getCodeMirrorInstance();
     const body = document.querySelector("body");
 
     const prevTheme = [...body.classList].find(c => c.startsWith('zide-theme-'));
@@ -15,7 +15,7 @@ function setTheme(theme) {
     instance.cm.setOption("theme", theme);
 }
 
-function toggleLeftPanel(value) {
+function zide_toggleLeftPanel(value) {
     if (typeof value !== "boolean") {
         return;
     }
@@ -28,24 +28,24 @@ function toggleLeftPanel(value) {
     node.style.display = value ? "inline-block" : "none";
 }
 
-function getCodeMirrorInstance() {
+function zide_getCodeMirrorInstance() {
     const cm = document.querySelector(".CodeMirror").CodeMirror;
     return cm.getDoc();
 }
 
-const eventHandlers = {
+const zide_eventHandlers = {
     injectCode            : (payload) => {
         if (payload?.code) {
             console.log("eventHandler:injectCode", payload)
-            const cm = getCodeMirrorInstance();
+            const cm = zide_getCodeMirrorInstance();
             const currentPosition = cm.getCursor();
             cm.replaceRange(payload.code, currentPosition);
         }
     },
     setAppearancesSettings: (payload) => {
         console.log("eventHandler:setAppearancesSettings", payload)
-        setTheme(payload?.theme);
-        toggleLeftPanel(payload?.showLeftPanel);
+        zide_setTheme(payload?.theme);
+        zide_toggleLeftPanel(payload?.showLeftPanel);
 
         try {
             localStorage.setItem("zohoIdeSettings", JSON.stringify(payload));
@@ -55,35 +55,33 @@ const eventHandlers = {
     }
 };
 
-async function listener(e) {
-    console.log("zla__message", e)
+async function zide_Listener(e) {
+    console.log("zide__message", e)
 
     if (!e?.detail) {
-        console.error('zla__message: no data')
+        console.error('zide__message: no data')
         return;
     }
 
     const {type, payload} = e.detail;
     if (!type || !payload) {
-        console.error('zla__message: invalid data')
+        console.error('zide__message: invalid data')
         return;
     }
 
-    if (eventHandlers[type]) {
-        eventHandlers[type](payload);
+    if (zide_eventHandlers[type]) {
+        zide_eventHandlers[type](payload);
     }
 }
 
-document.addEventListener("zla__message", listener);
-
-
-function onMounted() {
+function zide_onMounted() {
     try {
         const settings = JSON.parse(localStorage.getItem("zohoIdeSettings"));
-        eventHandlers.setAppearancesSettings(settings)
+        zide_eventHandlers.setAppearancesSettings(settings)
     } catch (error) {
         console.error(error)
     }
 }
 
-setTimeout(onMounted, 2000)
+document.addEventListener("zide__message", zide_Listener);
+setTimeout(zide_onMounted, 2000)

@@ -3,7 +3,7 @@ export const EVENT_TYPES = {
     changeTheme: 'changeTheme',
     setAppearancesSettings: 'setAppearancesSettings',
 };
-export const EVENT_MESSAGE = "zla__message";
+export const EVENT_MESSAGE = "zide__message";
 
 export function dispatchEvent(type, payload) {
     // eslint-disable-next-line no-undef
