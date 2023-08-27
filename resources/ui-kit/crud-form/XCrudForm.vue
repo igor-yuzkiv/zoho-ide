@@ -1,9 +1,8 @@
 <script setup>
 import {fieldSettings} from "@ui-kit/crud-form/crud-form.js"
-import {nextTick, onMounted, reactive} from "vue";
-import XButton from "@ui-kit/button/XButton.vue";
+import {nextTick, onMounted, ref} from "vue";
 
-const emit = defineEmits(["update:modelValue", "submit"]);
+const emit = defineEmits(["update:modelValue"]);
 const props = defineProps({
     modelValue: {
         type   : Object,
@@ -15,7 +14,7 @@ const props = defineProps({
     },
 })
 
-const formModel = reactive({});
+const formModel = ref({});
 
 function fieldInputHandle(fieldName, value) {
     formModel.value[fieldName] = value;
@@ -24,14 +23,14 @@ function fieldInputHandle(fieldName, value) {
     })
 }
 
-function resetForm() {
+function initFormValue() {
     if (!props.fields?.length) {
         return;
     }
 
     formModel.value = props.fields
         .reduce((acc, field) => {
-            acc[field.name] = field['value'] ?? fieldSettings[field.type].defaultValue
+            acc[field.name] = props.modelValue[field.name] ?? fieldSettings[field.type].defaultValue
             return acc;
         }, {});
 
@@ -40,7 +39,7 @@ function resetForm() {
     })
 }
 
-onMounted(resetForm)
+onMounted(initFormValue)
 </script>
 
 <template>
@@ -51,17 +50,13 @@ onMounted(resetForm)
         >
             <component
                 :is="fieldSettings[field.type].component"
-                :value="formModel[field.name]"
+                :model-value="formModel[field.name]"
                 @update:modelValue="fieldInputHandle(field.name, $event)"
                 :name="field.name"
-                :label="field.name"
+                :label="field.label ?? field.name"
                 v-bind="fieldSettings[field.type].prop"
             ></component>
         </div>
-
-        <slot name="footer" :data="formModel">
-            <x-button class="w-full" @click="emit('submit', formModel.value)">Submit</x-button>
-        </slot>
     </div>
 </template>
 

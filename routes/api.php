@@ -22,3 +22,13 @@ Route::prefix("ide")
     ->group(function () {
         Route::get("suggestions", [\App\Containers\CodeEditor\Http\Controllers\SuggestionController::class, "index"]);
     });
+
+Route::prefix("projects")
+    ->group(function () {
+        Route::get("{project}", [\App\Containers\Project\Http\Controllers\ProjectsController::class, "getProject"]);
+
+        Route::prefix("meta")
+            ->group(function () {
+                Route::get("form/{project?}", [\App\Containers\Project\Http\Controllers\ProjectsController::class, "getFormMeta"]);
+            });
+    });

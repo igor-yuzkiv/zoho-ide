@@ -2,14 +2,12 @@
 
 namespace App\Containers\CrudForm;
 
-use Illuminate\Contracts\Support\Arrayable;
-use Illuminate\Database\Eloquent\Model;
 use \Illuminate\Http\JsonResponse;
 
 /**
  *
  */
-abstract class CrudForm implements Arrayable
+abstract class CrudForm
 {
 
     /**
@@ -33,54 +31,21 @@ abstract class CrudForm implements Arrayable
     protected array $rules = [];
 
     /**
-     * @param Model|null $model
-     */
-    public function __construct(readonly protected ?Model $model = null)
-    {
-
-    }
-
-    /**
-     * @param array $data
      * @return array
      */
-    public function validate(array $data): array
-    {
-        return \Validator::validate($data, $this->getValidateRules());
-    }
-
-
-    /**
-     * @return JsonResponse
-     */
-    public function respond(): JsonResponse
-    {
-        return \Response::json($this->toArray());
-    }
-
-    /**
-     * @return array
-     */
-    public function toArray(): array
+    public function renderFields(): array
     {
         $result = [];
 
-        foreach ($this->fields as $name => $fieldClass) {
+        foreach ($this->getFields() as $name => $fieldClass) {
             /** @var FormField $field */
             $field = app($fieldClass);
 
             $field->setName($name);
+            $field->setRequired($this->isRequired($name));
 
-            if ($this->model) {
-                $field->setValue($this->model->{$name});
-            }
-
-            if (isset($this->labels[$name])) {
-                $field->setLabel($this->labels[$name]);
-            }
-
-            if (in_array($name, $this->required)) {
-                $field->setRequired(true);
+            if (isset($this->getLabels()[$name])) {
+                $field->setLabel($this->getLabels()[$name]);
             }
 
             $result[] = $field->toArray();
@@ -90,10 +55,68 @@ abstract class CrudForm implements Arrayable
     }
 
     /**
+     * @param string|null $wrap
+     * @return JsonResponse
+     */
+    public function respond(?string $wrap = null): JsonResponse
+    {
+        $result = [
+            'fields' => $this->renderFields(),
+            'rules'  => $this->getRules()
+        ];
+
+        return \Response::json(
+            $wrap ? [$wrap => $result] : $result
+        );
+    }
+
+    /**
+     * @param array $data
+     * @return array
+     */
+    public function validate(array $data): array
+    {
+        return \Validator::validate($data, $this->getRules());
+    }
+
+    /**
+     * @param string $name
+     * @return bool
+     */
+    public function isRequired(string $name): bool
+    {
+        return in_array($name, $this->getRequired());
+    }
+
+    /**
      * @return string[]
      */
-    public function getValidateRules(): array
+    public function getRules(): array
     {
         return $this->rules;
+    }
+
+    /**
+     * @return FormField[]
+     */
+    public function getFields(): array
+    {
+        return $this->fields;
+    }
+
+    /**
+     * @return array
+     */
+    public function getLabels(): array
+    {
+        return $this->labels;
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getRequired(): array
+    {
+        return $this->required;
     }
 }

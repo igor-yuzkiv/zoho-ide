@@ -25,11 +25,6 @@ abstract class FormField implements Arrayable
     protected string $type;
 
     /**
-     * @var mixed
-     */
-    protected mixed $value;
-
-    /**
      * @var mixed|null
      */
     protected mixed $defaultValue = null;
@@ -46,8 +41,8 @@ abstract class FormField implements Arrayable
     {
         return [
             'name'     => $this->getName(),
+            'label'    => $this->getLabel(),
             'type'     => $this->getType(),
-            'value'    => $this->getValue(),
             'required' => $this->isRequired(),
         ];
     }
@@ -105,27 +100,6 @@ abstract class FormField implements Arrayable
     public function setType(string $type): void
     {
         $this->type = $type;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getValue(): mixed
-    {
-        if (isset($this->value)) {
-            return $this->value;
-        }
-
-        return $this->defaultValue;
-    }
-
-    /**
-     * @param mixed $value
-     * @return void
-     */
-    public function setValue(mixed $value): void
-    {
-        $this->value = $value;
     }
 
     /**
