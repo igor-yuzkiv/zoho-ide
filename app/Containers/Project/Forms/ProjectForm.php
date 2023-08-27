@@ -27,4 +27,12 @@ class ProjectForm extends CrudForm
         'name'        => 'Name',
         'description' => 'Description',
     ];
+
+    /**
+     * @var array|array[]
+     */
+    protected array $rules = [
+        'name'        => ['required', 'string', 'max:255'],
+        'description' => ['nullable', 'string'],
+    ];
 }

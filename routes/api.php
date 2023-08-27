@@ -25,10 +25,14 @@ Route::prefix("ide")
 
 Route::prefix("projects")
     ->group(function () {
+        Route::get("", [\App\Containers\Project\Http\Controllers\ProjectsController::class, "getProjects"]);
         Route::get("{project}", [\App\Containers\Project\Http\Controllers\ProjectsController::class, "getProject"]);
+        Route::post("", [\App\Containers\Project\Http\Controllers\ProjectsController::class, "createProject"]);
+        Route::put("{project}", [\App\Containers\Project\Http\Controllers\ProjectsController::class, "updateProject"]);
+        Route::delete("{project}", [\App\Containers\Project\Http\Controllers\ProjectsController::class, "deleteProject"]);
 
         Route::prefix("meta")
             ->group(function () {
-                Route::get("form/{project?}", [\App\Containers\Project\Http\Controllers\ProjectsController::class, "getFormMeta"]);
+                Route::get("form", [\App\Containers\Project\Http\Controllers\ProjectsController::class, "getFormMeta"]);
             });
     });
