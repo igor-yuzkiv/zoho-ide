@@ -12,7 +12,7 @@ import XModal from "@ui-kit/modal/XModal.vue";
 </script>
 
 <template>
-    <x-modal :model-value="isOpen" @close="closeDialog" :dialog-class="{'w-2/5': true}">
+    <x-modal :model-value="isOpen" @close="closeDialog">
         <template #header>
             <div class="flex items-center gap-2 text-black dark:text-white text-xl font-medium">
                 <Icon icon="icon-park-outline:attention"></Icon>

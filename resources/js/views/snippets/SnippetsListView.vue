@@ -2,16 +2,15 @@
 import {defineComponent} from "vue";
 import {deleteSnippet, fetchSnippets} from "@/api/snippets.js";
 import XButton from "@ui-kit/button/XButton.vue";
-import XIconButton from "@ui-kit/icon-button/XIconButton.vue";
 import routesName from "@/constans/routesName.js";
 import {useConfirmBeforeAction} from "@ui-kit/confirm-dialog/useConfirmDialog.js";
 import {Icon} from "@iconify/vue";
-import XChip from "@ui-kit/chip/x-chip.vue";
 import {SNIPPET_TYPES} from "@/constans/snippet.js";
-import XPanel from "@ui-kit/panel/XPanel.vue";
+import XSnippetsExplorer from "@/components/snippets-explorer/XSnippetsExplorer.vue";
+import XSelect from "@ui-kit/select/XSelect.vue";
 
 export default defineComponent({
-    components: {XPanel, XChip, Icon, XIconButton, XButton},
+    components: {XSelect, XSnippetsExplorer, Icon, XButton},
     inject    : ['toast'],
     setup() {
         const confirmBeforeAction = useConfirmBeforeAction();
@@ -19,6 +18,7 @@ export default defineComponent({
     },
     data() {
         return {
+            viewMode  : "grid",
             snippets  : [],
             pagination: {
                 count       : 0,
@@ -35,7 +35,7 @@ export default defineComponent({
     computed: {
         SNIPPET_TYPES() {
             return SNIPPET_TYPES
-        }
+        },
     },
     methods : {
         async loadSnippets(page = 1) {
@@ -86,41 +86,22 @@ export default defineComponent({
 </script>
 
 <template>
-    <div class="flex items-center justify-end mb-2 p-2 bg-white rounded-lg shadow-xs dark:bg-gray-800">
+    <div class="flex items-center justify-between mb-2 p-2 bg-white rounded-lg shadow-xs dark:bg-gray-800">
+        <div>
+            <x-select :options="['list', 'grid']" v-model="viewMode"></x-select>
+        </div>
         <x-button @click="openSnippetIde(null)">
             Create New
         </x-button>
     </div>
 
-    <div class="grid grid-cols-4 gap-2" v-if="snippets.length">
-        <x-panel
-            v-for="item in snippets"
-            :key="item.id"
-            :title="item.title"
-            :clickable="true"
-            @click="openSnippetIde(item.id)"
-        >
-            <template #default>
-                <div class="flex flex-col flex-grow text-sm text-gray-500 mt-1">
-                    {{ item.description }}
-                </div>
-                <div class="flex flex-col items-start mb-1">
-                    <x-chip
-                        :variant="SNIPPET_TYPES[item.type]['variant']"
-                    >
-                        {{ item.type }}
-                    </x-chip>
-                </div>
-            </template>
-
-            <template #actions>
-                <x-icon-button
-                    icon="ic:baseline-delete"
-                    @click="handleClickDeleteSnippet(item.id)"
-                />
-            </template>
-        </x-panel>
-    </div>
+    <x-snippets-explorer
+        v-if="snippets.length"
+        :items="snippets"
+        @item:click="openSnippetIde($event.id)"
+        @item:delete="handleClickDeleteSnippet($event.id)"
+        :view="viewMode"
+    />
 
     <div class="flex items-center justify-center flex-grow" v-else>
         <Icon icon="formkit:sad" class="text-[100px] text-gray-500"/>

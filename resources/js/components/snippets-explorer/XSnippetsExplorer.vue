@@ -3,11 +3,12 @@ import {defineComponent} from "vue";
 import {fetchSnippets} from "@/api/snippets.js";
 import XIconButton from "@ui-kit/icon-button/XIconButton.vue";
 import {Icon} from "@iconify/vue";
-import {SNIPPET_TYPES} from "@/constans/snippet.js";
+import ListItem from "@/components/snippets-explorer/parts/ListItem.vue";
+import GridItem from "@/components/snippets-explorer/parts/GridItem.vue";
 
 export default defineComponent({
     components: {Icon, XIconButton},
-    emits: ["item:click"],
+    emits     : ["item:click", "item:delete"],
     props     : {
         items    : {
             type   : Array,
@@ -16,6 +17,11 @@ export default defineComponent({
         currentId: {
             type   : String,
             default: null
+        },
+        view     : {
+            type     : String,
+            default  : "list",
+            validator: (value) => ["list", "grid"].includes(value)
         }
     },
     data() {
@@ -36,11 +42,11 @@ export default defineComponent({
         }
     },
     computed: {
+        getItemComponent() {
+            return this.view === "list" ? ListItem : GridItem
+        },
         realItems() {
             return this.items.length ? this.items : this.snippets;
-        },
-        SNIPPET_TYPES() {
-            return SNIPPET_TYPES;
         }
     },
     methods : {
@@ -60,38 +66,26 @@ export default defineComponent({
         },
     }
 })
-
-
 </script>
 
 <template>
-    <div class="flex flex-col p-1">
-        <ul class="space-y-1">
-            <li
-                v-for="item in realItems"
-                :key="item.id"
-                class="cursor-pointer rounded-lg shadow-xs"
-                :class="{
-                    'bg-purple-200  dark:bg-purple-800 hover:dark:bg-purple-700 hover:bg-purple-100': item.id === currentId,
-                    'bg-white dark:bg-gray-800 hover:bg-purple-100 dark:hover:bg-purple-700': item.id !== currentId
-                }"
-                @click="$emit('item:click', item)"
-            >
-                <div class="flex px-1 py-2 items-center justify-between">
-                    <div class="flex items-center gap-x-1 dark:text-white truncate">
-                        <Icon
-                            class="text-lg"
-                            :icon="SNIPPET_TYPES[item.type]['icon']"
-                            :style="{color: SNIPPET_TYPES[item.type]['color']}"
-                        />
-                        <div>{{ item.title }}</div>
-                    </div>
-                    <div>
-                        <x-icon-button icon="pepicons-pop:dots-y"></x-icon-button>
-                    </div>
-                </div>
-            </li>
-        </ul>
+    <div
+        :role="view === 'list' ? 'listbox' : 'grid'"
+        :class="{
+            'space-y-1': view === 'list',
+            'grid grid-cols-4 gap-2': view === 'grid'
+        }"
+    >
+        <component
+            v-for="item in realItems"
+            :key="item.id"
+            :is="getItemComponent"
+            :item="item"
+            :isActive="item.id === currentId"
+            @item:click="$emit('item:click', item)"
+            @item:delete="$emit('item:delete', item)"
+        >
+        </component>
     </div>
 </template>
 
