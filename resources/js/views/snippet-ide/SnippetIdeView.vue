@@ -228,6 +228,7 @@ export default defineComponent({
                             class="ml-2"
                             :current-id="snippet.id"
                             @item:click="handleSnippetChange"
+                            view="list"
                         />
                     </x-tab-item>
                 </x-tabs>

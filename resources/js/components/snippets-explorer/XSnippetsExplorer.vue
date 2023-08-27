@@ -5,9 +5,11 @@ import XIconButton from "@ui-kit/icon-button/XIconButton.vue";
 import {Icon} from "@iconify/vue";
 import ListItem from "@/components/snippets-explorer/parts/ListItem.vue";
 import GridItem from "@/components/snippets-explorer/parts/GridItem.vue";
+import XMenu from "@ui-kit/menu/XMenu.vue";
+import XMenuItem from "@ui-kit/menu/XMenuItem.vue";
 
 export default defineComponent({
-    components: {Icon, XIconButton},
+    components: {XMenuItem, XMenu, Icon, XIconButton},
     emits     : ["item:click", "item:delete"],
     props     : {
         items    : {
@@ -85,6 +87,14 @@ export default defineComponent({
             @item:click="$emit('item:click', item)"
             @item:delete="$emit('item:delete', item)"
         >
+            <template #actions>
+                <x-menu>
+                    <x-menu-item @click="$emit('item:delete', item)">
+                        <Icon icon="ic:outline-delete"></Icon>
+                        Delete
+                    </x-menu-item>
+                </x-menu>
+            </template>
         </component>
     </div>
 </template>

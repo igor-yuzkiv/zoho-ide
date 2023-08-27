@@ -96,6 +96,7 @@ export default defineComponent({
     </div>
 
     <x-snippets-explorer
+        class="overflow-auto"
         v-if="snippets.length"
         :items="snippets"
         @item:click="openSnippetIde($event.id)"

@@ -2,9 +2,8 @@
 import XChip from "@ui-kit/chip/x-chip.vue";
 import XTile from "@ui-kit/tile/XTile.vue";
 import {SNIPPET_TYPES} from "@/constans/snippet.js";
-import XIconButton from "@ui-kit/icon-button/XIconButton.vue";
 
-defineEmits(['item:click', 'item:delete']);
+defineEmits(['item:click']);
 defineProps({
     item    : {
         type    : Object,
@@ -37,10 +36,9 @@ defineProps({
         </template>
 
         <template #actions>
-            <x-icon-button
-                icon="ic:baseline-delete"
-                @click="$emit('item:delete', item)"
-            />
+            <div class="flex items-center justify-end w-full">
+                <slot name="actions"></slot>
+            </div>
         </template>
     </x-tile>
 </template>

@@ -94,7 +94,11 @@ class SnippetsController extends Controller
     public function deleteSnippet(Snippet $snippet): JsonResponse
     {
         if ($snippet->type === SnippetType::TEMPLATE) {
-            unlink(SnippetUtil::getFullPath($snippet->component_name));
+            $path = SnippetUtil::getFullPath($snippet->component_name);
+
+            if (file_exists($path)) {
+                unlink($path);
+            }
         }
 
         return \Response::json([
