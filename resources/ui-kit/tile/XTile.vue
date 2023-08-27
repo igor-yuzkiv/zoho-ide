@@ -37,7 +37,7 @@ function handleClick() {
             @click="handleClick"
         >
             <slot name="title">
-                <h3 class="text-lg mb-1 font-semibold"> {{ title }} </h3>
+                <h3 class="truncate text-lg mb-1 font-semibold"> {{ title }} </h3>
             </slot>
             <slot></slot>
         </div>

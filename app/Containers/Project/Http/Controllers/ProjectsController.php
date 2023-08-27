@@ -4,8 +4,8 @@ namespace App\Containers\Project\Http\Controllers;
 
 use App\Containers\Project\Forms\ProjectForm;
 use App\Containers\Project\Model\Project;
+use App\Containers\Project\Transformers\ProjectTransformer;
 use App\Ship\Http\Controllers\Controller;
-use App\Transformers\ProjectTransformer;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Spatie\Fractalistic\ArraySerializer;
@@ -46,10 +46,10 @@ class ProjectsController extends Controller
     }
 
     /**
-     * @param \Request $request
+     * @param Request $request
      * @return JsonResponse
      */
-    public function createProject(\Request $request): JsonResponse
+    public function createProject(Request $request): JsonResponse
     {
         $data = (new ProjectForm())->validate($request->toArray());
         $project = Project::create($data);
@@ -64,7 +64,7 @@ class ProjectsController extends Controller
      * @param \Request $request
      * @return JsonResponse
      */
-    public function updateProject(Project $project, \Request $request): JsonResponse
+    public function updateProject(Project $project, Request $request): JsonResponse
     {
         $data = (new ProjectForm())->validate($request->toArray());
         $project->update($data);

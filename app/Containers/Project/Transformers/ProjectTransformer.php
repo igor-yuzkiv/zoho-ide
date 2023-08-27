@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Transformers;
+namespace App\Containers\Project\Transformers;
 
 use App\Containers\Project\Model\Project;
 use League\Fractal\TransformerAbstract;
@@ -35,7 +35,7 @@ class ProjectTransformer extends TransformerAbstract
     public function transform(Project $project): array
     {
         return [
-            'id'          => (int)$project->id,
+            'id'          => (string)$project->id,
             'name'        => $project->name,
             'description' => $project->description,
             'created_at'  => $project->created_at,

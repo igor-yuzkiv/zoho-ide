@@ -1,11 +1,20 @@
 <script>
 import {defineComponent} from 'vue'
-import {fetchProject, fetchProjectFormMeta} from "@/api/projects.js";
+import {createProject, fetchProject, fetchProjectFormMeta, updateProject} from "@/api/projects.js";
 import XCrudForm from "@ui-kit/crud-form/XCrudForm.vue";
+import XButton from "@ui-kit/button/XButton.vue";
 
 
 export default defineComponent({
-    components: {XCrudForm},
+    components: {XButton, XCrudForm},
+    emits     : ['project:created', 'project:updated', 'project:createdOrUpdated'],
+    inject    : ['toast'],
+    props     : {
+        projectId: {
+            type   : String,
+            default: null
+        }
+    },
     data() {
         return {
             isLoaded  : false,
@@ -25,16 +34,16 @@ export default defineComponent({
     },
     methods: {
         async loadProject() {
-            if (!this.$route.params?.id) return;
+            if (!this.projectId) return;
 
-            await fetchProject(this.$route.params.id)
+            await fetchProject(this.projectId)
                 .then(({data}) => {
                     this.project = data;
                 })
                 .catch(e => console.log(e))
         },
         async loadProjectFormMeta() {
-            await fetchProjectFormMeta(this.$route.params?.id)
+            await fetchProjectFormMeta(this.projectId)
                 .then(({data}) => {
                     const {fields} = data;
                     if (Array.isArray(fields)) {
@@ -44,10 +53,27 @@ export default defineComponent({
                 .catch(e => console.log(e))
         },
 
-        submitFormHandle(e) {
-            console.log({
-                e, p: this.project
-            })
+        submitFormHandle() {
+            const upsertProject = () => {
+                if (this.projectId) {
+                    return updateProject(this.projectId, this.project);
+                }
+                return createProject(this.project);
+            }
+
+            upsertProject(this.project)
+                .then(({data}) => {
+                    this.$emit('project:created', data);
+                    this.$emit('project:createdOrUpdated', data);
+                })
+                .catch(error => {
+                    if (!error?.response) {
+                        this.toast.error("Something went wrong")
+                        return;
+                    }
+                    const {data} = error.response;
+                    this.toast.error(data.message ?? "Something went wrong")
+                })
         }
     }
 })
@@ -55,7 +81,12 @@ export default defineComponent({
 
 <template>
     <div v-if="isLoaded">
-        <x-crud-form :fields="formFields" v-model="project" @submit="submitFormHandle($event)"/>
+        <x-crud-form :fields="formFields" v-model="project"/>
+        <div class="flex items-center">
+            <x-button class="block w-full text-center mt-3" @click="submitFormHandle">
+                Save
+            </x-button>
+        </div>
     </div>
 </template>
 

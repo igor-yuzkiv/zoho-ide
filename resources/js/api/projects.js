@@ -12,3 +12,11 @@ export function fetchProject(projectId) {
 export function fetchProjectFormMeta() {
     return http.get('projects/meta/form');
 }
+
+export function createProject(data) {
+    return http.post('projects', data);
+}
+
+export function updateProject(projectId, data) {
+    return http.put(`projects/${projectId}`, data);
+}
