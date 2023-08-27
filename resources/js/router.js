@@ -30,9 +30,9 @@ const router = createRouter({
                     component: () => import('@/views/snippet-ide/SnippetIdeView.vue'),
                 },
                 {
-                    path     : 'projects/from/:id?',
-                    name     : routesName.snippet_ide,
-                    component: () => import('@/views/project/ProjectFormView.vue'),
+                    path     : 'projects',
+                    name     : routesName.projects,
+                    component: () => import('@/views/projects/ProjectListView.vue'),
                 },
             ],
         },

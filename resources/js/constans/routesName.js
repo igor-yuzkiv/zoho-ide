@@ -1,6 +1,6 @@
 export default {
-    home             : "home",
-    snippets         : "snippets",
-    snippet_ide      : "snippets.ide",
-    project_form      : "project.form",
+    home       : "home",
+    snippets   : "snippets",
+    snippet_ide: "snippets.ide",
+    projects   : "projects",
 }
