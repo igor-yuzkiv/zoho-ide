@@ -47,11 +47,13 @@ export default defineComponent({
 
         this.$nextTick(() => {
             this.isLoaded = true;
+            this.isShowEditor = true;
         });
     },
     data() {
         return {
             isLoaded         : false,
+            isShowEditor     : false,
             minimizeView     : false,
             snippetIsModified: false,
             snippet          : {
@@ -141,11 +143,12 @@ export default defineComponent({
                     }
                 }
             }
-
+            this.isShowEditor = false;
             await this.loadSnippet(item.id);
             this.$nextTick(() => {
                 this.$router.replace({name: routesName.snippet_ide, params: {id: item.id}});
                 this.snippetIsModified = false;
+                this.isShowEditor = true;
             });
         }
     },
@@ -235,6 +238,7 @@ export default defineComponent({
             <div
                 class="flex flex-col flex-grow"
                 :class="{'col-span-4': !minimizeView,'col-span-6': minimizeView}"
+                v-if="isShowEditor"
             >
                 <x-deluge-template-editor
                     v-if="isTemplate"
